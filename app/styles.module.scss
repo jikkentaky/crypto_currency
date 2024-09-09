@@ -1,0 +1,17 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+
+.main {
+  background-color: $color-grey-4;
+}
+
+.container {
+  display: flex;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.content {
+  background-color: $color-grey-4;
+}

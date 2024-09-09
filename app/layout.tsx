@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
+import { Lato } from 'next/font/google'
 import "./globals.scss";
 
+const lato = Lato({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '900', '700'],
+});
 
 export const metadata: Metadata = {
   title: "ONCHAINBUBBLES",
@@ -13,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={lato.className}>
       <body
         className={''}
       >

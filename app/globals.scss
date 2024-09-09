@@ -10,7 +10,7 @@
 html {
   color: $color-white;
 
-  font-family: $ff-grotesk;
+  font-family: $ff-lato;
 }
 
 html,
@@ -18,7 +18,6 @@ html,
   height: 100%;
 }
 
-// Custom scrollbar
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -35,8 +34,6 @@ html,
   &-thumb {
     border: 6px solid transparent;
     background-color: $color-light-grey-2;
-
-    // background-clip: content-box;
 
     &:hover {
       background-color: color.adjust($color-light-grey-2, $lightness: 10%);

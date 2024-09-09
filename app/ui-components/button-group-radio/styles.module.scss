@@ -1,0 +1,21 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+.button-group {
+  background-color: $color-grey-3 !important;
+}
+
+.button {
+  padding: 16px 14px !important;
+
+  border-color: $color-grey-8 !important;
+
+  font-size: $fs-16 !important;
+  font-weight: $fw-800 !important;
+  line-height: $fs-16 !important;
+
+  &:hover {
+    color: #000 !important;
+    background-color: $color-green-1 !important;
+  }
+}

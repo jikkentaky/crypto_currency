@@ -1,4 +1,4 @@
-import { TokenWithMetaData } from "@/app/types/tokenWithMetaData.type";
+import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import axios from "axios";
 import { unstable_cache } from "next/cache";
 
@@ -9,7 +9,7 @@ async function fetchFilterTokens(
     const { data }: {
       data: {
         data: {
-          filterTokens: { results: TokenWithMetaData[] }
+          filterTokens: { results: TokenFilterResult[] }
         }
       }
     } = await axios.post(
@@ -51,27 +51,7 @@ async function fetchFilterTokens(
     }
     );
 
-    const tokens = data.data.filterTokens.results.map(({
-      priceChange1,
-      priceChange4,
-      priceChange12,
-      priceChange24,
-      address,
-      name,
-      symbol,
-      imageThumbUrl
-    }) => ({
-      priceChange1,
-      priceChange4,
-      priceChange12,
-      priceChange24,
-      address,
-      name,
-      symbol,
-      imageThumbUrl
-    }))
-
-    return tokens;
+    return data.data.filterTokens.results;
   } catch (err) {
     console.error(err);
   }

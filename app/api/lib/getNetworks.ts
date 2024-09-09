@@ -1,5 +1,5 @@
 
-import { Network } from "@/app/types/network.type";
+import { Network } from "@/types/network.type";
 import axios from "axios";
 import { unstable_cache } from "next/cache";
 
@@ -42,6 +42,7 @@ async function fetchNetworks() {
       if (indexB === -1) {
         return -1;
       }
+
       return indexA - indexB;
     });
 
@@ -54,5 +55,5 @@ async function fetchNetworks() {
 export const getNetworks = unstable_cache(
   fetchNetworks,
   ['networks'],
-  { revalidate: 60 * 60 * 24, tags: ['networks'] }
+  { revalidate: 60, tags: ['networks'] }
 )
