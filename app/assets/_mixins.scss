@@ -1,0 +1,52 @@
+@import '@/assets/utils/variables';
+@import '@/assets/utils/variables-colors';
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin hover($_property, $_toValue) {
+  transition: #{$_property} $transition-time;
+
+  &:hover {
+    #{$_property}: $_toValue;
+  }
+}
+
+@mixin full {
+  @media (min-width: #{$media-1920-width}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: $media-1600-width) and (max-width: #{$media-1920-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desctop {
+  @media (min-width: $media-1200-width) and (max-width: #{$media-1600-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile() {
+  @media (max-width: #{$media-1200-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin component-to-hide($min-width, $max-width) {
+  @media (min-width: $min-width) and (max-width: $max-width) {
+    display: none !important;
+  }
+}
