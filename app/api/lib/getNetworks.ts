@@ -1,3 +1,4 @@
+'use server';
 
 import { Network } from "@/types/network.type";
 import axios from "axios";

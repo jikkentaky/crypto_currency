@@ -20,13 +20,14 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig
 
 const Bubbles: FC<Props> = ({ coins }) => {
-  console.log("🚀 ~ coins:", coins)
+
   const [, setIsLoading] = useState<boolean>(true)
 
   const [circles, setCircles] = useState<Circle[] | null>(null)
   const { resolution, searchCoin } = useStore()
 
   const appRef = React.useRef<HTMLDivElement>(null)
+  const appInstance = React.useRef<PIXI.Application | null>(null)
 
   const scalingFactor = useMemo(() => {
     return BubblesUtils.getScalingFactor(coins, resolution)
@@ -42,6 +43,12 @@ const Bubbles: FC<Props> = ({ coins }) => {
 
   useEffect(() => {
     if (!circles) return
+
+    if (appInstance.current) {
+      appInstance.current.destroy(true, { children: true })
+      appInstance.current = null
+    }
+
     const imageSprites: PIXI.Sprite[] = []
     const textSprites: PIXI.Text[] = []
     const text2Sprites: PIXI.Text[] = []
@@ -61,6 +68,7 @@ const Bubbles: FC<Props> = ({ coins }) => {
       },
     }) as unknown
 
+    appInstance.current = app as PIXI.Application
     const appContainer = appRef.current
 
     appContainer?.appendChild((app as { view: Node }).view)
@@ -114,7 +122,7 @@ const Bubbles: FC<Props> = ({ coins }) => {
     )
 
     setTimeout(() => {
-      (app as PIXI.Application<PIXI.ICanvas>).ticker.add(ticker)
+      (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker)
       setIsLoading(false)
     }, 200)
 
@@ -129,31 +137,6 @@ const Bubbles: FC<Props> = ({ coins }) => {
     }
   }, [circles])
 
-  // useMemo(() => {
-  //   if (circles) {
-  //     const max = maxCircleSize
-  //     const min = minCircleSize
-
-  //     circles.forEach((circle) => {
-  //       if (!circle[resolution]) return
-
-  //       const radius = Math.abs(Math.floor(circle[resolution] * scalingFactor))
-  //       circle.targetRadius = radius > max ? max : radius > min ? radius : min
-  //       circle.color = circle[resolution] > 0 ? 'green' : 'red'
-
-  //       if (searchCoin && circle.symbol.toLowerCase().includes(searchCoin.toLowerCase().trim())) {
-  //         // console.log(circle.symbol, searchCoin && circle.symbol.toLowerCase()
-  //         //   .includes(searchCoin.toLowerCase().trim()))
-  //         circle.isSearched = true
-  //       }
-
-  //       if (circle.text2) {
-  //         circle.text2.text = circle[resolution].toFixed(2) + '%'
-  //       }
-  //     })
-  //   }
-  // }, [resolution, coins, circles, scalingFactor, searchCoin])
-
   useMemo(() => {
     if (circles) {
       const max = maxCircleSize;
@@ -167,7 +150,6 @@ const Bubbles: FC<Props> = ({ coins }) => {
         circle.color = circle[resolution] > 0 ? 'green' : 'red';
 
         if (searchCoin && circle.symbol.toLowerCase().includes(searchCoin.toLowerCase().trim())) {
-          console.log(circle.symbol)
           circle.isSearched = true;
         } else {
           circle.isSearched = false

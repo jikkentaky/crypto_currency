@@ -1,3 +1,5 @@
+'use server';
+
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import axios from "axios";
 import { unstable_cache } from "next/cache";

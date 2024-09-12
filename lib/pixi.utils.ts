@@ -11,52 +11,35 @@ export class PixiUtils {
     container.hitArea = new PIXI.Circle(0, 0, circle.targetRadius)
     container.sortableChildren = true
 
-    // container.on('pointerover', () => {
-    //   container.cacheAsBitmap = false;
-    //   const borderSprite = container.children[0] as PIXI.Sprite;
-    //   borderSprite.texture = PixiUtils.createSolidColorTexture(
-    //     {
-    //       radius: circle.targetRadius * 4,
-    //       color: circle.color,
-    //       isSearched: circle.isSearched
-    //     },
-    //     'white'
-    //   );
-    //   container.cacheAsBitmap = true;
-    // });
+    container.on('pointerover', () => {
+      container.cacheAsBitmap = false;
+      const borderSprite = container.children[0] as PIXI.Sprite;
+      borderSprite.texture = PixiUtils.createSolidColorTexture(
+        {
+          radius: circle.targetRadius * 4,
+          color: circle.color,
+          isSearched: circle.isSearched
+        },
+        'white'
+      );
+      container.cacheAsBitmap = true;
+    });
 
-    // container.on('pointerout', () => {
-    //   container.cacheAsBitmap = false;
-    //   const borderSprite = container.children[0] as PIXI.Sprite;
-    //   borderSprite.texture = PixiUtils.createSolidColorTexture(
-    //     {
-    //       radius: circle.targetRadius * 4,
-    //       color: circle.color,
-    //       isSearched: circle.isSearched
-    //     }
-    //   );
-    //   container.cacheAsBitmap = true;
-    // });
+    container.on('pointerout', () => {
+      container.cacheAsBitmap = false;
+      const borderSprite = container.children[0] as PIXI.Sprite;
+      borderSprite.texture = PixiUtils.createSolidColorTexture(
+        {
+          radius: circle.targetRadius * 4,
+          color: circle.color,
+          isSearched: circle.isSearched
+        }
+      );
+      container.cacheAsBitmap = true;
+    });
 
     return container
   }
-
-  // static createImageSprite = (circle: Circle) => {
-  //   const imgUrl = circle.image || ''
-
-  //   if (imgUrl) {
-  //     const imageSprite = PIXI.Sprite.from(imgUrl)
-
-  //     const isFullSize = circle.radius * 0.3 < 10
-
-  //     imageSprite.anchor.set(0.5)
-  //     imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5)
-  //     imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5)
-  //     imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 }
-  //     imageSprite.zIndex = 1
-  //     return imageSprite
-  //   }
-  // }
 
   static createImageSprite = (circle: Circle) => {
     const imgUrl = circle.image;
@@ -161,7 +144,6 @@ export class PixiUtils {
       }
 
       context.fillStyle = isSearched ? '#fff' : borderColor
-      // context.fillStyle = borderColor
       context.beginPath()
       context.arc(radius / 2, radius / 2, radius / 4, 0, Math.PI * 2)
       context.fill()

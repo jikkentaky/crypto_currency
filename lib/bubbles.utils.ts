@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js'
 
-
 import { PixiUtils } from './pixi.utils'
 import { Circle, PriceChangePercentage } from '@/types/bubbles.type'
 import { TokenFilterResult } from '@/types/tokenFilterResultType.type'
@@ -84,36 +83,6 @@ class BubblesUtils {
         const imageSprite = imageSprites[i]
         const text = textSprites[i]
         const text2 = text2Sprites[i]
-
-        // const updateCircleChilds = () => {
-        //   circleGraphic.texture = PixiUtils.createSolidColorTexture(circle.targetRadius * 4, circle.color);
-
-        //   const fontSize = circle.radius * 0.5
-        //   const isFullSize = circle.radius * 0.5 < 20
-        //   const isTextVisible = fontSize >= 20
-
-        //   if (imageSprite) {
-        //     imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5)
-        //     imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5)
-        //     imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 }
-        //   }
-
-        //   const textStyle = new PIXI.TextStyle({
-        //     fontSize: isTextVisible ? fontSize + 'px' : '1px',
-        //     fill: '#ffffff',
-        //   })
-
-        //   const text2Style = new PIXI.TextStyle({
-        //     fontSize: isTextVisible ? fontSize * 0.5 + 'px' : '1px',
-        //     fill: '#ffffff',
-        //   })
-
-        //   text.style = textStyle
-        //   text.position.y = 0.15 * circle.radius
-
-        //   text2.style = text2Style
-        //   text2.position.y = circle.radius / 1.5
-        // }
 
         const updateCircleChilds = () => {
           const container = circleGraphic.parent as PIXI.Container

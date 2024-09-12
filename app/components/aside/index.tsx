@@ -1,5 +1,5 @@
 'use client'
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import styles from './styles.module.scss'
 import { useStore } from '@/store';
@@ -7,20 +7,31 @@ import { useStore } from '@/store';
 import { SearchInput } from '@/app/ui-components/search-input';
 import { Network } from '@/types/network.type';
 import { NetworksList } from '@/app/components/networks-list';
+import { getNetworks } from '@/app/api/lib';
 
-type Props = {
-  networks: Network[]
-}
-
-const Aside: FC<Props> = ({ networks }) => {
+const Aside: FC = () => {
   const { searchNetwork, setSearchNetwork } = useStore()
+
+  const [networkList, setNetworksList] = useState<Network[] | null>(null)
+
+  useEffect(() => {
+    const fetchNetworks = async () => {
+      const networks = await getNetworks()
+
+      if (!networks) return
+
+      setNetworksList(networks);
+    }
+
+    fetchNetworks()
+  }, [])
 
   const filteredNetworks = useMemo(
     () =>
-      networks?.filter(({ name }) =>
+      networkList?.filter(({ name }) =>
         name.toLowerCase().includes(searchNetwork.toLowerCase().trim()),
       ),
-    [searchNetwork, networks],
+    [searchNetwork, networkList],
   )
 
   return (
