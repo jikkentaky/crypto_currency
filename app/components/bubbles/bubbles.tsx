@@ -9,20 +9,17 @@ import { Circle, PriceChangePercentage } from '@/types/bubbles.type'
 import { useStore } from '@/store'
 import { PixiUtils } from '@/lib/pixi.utils'
 import { TokenFilterResult } from '@/types/tokenFilterResultType.type'
-
-
-// import Loader from "../Loader/Loader";
+import { Loader } from '@/app/ui-components/loader'
 
 type Props = {
   coins: TokenFilterResult[]
+  isLoading: boolean
+  setIsLoading: (value: boolean) => void
 }
 
 const { width, height, maxCircleSize, minCircleSize } = appConfig
 
-const Bubbles: FC<Props> = ({ coins }) => {
-
-  const [, setIsLoading] = useState<boolean>(true)
-
+const Bubbles: FC<Props> = ({ coins, isLoading, setIsLoading }) => {
   const [circles, setCircles] = useState<Circle[] | null>(null)
   const { resolution, searchCoin } = useStore()
 
@@ -180,13 +177,12 @@ const Bubbles: FC<Props> = ({ coins }) => {
   }, [resolution, coins, circles, scalingFactor, searchCoin]);
 
   return (
-    <Box className="flex rounded px-2 overflow-hidden bg-zinc-900 md:flex-col flex-col-reverse">
-      <Box
-        style={{ height: '84vh' }}
-        className="bg-zinc-900 w-full overflow-hidden border-2 rounded border-gray-800"
-        ref={appRef}
-      ></Box>
-      {/* {isLoading && <Loader / >} */}
+    <Box sx={{ height: '950px' }}>
+      {!isLoading
+        ? <Box ref={appRef} />
+        : <Loader />
+      }
+
     </Box>
   )
 }

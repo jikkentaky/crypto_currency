@@ -16,7 +16,7 @@ const appConfig = {
   speed: 0.007,
   elasticity: 0.005,
   wallDamping: 0.5,
-  maxCircleSize: 220,
+  maxCircleSize: 200,
   minCircleSize: 55,
 }
 
@@ -123,7 +123,7 @@ class BubblesUtils {
           text.position.y = 0.15 * circle.radius
 
           text2.style = text2Style
-          text2.position.y = circle.radius / 1.5
+          text2.position.y = circle.targetRadius / 1.8
         }
 
         // Update circle position

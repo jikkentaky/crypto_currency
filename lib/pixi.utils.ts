@@ -87,7 +87,7 @@ export class PixiUtils {
   }
 
   static createText2 = (circle: Circle, bubbleSort: PriceChangePercentage) => {
-    const fontSize = circle.radius * 0.3
+    const fontSize = circle.targetRadius * 0.3
     const isTextVisible = fontSize > 10
 
     const text2Style = new PIXI.TextStyle({
@@ -99,7 +99,7 @@ export class PixiUtils {
 
     const text2 = new PIXI.Text(data, text2Style)
     text2.anchor.set(0.5)
-    text2.position.y = circle.radius / 1.5
+    text2.position.y = circle.targetRadius / 1.8
     circle['text2'] = text2
 
     return text2

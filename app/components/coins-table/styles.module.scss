@@ -1,0 +1,59 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+.table {
+  width: 100%;
+}
+
+.table-head {
+  background-color: $color-grey-5;
+}
+
+.table-th {
+  padding: 16px;
+  font-size: $fs-14;
+  font-weight: $fw-900;
+}
+
+.table-row {
+
+  &:nth-child(even) {
+    background-color: $color-grey-6;
+  }
+
+  &:nth-child(odd) {
+    background-color: $color-grey-7;
+  }
+}
+
+.table-cell {
+  font-size: $fs-14;
+  font-weight: $fw-600;
+  text-align: center;
+
+  &:last-child {
+    display: flex;
+    padding: 0 16px;
+    justify-content: flex-end;
+  }
+}
+
+.links {
+  text-align: right;
+}
+
+.positive {
+  background-color: $color-green-1;
+}
+
+.negative {
+  background-color: $color-red-1;
+}
+
+.neutral {
+  background-color: 'transparent';
+}
+
+.border {
+  border: 1px solid $color-grey-10;
+}

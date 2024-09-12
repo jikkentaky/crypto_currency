@@ -73,7 +73,7 @@ export type EnhancedToken = {
   imageThumbUrl?: string;
   info: TokenInfo;
   isScam?: boolean;
-  name?: string;
+  name: string;
   networkId: number;
   pooled?: string;
   socialLinks?: SocialLinks;
@@ -130,7 +130,7 @@ export type TokenInfo = {
   imageSmallUrl?: string;
   imageThumbUrl?: string;
   isScam?: boolean;
-  name?: string;
+  name: string;
   networkId: number;
   symbol: string;
   totalSupply?: string;

@@ -1,17 +1,17 @@
 import { create } from 'zustand'
 import { Network } from '@/types/network.type'
 import { PriceChangePercentage } from '@/types/bubbles.type'
-import { TokenFilterResult } from '@/types/tokenFilterResultType.type'
+import { TokenFilterResultType } from '@/types/tokenFilterResultType.type'
 
 
 interface UseStore {
-  topTokensList: TokenFilterResult[] | null
+  topTokensList: TokenFilterResultType[] | null
   chosenNetwork: Network
   searchCoin: string
   searchNetwork: string
   resolution: PriceChangePercentage
   setResolution: (resolution: PriceChangePercentage) => void
-  setTopTokensList: (topTokensList: TokenFilterResult[]) => void
+  setTopTokensList: (topTokensList: TokenFilterResultType[]) => void
   setChosenNetwork: (network: Network) => void
   setSearchCoin: (searchCoin: string) => void
   setSearchNetwork: (searchNetwork: string) => void

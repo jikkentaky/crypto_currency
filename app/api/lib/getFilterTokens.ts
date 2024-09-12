@@ -21,28 +21,31 @@ async function fetchFilterTokens(
           filterTokens(
             filters: {
             trendingIgnored: false
-                  network: [${networkId}]
+                network: [${networkId}]
           }
                 rankings: {
-            attribute: trendingScore
+                  attribute: trendingScore
                   direction: DESC
-          }
+               }
                 limit: 70
           ) {
-                results {
-              change1
-              change4
-              change12
-              change24
-                  token {
-                address
-                name
-                symbol
+              results {
+                change1
+                change4
+                change12
+                change24
+                priceUSD
+                marketCap
+                volume24
+                token {
+                  address
+                  name
+                  symbol
                     info {
-                  imageThumbUrl
+                      imageThumbUrl
+                    }
                 }
               }
-            }
           }
         }`
       }, {
