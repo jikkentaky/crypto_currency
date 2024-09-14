@@ -27,7 +27,7 @@ async function fetchFilterTokens(
                   attribute: trendingScore
                   direction: DESC
                }
-                limit: 70
+                limit: 200
           ) {
               results {
                 change1
@@ -56,7 +56,18 @@ async function fetchFilterTokens(
     }
     );
 
-    return data.data.filterTokens.results;
+    const result = data.data.filterTokens.results.map((token) => ({
+      ...token,
+      change1: Number(token.change1),
+      change4: Number(token.change4),
+      change12: Number(token.change12),
+      change24: Number(token.change24),
+      marketCap: Number(token.marketCap),
+      priceUSD: Number(token.priceUSD),
+      volume24: Number(token.volume24),
+    }))
+
+    return result;
   } catch (err) {
     console.error(err);
   }

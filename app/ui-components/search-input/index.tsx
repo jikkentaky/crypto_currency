@@ -4,7 +4,7 @@ import { InputAdornment, TextField } from '@mui/material'
 
 
 import styles from './styles.module.scss'
-import { SearchIcon } from '@/app/ui-components/icons/search-icon'
+import { SearchIcon } from '@/app/ui-components/icons'
 
 type Props = {
   placeholder?: string

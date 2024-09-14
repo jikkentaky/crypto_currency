@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { Bubbles } from './bubbles'
 import { getFilterTokens } from '@/app/api/lib'
 import { useStore } from '@/store'
+import { Loader } from '@/app/ui-components/loader'
 
 const BubblesPage: FC = () => {
   const { chosenNetwork, topTokensList, setTopTokensList } = useStore()
@@ -29,12 +30,11 @@ const BubblesPage: FC = () => {
   }, [chosenNetwork.id])
 
 
-  return (topTokensList &&
+  return (!isLoading && topTokensList ?
     <Bubbles
-      coins={topTokensList}
-      isLoading={isLoading}
-      setIsLoading={setIsLoading}
+      coins={topTokensList.slice(0, 70)}
     />
+    : <Loader />
   )
 }
 

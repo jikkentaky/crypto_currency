@@ -9,17 +9,14 @@ import { Circle, PriceChangePercentage } from '@/types/bubbles.type'
 import { useStore } from '@/store'
 import { PixiUtils } from '@/lib/pixi.utils'
 import { TokenFilterResult } from '@/types/tokenFilterResultType.type'
-import { Loader } from '@/app/ui-components/loader'
 
 type Props = {
   coins: TokenFilterResult[]
-  isLoading: boolean
-  setIsLoading: (value: boolean) => void
 }
 
 const { width, height, maxCircleSize, minCircleSize } = appConfig
 
-const Bubbles: FC<Props> = ({ coins, isLoading, setIsLoading }) => {
+const Bubbles: FC<Props> = ({ coins }) => {
   const [circles, setCircles] = useState<Circle[] | null>(null)
   const { resolution, searchCoin } = useStore()
 
@@ -116,21 +113,20 @@ const Bubbles: FC<Props> = ({ coins, isLoading, setIsLoading }) => {
       textSprites,
       text2Sprites,
       circleGraphics,
-    )
+    );
 
     setTimeout(() => {
-      (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker)
-      setIsLoading(false)
-    }, 200)
+      (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
+    }, 0)
 
     return () => {
-      ; (app as PIXI.Application<PIXI.ICanvas>).ticker.remove(ticker)
+      (app as PIXI.Application<PIXI.ICanvas>).ticker.remove(ticker);
 
       appContainer?.children[0]?.removeEventListener('click', (e: unknown) =>
         BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles),
-      )
+      );
 
-      eventHandlers.forEach((removeClickEvent) => removeClickEvent())
+      eventHandlers.forEach((removeClickEvent) => removeClickEvent());
     }
   }, [circles])
 
@@ -178,11 +174,7 @@ const Bubbles: FC<Props> = ({ coins, isLoading, setIsLoading }) => {
 
   return (
     <Box sx={{ height: '950px' }}>
-      {!isLoading
-        ? <Box ref={appRef} />
-        : <Loader />
-      }
-
+      <Box ref={appRef} />
     </Box>
   )
 }

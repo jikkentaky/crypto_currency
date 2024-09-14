@@ -32,7 +32,7 @@ html,
   }
 
   &-thumb {
-    border: 6px solid transparent;
+    border: 1px solid $color-grey-2;
     background-color: $color-light-grey-2;
 
     &:hover {

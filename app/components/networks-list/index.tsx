@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import styles from './styles.module.scss'
 import { Network } from '@/types/network.type'
-import { NetworkIcon } from '@/app/ui-components/icons/network-icon'
+import { NetworkIcon } from '@/app/ui-components/icons'
 import { useStore } from '@/store'
 import { Typography } from '@/app/ui-components/typography'
 

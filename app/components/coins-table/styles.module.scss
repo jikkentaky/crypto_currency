@@ -1,6 +1,12 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
 
+.container {
+  height: 840px;
+  overflow: auto;
+  padding-right: 1px;
+}
+
 .table {
   width: 100%;
 }
@@ -10,9 +16,25 @@
 }
 
 .table-th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: $color-grey-1;
   padding: 16px;
   font-size: $fs-14;
   font-weight: $fw-900;
+  cursor: pointer;
+}
+
+.table-th-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.end {
+  justify-content: flex-end;
 }
 
 .table-row {
@@ -30,6 +52,7 @@
   font-size: $fs-14;
   font-weight: $fw-600;
   text-align: center;
+  height: 100%;
 
   &:last-child {
     display: flex;
@@ -40,6 +63,15 @@
 
 .links {
   text-align: right;
+
+  &-content {
+    padding: 16px 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+  }
 }
 
 .positive {
@@ -56,4 +88,22 @@
 
 .border {
   border: 1px solid $color-grey-10;
+}
+
+.up {
+  transform: rotate(180deg);
+}
+
+.price-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.col-name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
 }

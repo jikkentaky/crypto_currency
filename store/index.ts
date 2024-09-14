@@ -10,6 +10,8 @@ interface UseStore {
   searchCoin: string
   searchNetwork: string
   resolution: PriceChangePercentage
+  isLoading: boolean
+  setIsLoading: (isLoading: boolean) => void
   setResolution: (resolution: PriceChangePercentage) => void
   setTopTokensList: (topTokensList: TokenFilterResultType[]) => void
   setChosenNetwork: (network: Network) => void
@@ -23,6 +25,8 @@ export const useStore = create<UseStore>()((set) => ({
   resolution: PriceChangePercentage.HOUR,
   searchCoin: '',
   searchNetwork: '',
+  isLoading: false,
+  setIsLoading: (isLoading) => set(() => ({ isLoading })),
   setResolution: (resolution) => set(() => ({ resolution })),
   setTopTokensList: (topTokensList) => set(() => ({ topTokensList })),
   setChosenNetwork: (chosenNetwork) => set(() => ({ chosenNetwork })),

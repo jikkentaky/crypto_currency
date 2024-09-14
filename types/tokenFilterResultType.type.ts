@@ -5,10 +5,10 @@ export type TokenFilterResult = {
   buyCount4?: number;
   buyCount12?: number;
   buyCount24?: number;
-  change1: string;
-  change4: string;
-  change12: string;
-  change24: string;
+  change1: number;
+  change4: number;
+  change12: number;
+  change24: number;
   createdAt?: number;
   exchanges?: Exchange[];
   fdv?: string;
@@ -24,9 +24,9 @@ export type TokenFilterResult = {
   low4?: string;
   low12?: string;
   low24?: string;
-  marketCap?: string;
+  marketCap: number;
   pair?: Pair;
-  priceUSD?: string;
+  priceUSD: number;
   quoteToken?: string;
   sellCount1?: number;
   sellCount4?: number;
@@ -52,7 +52,7 @@ export type TokenFilterResult = {
   volume1?: string;
   volume4?: string;
   volume12?: string;
-  volume24?: string;
+  volume24: number;
 };
 
 export type EnhancedToken = {
