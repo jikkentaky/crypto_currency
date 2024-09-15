@@ -1,29 +1,25 @@
-import { FC } from 'react'
+import { FC } from 'react';
+import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material';
+import styles from './styles.module.scss';
+import { PriceChangePercentage, Resolution } from '@/types/bubbles.type';
 
-import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material'
-
-
-import styles from './styles.module.scss'
-import { useStore } from '@/store'
-import { PriceChangePercentage } from '@/types/bubbles.type'
-
-type ToggleButton = ToggleButtonProps & {
-  value: string
-  content: string
-}
+type CustomToggleButton = ToggleButtonProps & {
+  value: string;
+  content: string;
+};
 
 type Props = {
-  buttons: ToggleButton[]
-}
+  buttons: CustomToggleButton[];
+  resolution: PriceChangePercentage | Resolution;
+  setResolution: (value: PriceChangePercentage | Resolution) => void;
+};
 
-const ButtonGroupRadio: FC<Props> = ({ buttons }) => {
-  const { resolution, setResolution } = useStore()
-
+const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, setResolution }) => {
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newAlignment: PriceChangePercentage,
+    newAlignment: string,
   ) => {
-    setResolution(newAlignment)
+    setResolution(newAlignment as PriceChangePercentage | Resolution)
   }
 
   return (
@@ -50,6 +46,7 @@ const ButtonGroupRadio: FC<Props> = ({ buttons }) => {
         </ToggleButton>
       ))}
     </ToggleButtonGroup>
-  )
-}
+  );
+};
+
 export { ButtonGroupRadio }

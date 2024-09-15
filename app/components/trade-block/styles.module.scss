@@ -1,0 +1,39 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+.trade-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.list {
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  list-style-type: none;
+  margin: 0 auto;
+}
+
+.about {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.about-subtitle {
+  text-transform: uppercase;
+}
+
+.social-list {
+  display: flex;
+  gap: 18px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

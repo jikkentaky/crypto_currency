@@ -1,0 +1,33 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+.content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 910px;
+  background-color: $color-grey-11;
+  padding: 45px;
+
+  transform: translate(-50%, -50%);
+
+  inset: 50% auto auto 50%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.title-wrapper {
+  display: flex;
+}
+
+.icon-wrapper {
+  border: none;
+  padding: 5px 0 5px 5px;
+  background-color: transparent;
+  margin-left: auto;
+  cursor: pointer;
+}

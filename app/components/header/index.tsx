@@ -9,14 +9,21 @@ const buttons = [
   { value: PriceChangePercentage.HOUR, content: '1H' },
   { value: PriceChangePercentage.FOUR_HOURS, content: '4H' },
   { value: PriceChangePercentage.TWELVE_HOURS, content: '12H' },
-  { value: PriceChangePercentage.DAY, content: '24H' },
+  { value: PriceChangePercentage.DAY, content: '1D' },
 ]
 const Header = () => {
-  const { searchCoin, setSearchCoin } = useStore()
+  const { searchCoin, resolution, setResolution, setSearchCoin } = useStore()
 
   return (
     <header className={styles.header}>
-      <ButtonGroupRadio buttons={buttons} />
+      <div className={styles['buttons-wrapper']}>
+        <ButtonGroupRadio
+          buttons={buttons}
+          resolution={resolution}
+          // @ts-ignore
+          setResolution={setResolution}
+        />
+      </div>
 
       <SearchInput
         placeholder="Search cryptocurrency"

@@ -27,7 +27,7 @@ async function fetchFilterTokens(
                   attribute: trendingScore
                   direction: DESC
                }
-                limit: 200
+                limit: 70
           ) {
               results {
                 change1
@@ -37,12 +37,15 @@ async function fetchFilterTokens(
                 priceUSD
                 marketCap
                 volume24
+                quoteToken
                 token {
                   address
                   name
                   symbol
+                  totalSupply
                     info {
                       imageThumbUrl
+                      imageSmallUrl
                     }
                 }
               }

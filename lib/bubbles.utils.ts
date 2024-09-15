@@ -56,16 +56,16 @@ class BubblesUtils {
     })
   }
 
-  static clickHandler = (container: PIXI.Container, circle: Circle) => {
+  static clickHandler = (props: { circle: Circle; container: PIXI.Container, setIsOpenModal: (isOpenModal: boolean) => void, setChosenToken: (chosenToken: string) => void }) => {
     const clickHandler = () => {
-      return circle
-      // console.log('Circle ID:', circle.id);
+      props.setIsOpenModal(true)
+      props.setChosenToken(props.circle.id)
     }
 
-    container.on('pointerdown', clickHandler)
+    props.container.on('pointerdown', clickHandler)
 
     return () => {
-      container.off('pointerdown', clickHandler)
+      props.container.off('pointerdown', clickHandler)
     }
   }
 

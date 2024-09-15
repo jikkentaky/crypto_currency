@@ -27,7 +27,7 @@ export type TokenFilterResult = {
   marketCap: number;
   pair?: Pair;
   priceUSD: number;
-  quoteToken?: string;
+  quoteToken: string;
   sellCount1?: number;
   sellCount4?: number;
   sellCount12?: number;
@@ -78,7 +78,7 @@ export type EnhancedToken = {
   pooled?: string;
   socialLinks?: SocialLinks;
   symbol: string;
-  totalSupply?: string;
+  totalSupply: string;
 };
 
 export type Exchange = {
@@ -133,7 +133,7 @@ export type TokenInfo = {
   name: string;
   networkId: number;
   symbol: string;
-  totalSupply?: string;
+  totalSupply: string;
 };
 
 export type SocialLinks = {

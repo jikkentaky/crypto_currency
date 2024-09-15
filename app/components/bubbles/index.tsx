@@ -5,10 +5,13 @@ import { Bubbles } from './bubbles'
 import { getFilterTokens } from '@/app/api/lib'
 import { useStore } from '@/store'
 import { Loader } from '@/app/ui-components/loader'
+import { appConfig } from '@/lib/bubbles.utils'
+const { height } = appConfig
 
 const BubblesPage: FC = () => {
   const { chosenNetwork, topTokensList, setTopTokensList } = useStore()
   const [isLoading, setIsLoading] = useState(false)
+
 
   const fetchCoins = async () => {
     setIsLoading(true)
@@ -17,6 +20,7 @@ const BubblesPage: FC = () => {
 
       if (!coins) return
 
+      console.log("🚀 ~ fetchCoins ~ coins:", coins)
       setTopTokensList(coins)
     } catch (error) {
       console.log(error)
@@ -34,7 +38,7 @@ const BubblesPage: FC = () => {
     <Bubbles
       coins={topTokensList.slice(0, 70)}
     />
-    : <Loader />
+    : <Loader height={height} />
   )
 }
 

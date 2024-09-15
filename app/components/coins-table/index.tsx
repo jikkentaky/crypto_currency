@@ -2,8 +2,8 @@
 
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, } from "@tanstack/react-table"
-import { useCallback, useMemo, useState } from "react"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row, } from "@tanstack/react-table"
+import { memo, useCallback, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
@@ -13,6 +13,7 @@ import classNames from "classnames"
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
+  // const currentList = topTokensList?.slice(0, 70);
 
   const tableData = useMemo(() => topTokensList, [topTokensList]);
 
@@ -20,7 +21,7 @@ const CoinsTable = () => {
 
   const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'RANK', desc: false }]);
 
-  const toggleSorting = useCallback((columnId: string) => {
+  const toggleSorting = (columnId: string) => {
     setSorting((oldSorting) => {
       const currentSort = oldSorting.find((sort) => sort.id === columnId);
 
@@ -34,7 +35,7 @@ const CoinsTable = () => {
 
       return [{ id: columnId, desc: true }];
     });
-  }, []);
+  };
 
   const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
     () => [
@@ -47,12 +48,12 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.token.name.length > 10 ? row.token.name.slice(0, 10) + '...' : row.token.name, {
+      columnHelper.accessor((row) => row.token.name.length > 10 ? row.token.name.slice(0, 8) + '...' : row.token.name, {
         id: 'name',
         cell: (info) => {
           const row = info.row.original;
           return (
-            <p className={styles['col-name']}>
+            <p className={styles['col-name']} title={row.token.name}>
               <img
                 loading="lazy"
                 src={row.token.info.imageThumbUrl}
@@ -254,6 +255,17 @@ const CoinsTable = () => {
     onSortingChange: setSorting,
   });
 
+  const cellClass = useCallback((columnId: string, value: number) => {
+    const isChangeColumn = columnId === 'change1' || columnId === 'change4' || columnId === 'change12' || columnId === 'change24';
+
+    return cn(styles['table-cell'], {
+      [styles['positive']]: isChangeColumn && value > 0,
+      [styles['negative']]: isChangeColumn && value < 0,
+      [styles['neutral']]: isChangeColumn && value === 0,
+      [styles['border']]: isChangeColumn,
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
       <table className={styles['table']}>
@@ -286,25 +298,7 @@ const CoinsTable = () => {
         {tableData && tableData.length > 0 && (
           <tbody className={styles['table-body']}>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={styles['table-row']}>
-                {row.getVisibleCells().map((cell) => {
-                  const columnId = cell.column.id;
-                  const value = Number(cell.getValue());
-                  const isChangeColumn = columnId === 'change1' || columnId === 'change4' || columnId === 'change12' || columnId === 'change24';
-                  const cellClass = cn(styles['table-cell'], {
-                    [styles['positive']]: isChangeColumn && value > 0,
-                    [styles['negative']]: isChangeColumn && value < 0,
-                    [styles['neutral']]: isChangeColumn && value === 0,
-                    [styles['border']]: isChangeColumn,
-                  });
-
-                  return (
-                    <td className={cellClass} key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  );
-                })}
-              </tr>
+              <TableRow key={row.id} row={row} cellClass={cellClass} />
             ))}
           </tbody>
         )}
@@ -315,3 +309,20 @@ const CoinsTable = () => {
 
 export { CoinsTable };
 
+const TableRow = memo(({ row, cellClass }: { row: Row<TokenFilterResultType>, cellClass: (columnId: string, value: number) => string }) => {
+
+  return (
+    <tr key={row.id} className={styles['table-row']}>
+      {row.getVisibleCells().map((cell) => {
+        const columnId = cell.column.id;
+        const value = Number(cell.getValue());
+
+        return (
+          <td className={cellClass(columnId, value)} key={cell.id}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </td>
+        );
+      })}
+    </tr>
+  );
+});

@@ -1,8 +1,12 @@
 import { Aside } from "./components/aside";
 import { BubblesPage } from "./components/bubbles";
+import { Chart } from "./components/chart";
 import { CoinsTable } from "./components/coins-table";
 import { Header } from "./components/header";
+import { TokenInfo } from "./components/token-info";
+import { TradeBlock } from "./components/trade-block";
 import styles from './styles.module.scss';
+import { ModalComponent } from "@/app/ui-components/modal";
 
 export default function Home() {
 
@@ -18,6 +22,14 @@ export default function Home() {
 
           <CoinsTable />
         </div>
+
+        <ModalComponent>
+          <TokenInfo />
+
+          <Chart />
+
+          <TradeBlock />
+        </ModalComponent>
       </div>
     </main >
   );

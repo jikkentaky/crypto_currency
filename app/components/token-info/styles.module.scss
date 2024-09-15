@@ -1,0 +1,30 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+
+
+
+.token-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.token-image-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.token-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.token-item {
+  min-width: 85px;
+
+  &:last-child {
+    margin-top: 2px;
+  }
+}

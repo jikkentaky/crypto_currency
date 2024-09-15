@@ -18,7 +18,7 @@ const { width, height, maxCircleSize, minCircleSize } = appConfig
 
 const Bubbles: FC<Props> = ({ coins }) => {
   const [circles, setCircles] = useState<Circle[] | null>(null)
-  const { resolution, searchCoin } = useStore()
+  const { resolution, searchCoin, setIsOpenModal, setChosenToken } = useStore()
 
   const appRef = React.useRef<HTMLDivElement>(null)
   const appInstance = React.useRef<PIXI.Application | null>(null)
@@ -96,7 +96,9 @@ const Bubbles: FC<Props> = ({ coins }) => {
       container.addChild(text)
       textSprites.push(text)
 
-      const removeClickEvent = BubblesUtils.clickHandler(container, circle)
+      const props = { circle, container, setIsOpenModal, setChosenToken }
+
+      const removeClickEvent = BubblesUtils.clickHandler(props)
       eventHandlers.push(removeClickEvent)
 
       // Create the second text
