@@ -97,7 +97,7 @@ class BubblesUtils {
           circleGraphic.texture.update()
 
           container.cacheAsBitmap = true
-          container.updateTransform()
+          container?.updateTransform()
 
           const fontSize = circle.radius * 0.5
           const isFullSize = circle.radius * 0.5 < 20

@@ -13,7 +13,6 @@ import classNames from "classnames"
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
-  // const currentList = topTokensList?.slice(0, 70);
 
   const tableData = useMemo(() => topTokensList, [topTokensList]);
 
@@ -86,11 +85,6 @@ const CoinsTable = () => {
             PRICE
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.priceUSD;
-          const valueB = +rowB.original.priceUSD;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.marketCap, {
         id: 'marketCap',
@@ -104,11 +98,6 @@ const CoinsTable = () => {
             M CAP
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.marketCap;
-          const valueB = +rowB.original.marketCap;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.volume24, {
         id: 'volume24',
@@ -123,11 +112,6 @@ const CoinsTable = () => {
             24H VOLUME
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.volume24;
-          const valueB = +rowB.original.volume24;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.change1, {
         id: 'change1',
@@ -147,11 +131,6 @@ const CoinsTable = () => {
             HOUR
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.change1;
-          const valueB = +rowB.original.change1;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.change4, {
         id: 'change4',
@@ -171,11 +150,6 @@ const CoinsTable = () => {
             4 HOUR
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.change4;
-          const valueB = +rowB.original.change4;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.change12, {
         id: 'change12',
@@ -195,11 +169,6 @@ const CoinsTable = () => {
             12 HOUR
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.change12;
-          const valueB = +rowB.original.change12;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor((row) => row.change24, {
         id: 'change24',
@@ -219,11 +188,6 @@ const CoinsTable = () => {
             24 HOUR
           </span>
         ),
-        sortingFn: (rowA, rowB) => {
-          const valueA = +rowA.original.change24;
-          const valueB = +rowB.original.change24;
-          return valueA - valueB;
-        },
       }),
       columnHelper.accessor(() => '', {
         id: 'links',

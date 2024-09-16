@@ -95,7 +95,7 @@ export class PixiUtils {
       fill: '#ffffff',
     })
 
-    const data = circle[bubbleSort] ? circle[bubbleSort]?.toFixed(2) + '%' : 'No data'
+    const data = circle[bubbleSort] ? circle[bubbleSort]?.toFixed(2) + '%' : ''
 
     const text2 = new PIXI.Text(data, text2Style)
     text2.anchor.set(0.5)
