@@ -16,11 +16,9 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins = [] }: Props) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { resolution: bubbleSort, chosenNetwork } = useStore()
 
   const [circles, setCircles] = useState<Circle[] | null>(null);
-  // const [bubbleSort, setBubbleSort] = useState(PriceChangePercentage.HOUR);
 
   const appRef = useRef<HTMLDivElement>(null);
   const appInstance = useRef<PIXI.Application | null>(null);
@@ -95,7 +93,6 @@ export default function Bubbles({ coins = [] }: Props) {
     const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics);
     setTimeout(() => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
-      setIsLoading(false);
     }, 200);
 
     return () => {

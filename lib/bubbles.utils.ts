@@ -141,9 +141,10 @@ export class BubblesUtils {
             container.cacheAsBitmap = true;
           } else {
             circle.radius > circle.targetRadius ? (circle.radius -= changeSizeStep) : (circle.radius += changeSizeStep);
-            updateCircleChilds();
           }
         }
+
+        updateCircleChilds();
       }
     };
   };
