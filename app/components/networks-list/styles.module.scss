@@ -36,7 +36,9 @@
 
 .button {
   padding: 16px 14px;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
 
   cursor: pointer;
@@ -53,4 +55,8 @@
   &:active {
     background-color: $color-light-grey-2;
   }
+}
+
+.img {
+  border-radius: 50%;
 }
