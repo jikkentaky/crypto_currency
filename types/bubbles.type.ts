@@ -28,7 +28,7 @@ export type Circle = {
   vx: number
   vy: number
   color: string
-  dragging: boolean
+  dragging?: boolean
   targetRadius: number
   symbol: string
   coinName: string

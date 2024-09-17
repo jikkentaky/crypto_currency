@@ -21,13 +21,13 @@ async function fetchFilterTokens(
           filterTokens(
             filters: {
             trendingIgnored: false
-                network: [${networkId}]
+            network: [${networkId}]
           }
-                rankings: {
-                  attribute: trendingScore
-                  direction: DESC
-               }
-                limit: 70
+            rankings: {
+              attribute: trendingScore
+              direction: DESC
+            }
+            limit: 70
           ) {
               results {
                 change1
