@@ -16,7 +16,7 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins = [] }: Props) {
-  const { resolution: bubbleSort, chosenNetwork } = useStore()
+  const { resolution: bubbleSort, chosenNetwork, setIsOpenModal, setChosenToken } = useStore()
 
   const [circles, setCircles] = useState<Circle[] | null>(null);
 
@@ -65,14 +65,15 @@ export default function Bubbles({ coins = [] }: Props) {
     for (let i = 0; i < circles.length; i++) {
       const circle = circles[i];
 
-      const container = PixiUtils.createContainer(circle);
+      const container = PixiUtils.createContainer(circle, setChosenToken, setIsOpenModal);
 
       const imageSprite = PixiUtils.createImageSprite(circle);
       imageSprites.push(imageSprite);
       container.addChild(imageSprite);
 
-      const circleGraphic = new PIXI.Sprite(PixiUtils.createGradientTexture(circle.radius * 4, circle.color));
+      const circleGraphic = new PIXI.Sprite(PixiUtils.createGradientTexture(circle.targetRadius * 4, circle.color, circle.isHovered));
       circleGraphic.anchor.set(0.5);
+      circle.graphicSprite = circleGraphic;
       circleGraphics.push(circleGraphic);
       container.addChild(circleGraphic);
 

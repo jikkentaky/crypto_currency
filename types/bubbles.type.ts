@@ -33,6 +33,9 @@ export type Circle = {
   symbol: string
   coinName: string
   radius: number
+  previousColor: string | null
+  previousHovered: boolean
+  isHovered: boolean
   isSearched: boolean
   graphicSprite: Sprite | null
   [PriceChangePercentage.HOUR]: number

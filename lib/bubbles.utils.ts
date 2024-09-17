@@ -38,7 +38,13 @@ export class BubblesUtils {
     return Math.sqrt((width * height) / totalSquare) * (width > 920 ? 0.8 : 0.5);
   };
 
-  static update = (circles: Circle[], imageSprites: PIXI.Sprite[], textSprites: PIXI.Text[], text2Sprites: PIXI.Text[], circleGraphics: PIXI.Sprite[] = []) => {
+  static update = (
+    circles: Circle[],
+    imageSprites: PIXI.Sprite[],
+    textSprites: PIXI.Text[],
+    text2Sprites: PIXI.Text[],
+    circleGraphics: PIXI.Sprite[] = []
+  ) => {
     return () => {
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
@@ -47,8 +53,14 @@ export class BubblesUtils {
         const text = textSprites[i];
         const text2 = text2Sprites[i];
 
+        const container = circleGraphic.parent as PIXI.Container;
+
         const updateCircleChilds = () => {
-          circleGraphic.texture = PixiUtils.createGradientTexture(circle.radius * 4, circle.color);
+          circleGraphic.texture = PixiUtils.createGradientTexture(
+            circle.targetRadius * 4,
+            circle.color,
+            circle.isHovered
+          );
 
           const fontSize = circle.radius * 0.5;
           const isFullSize = circle.radius * 0.5 < 20;
@@ -77,31 +89,29 @@ export class BubblesUtils {
           text2.position.y = circle.radius / 1.5;
         };
 
-        // Update circle position
         circle.x += circle.vx;
         circle.y += circle.vy;
 
-        // Check for collisions with walls
         if (circle.x - circle.radius < 0) {
-          circle.x = circle.radius; // Keep the circle inside the left wall
+          circle.x = circle.radius;
           circle.vx *= -1;
-          circle.vx *= 1 - wallDamping; // Apply wall damping
+          circle.vx *= 1 - wallDamping;
         } else if (circle.x + circle.radius > width) {
-          circle.x = width - circle.radius; // Keep the circle inside the right wall
+          circle.x = width - circle.radius;
           circle.vx *= -1;
-          circle.vx *= 1 - wallDamping; // Apply wall damping
+          circle.vx *= 1 - wallDamping;
         }
         if (circle.y - circle.radius < 0) {
-          circle.y = circle.radius; // Keep the circle inside the top wall
+          circle.y = circle.radius;
           circle.vy *= -1;
-          circle.vy *= 1 - wallDamping; // Apply wall damping
+          circle.vy *= 1 - wallDamping;
         } else if (circle.y + circle.radius > height) {
-          circle.y = height - circle.radius; // Keep the circle inside the bottom wall
+          circle.y = height - circle.radius;
           circle.vy *= -1;
-          circle.vy *= 1 - wallDamping; // Apply wall damping
+          circle.vy *= 1 - wallDamping;
         }
 
-        // Check for collisions with other circles
+
         for (let j = i + 1; j < circles.length; j++) {
           const otherCircle = circles[j];
           const dx = otherCircle.x - circle.x;
@@ -109,10 +119,8 @@ export class BubblesUtils {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < circle.radius + otherCircle.radius) {
-            // Colliding circles
             const angle = Math.atan2(dy, dx);
 
-            // Calculate the new velocities after collision with elasticity
             const totalRadius = circle.radius + otherCircle.radius;
             const overlap = totalRadius - distance;
             const force = overlap * elasticity;
@@ -125,26 +133,42 @@ export class BubblesUtils {
           }
         }
 
-        // Update container position
-        const container = circleGraphic.parent as PIXI.Container;
         container.position.set(circle.x, circle.y);
 
-        // Smoothly change the size of the circle
-        if (circle.radius !== circle.targetRadius) {
-          // container.children.forEach((item) => (item.cacheAsBitmap = false));
+        let radiusChanged = false;
+
+        if (
+          circle.radius !== circle.targetRadius ||
+          circle.color !== circle.previousColor ||
+          circle.isHovered !== circle.previousHovered
+        ) {
           container.cacheAsBitmap = false;
 
-          const sizeDifference = circle.targetRadius - circle.radius;
+          circle.previousColor = circle.color;
+          circle.previousHovered = circle.isHovered;
 
-          if (Math.abs(sizeDifference) <= changeSizeStep) {
-            circle.radius = circle.targetRadius;
-            container.cacheAsBitmap = true;
-          } else {
-            circle.radius > circle.targetRadius ? (circle.radius -= changeSizeStep) : (circle.radius += changeSizeStep);
+          if (circle.radius !== circle.targetRadius) {
+            const sizeDifference = circle.targetRadius - circle.radius;
+
+            if (Math.abs(sizeDifference) <= changeSizeStep) {
+              circle.radius = circle.targetRadius;
+            } else {
+              circle.radius > circle.targetRadius
+                ? (circle.radius -= changeSizeStep)
+                : (circle.radius += changeSizeStep);
+            }
+
+            radiusChanged = true;
           }
-        }
 
-        updateCircleChilds();
+          if (radiusChanged) {
+            container.hitArea = new PIXI.Circle(0, 0, circle.radius);
+          }
+
+          updateCircleChilds();
+
+          container.cacheAsBitmap = true;
+        }
       }
     };
   };
@@ -190,12 +214,15 @@ export class BubblesUtils {
         image: item.token.info.imageThumbUrl || null,
         coinName: item.token.info.name,
         isSearched: false,
+        isHovered: false,
         graphicSprite: null,
         x: Math.random() * (width - radius * 2),
         y: Math.random() * (height - radius * 2),
         vx: Math.random() * speed * 2 - speed,
         vy: Math.random() * speed * 2 - speed,
         color: item[bubbleSort]! > 0 ? "green" : "red",
+        previousColor: null,
+        previousHovered: false,
         targetRadius: radius > maxCircleSize ? maxCircleSize : radius > minCircleSize ? radius : minCircleSize,
         radius: minCircleSize,
         dragging: false,

@@ -6,11 +6,24 @@ import * as PIXI from "pixi.js";
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
 
 export class PixiUtils {
-  static createContainer = (circle: Circle) => {
+  static createContainer = (circle: Circle, setChosenToken: (tokenAddress: string) => void, setIsOpenModal: (isOpen: boolean) => void) => {
     const container = new PIXI.Container();
     container.position.set(circle.x, circle.y);
     container.hitArea = new PIXI.Circle(0, 0, circle.radius);
-    container.eventMode = "dynamic";
+
+    container.on('pointerover', () => {
+      circle.isHovered = true;
+    });
+
+    container.on('pointerout', () => {
+      circle.isHovered = false;
+    });
+
+    container.on('click', () => {
+      setChosenToken(circle.id);
+      setIsOpenModal(true);
+    });
+
     return container;
   };
 
@@ -61,8 +74,8 @@ export class PixiUtils {
     return text2;
   };
 
-  static createGradientTexture(radius: number, color: string): PIXI.Texture {
-    const textureKey: string = `${radius}_${color}`;
+  static createGradientTexture(radius: number, color: string, isHovered: boolean = false): PIXI.Texture {
+    const textureKey: string = `${radius}_${color}_${isHovered}`;
 
     if (gradientTextureCache.has(textureKey)) {
       return gradientTextureCache.get(textureKey)!;
@@ -74,37 +87,64 @@ export class PixiUtils {
     const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
 
     if (context) {
-      // Create the radial gradient based on the provided color
-      const gradient: CanvasGradient = context.createRadialGradient(radius / 2, radius / 2, 0, radius / 2, radius / 2, radius / 2);
+      const centerX = radius / 2;
+      const centerY = radius / 2;
 
-      switch (color) {
-        case "green":
-          gradient.addColorStop(0, "rgba(46, 204, 113, 0)");
-          gradient.addColorStop(0.42, "rgba(46, 204, 113, 0.15)");
-          gradient.addColorStop(0.6, "rgba(46, 204, 113, 0.92)");
-          break;
-        case "red":
-          gradient.addColorStop(0, "rgba(255,99,71, 0.1)");
-          gradient.addColorStop(0.45, "rgba(255,99,71, 0.15)");
-          gradient.addColorStop(0.6, "rgba(255,99,71, 0.95)");
-          break;
+      const gradient: CanvasGradient = context.createRadialGradient(
+        centerX,
+        centerY,
+        0,
+        centerX,
+        centerY,
+        radius / 2
+      );
+
+      if (isHovered) {
+        gradient.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+      } else {
+        switch (color) {
+          case "green":
+            gradient.addColorStop(0, 'rgba(6, 160, 49, 1)')
+            gradient.addColorStop(0.82, 'rgba(6, 160, 49, 0.15)')
+            gradient.addColorStop(0.9, 'rgba(6, 160, 49, 0.92)')
+            break;
+          case "red":
+            gradient.addColorStop(0, 'rgba(190, 20, 20, 11)')
+            gradient.addColorStop(0.82, 'rgba(190, 20, 20, 0.15)')
+            gradient.addColorStop(0.9, 'rgba(190, 20, 20, 0.92)')
+            break;
+        }
       }
 
-      // Fill the canvas with the gradient
       context.fillStyle = gradient;
       context.beginPath();
-      context.arc(radius / 2, radius / 2, radius / 2 / 2, 0, Math.PI * 2);
+      context.arc(centerX, centerY, radius / 4, 0, Math.PI * 2);
       context.fill();
 
-      // Create a PIXI texture from the canvas
       const texture: PIXI.Texture = PIXI.Texture.from(canvas);
 
-      // Cache the texture for future use
       gradientTextureCache.set(textureKey, texture);
 
       return texture;
     }
 
-    return PIXI.Texture.from(canvas);
+    return PIXI.Texture.WHITE;
   }
+
+
+  static updateCircleAppearance = (circle: Circle) => {
+    const circleGraphic = circle.graphicSprite;
+
+    if (!circleGraphic) return;
+
+    const newTexture = PixiUtils.createGradientTexture(
+      circle.radius * 4,
+      circle.color,
+      circle.isHovered
+    );
+
+    circleGraphic.texture = newTexture;
+  };
 }

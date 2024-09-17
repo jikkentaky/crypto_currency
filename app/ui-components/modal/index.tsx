@@ -12,6 +12,7 @@ type Props = {
 
 const ModalComponent: React.FC<Props> = ({ isNetworkModal, children }) => {
   const { isOpenModal, setIsOpenModal } = useStore()
+
   const handleClose = () => {
     setIsOpenModal(false)
   };
