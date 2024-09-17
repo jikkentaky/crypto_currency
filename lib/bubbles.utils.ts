@@ -17,8 +17,8 @@ export const appConfig = {
   speed: 0.005,
   elasticity: 0.005,
   wallDamping: 0.5,
-  maxCircleSize: 200,
-  minCircleSize: 50,
+  maxCircleSize: 160,
+  minCircleSize: 55,
 };
 const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleSize } = appConfig;
 
@@ -60,9 +60,11 @@ export class BubblesUtils {
         const newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
 
         const updateCircleChilds = () => {
+          const gradientColor = circle.isSearched ? "white" : circle.color;
+
           circleGraphic.texture = PixiUtils.createGradientTexture(
             circle.targetRadius * 4,
-            circle.color,
+            gradientColor,
             circle.isHovered
           );
 
@@ -148,13 +150,15 @@ export class BubblesUtils {
           circle.radius !== circle.targetRadius ||
           circle.color !== circle.previousColor ||
           circle.isHovered !== circle.previousHovered ||
-          circle.previousText2 !== newText2Value
+          circle.previousText2 !== newText2Value ||
+          circle.isSearched !== circle.isPreviousSearched
         ) {
           container.cacheAsBitmap = false;
 
           circle.previousColor = circle.color;
           circle.previousHovered = circle.isHovered;
           circle.previousText2 = newText2Value;
+          circle.isPreviousSearched = circle.isSearched;
 
           if (circle.radius !== circle.targetRadius) {
             const sizeDifference = circle.targetRadius - circle.radius;
@@ -219,10 +223,11 @@ export class BubblesUtils {
 
       const data = {
         id: item.token.address,
-        symbol: item.token.symbol.slice(0, 8),
+        symbol: item.token.symbol.slice(0, 5),
         image: item.token.info.imageThumbUrl || null,
         coinName: item.token.info.name,
         isSearched: false,
+        isPreviousSearched: false,
         isHovered: false,
         graphicSprite: null,
         x: Math.random() * (width - radius * 2),

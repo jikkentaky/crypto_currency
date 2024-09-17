@@ -100,20 +100,31 @@ export class PixiUtils {
       );
 
       if (isHovered) {
-        gradient.addColorStop(0, "rgba(255, 255, 255, 0.5)");
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-
+        gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.9)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
       } else {
         switch (color) {
           case "green":
-            gradient.addColorStop(0, 'rgba(6, 160, 49, 1)')
-            gradient.addColorStop(0.82, 'rgba(6, 160, 49, 0.15)')
-            gradient.addColorStop(0.9, 'rgba(6, 160, 49, 0.92)')
+            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0.5, 'rgba(108, 250, 60, 1)');
+            gradient.addColorStop(0.7, 'rgba(108, 250, 60, 0.9)');
+            gradient.addColorStop(1, 'rgba(108, 250, 60, 1)');
             break;
+
           case "red":
-            gradient.addColorStop(0, 'rgba(190, 20, 20, 11)')
-            gradient.addColorStop(0.82, 'rgba(190, 20, 20, 0.15)')
-            gradient.addColorStop(0.9, 'rgba(190, 20, 20, 0.92)')
+            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0.5, 'rgba(244, 58, 54, 1)');
+            gradient.addColorStop(0.7, 'rgba(244, 58, 54, 0.9)');
+            gradient.addColorStop(1, 'rgba(244, 58, 54, 1)');
+            break;
+
+          case "white":
+            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.9)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
             break;
         }
       }
@@ -133,7 +144,6 @@ export class PixiUtils {
     return PIXI.Texture.WHITE;
   }
 
-
   static updateCircleAppearance = (circle: Circle) => {
     const circleGraphic = circle.graphicSprite;
 
@@ -147,4 +157,25 @@ export class PixiUtils {
 
     circleGraphic.texture = newTexture;
   };
+
+  static createGradientBackground(width: number, height: number): HTMLCanvasElement {
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+
+    if (context) {
+      const gradient = context.createLinearGradient(0, 0, width * 0.1, height);
+      gradient.addColorStop(0, 'rgba(19, 16, 120, 0.30)');
+      gradient.addColorStop(0.30, 'rgba(25, 47, 67, 0.35)');
+      gradient.addColorStop(0.5, 'rgba(117, 89, 24, 0.30)');
+      gradient.addColorStop(0.75, 'rgba(109, 40, 23, 0.35)');
+      gradient.addColorStop(1, 'rgba(55, 17, 96, 0.40)');
+
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, width, height);
+    }
+
+    return canvas;
+  }
 }

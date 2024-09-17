@@ -16,7 +16,7 @@ const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins = [] }: Props) {
   const bubbleSortRef = useRef<PriceChangePercentage | null>(null);
-  const { resolution: bubbleSort, chosenNetwork, setIsOpenModal, setChosenToken } = useStore((state) => {
+  const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
     bubbleSortRef.current = state.resolution || PriceChangePercentage.HOUR;
     return state;
   });
@@ -49,7 +49,7 @@ export default function Bubbles({ coins = [] }: Props) {
     const app = new PIXI.Application({
       width: width,
       height,
-      backgroundColor: "#0e1010",
+      backgroundColor: "0x000000",
       eventMode: "dynamic",
       eventFeatures: {
         move: true,
@@ -58,6 +58,13 @@ export default function Bubbles({ coins = [] }: Props) {
         wheel: true,
       }
     }) as unknown;
+
+    const gradient = new PIXI.Graphics();
+    const texture = PIXI.Texture.from(PixiUtils.createGradientBackground(width, height));
+    const sprite = new PIXI.Sprite(texture);
+
+    gradient.addChild(sprite);
+    (app as { stage: PIXI.Container }).stage.addChild(gradient);
 
     const appContainer = appRef.current;
     appInstance.current = app as PIXI.Application;
@@ -92,6 +99,12 @@ export default function Bubbles({ coins = [] }: Props) {
       text2Sprites.push(text2);
 
       (app as PIXI.Application<PIXI.ICanvas>).stage.addChild(container);
+
+      circle.isSearched = !searchCoin
+        ? false
+        : circle.symbol.toLowerCase().includes(searchCoin.toLowerCase());
+
+      circle.isPreviousSearched = circle.isSearched;
     }
 
     const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef);
@@ -132,9 +145,15 @@ export default function Bubbles({ coins = [] }: Props) {
 
           circle.text2.text = newText2Value;
         }
+
+        const isMatched = !searchCoin
+          ? false
+          : circle.symbol.toLowerCase().includes(searchCoin.toLowerCase());
+
+        circle.isSearched = isMatched;
       });
     }
-  }, [bubbleSort, coins, circles, scalingFactor]);
+  }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
 
   return (
     <div className="flex rounded px-2 overflow-hidden bg-zinc-900 md:flex-col flex-col-reverse">

@@ -37,6 +37,7 @@ export type Circle = {
   previousHovered: boolean
   isHovered: boolean
   isSearched: boolean
+  isPreviousSearched: boolean
   graphicSprite: Sprite | null
   [PriceChangePercentage.HOUR]: number
   [PriceChangePercentage.FOUR_HOURS]: number
