@@ -44,4 +44,5 @@ export type Circle = {
   [PriceChangePercentage.DAY]: number
   image: string | null | undefined
   text2: Text | null
+  previousText2: string | null
 }

@@ -43,9 +43,11 @@ export class BubblesUtils {
     imageSprites: PIXI.Sprite[],
     textSprites: PIXI.Text[],
     text2Sprites: PIXI.Text[],
-    circleGraphics: PIXI.Sprite[] = []
+    circleGraphics: PIXI.Sprite[] = [],
+    bubbleSortRef: React.RefObject<string>
   ) => {
     return () => {
+      const bubbleSort = bubbleSortRef.current as PriceChangePercentage;
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
         const circleGraphic = circleGraphics[i];
@@ -54,6 +56,8 @@ export class BubblesUtils {
         const text2 = text2Sprites[i];
 
         const container = circleGraphic.parent as PIXI.Container;
+
+        const newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
 
         const updateCircleChilds = () => {
           circleGraphic.texture = PixiUtils.createGradientTexture(
@@ -87,6 +91,10 @@ export class BubblesUtils {
 
           text2.style = text2Style;
           text2.position.y = circle.radius / 1.5;
+
+          if (circle.text2) {
+            circle.text2.text = newText2Value;
+          }
         };
 
         circle.x += circle.vx;
@@ -110,7 +118,6 @@ export class BubblesUtils {
           circle.vy *= -1;
           circle.vy *= 1 - wallDamping;
         }
-
 
         for (let j = i + 1; j < circles.length; j++) {
           const otherCircle = circles[j];
@@ -140,12 +147,14 @@ export class BubblesUtils {
         if (
           circle.radius !== circle.targetRadius ||
           circle.color !== circle.previousColor ||
-          circle.isHovered !== circle.previousHovered
+          circle.isHovered !== circle.previousHovered ||
+          circle.previousText2 !== newText2Value
         ) {
           container.cacheAsBitmap = false;
 
           circle.previousColor = circle.color;
           circle.previousHovered = circle.isHovered;
+          circle.previousText2 = newText2Value;
 
           if (circle.radius !== circle.targetRadius) {
             const sizeDifference = circle.targetRadius - circle.radius;
@@ -227,6 +236,7 @@ export class BubblesUtils {
         radius: minCircleSize,
         dragging: false,
         text2: null,
+        previousText2: null,
         [PriceChangePercentage.HOUR]: item[PriceChangePercentage.HOUR],
         [PriceChangePercentage.FOUR_HOURS]: item[PriceChangePercentage.FOUR_HOURS],
         [PriceChangePercentage.TWELVE_HOURS]: item[PriceChangePercentage.TWELVE_HOURS],

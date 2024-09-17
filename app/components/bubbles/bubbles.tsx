@@ -8,7 +8,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 
-
 type Props = {
   coins: TokenFilterResult[];
 };
@@ -16,7 +15,11 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins = [] }: Props) {
-  const { resolution: bubbleSort, chosenNetwork, setIsOpenModal, setChosenToken } = useStore()
+  const bubbleSortRef = useRef<PriceChangePercentage | null>(null);
+  const { resolution: bubbleSort, chosenNetwork, setIsOpenModal, setChosenToken } = useStore((state) => {
+    bubbleSortRef.current = state.resolution || PriceChangePercentage.HOUR;
+    return state;
+  });
 
   const [circles, setCircles] = useState<Circle[] | null>(null);
 
@@ -91,7 +94,7 @@ export default function Bubbles({ coins = [] }: Props) {
       (app as PIXI.Application<PIXI.ICanvas>).stage.addChild(container);
     }
 
-    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics);
+    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef);
     setTimeout(() => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
     }, 200);
@@ -119,8 +122,15 @@ export default function Bubbles({ coins = [] }: Props) {
         const radius = Math.abs(Math.floor(circle[bubbleSort] * scalingFactor));
         circle.targetRadius = radius > max ? max : radius > min ? radius : min;
         circle.color = circle[bubbleSort] > 0 ? "green" : "red";
+
+        const newText2Value = circle[bubbleSort].toFixed(2) + "%";
+
         if (circle.text2) {
-          circle.text2.text = circle[bubbleSort].toFixed(2) + "%";
+          if (!circle.previousText2) {
+            circle.previousText2 = newText2Value;
+          }
+
+          circle.text2.text = newText2Value;
         }
       });
     }
