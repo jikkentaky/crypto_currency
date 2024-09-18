@@ -1,0 +1,24 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.search-block {}
+
+.title-wrapper {
+  @include flex-between();
+}
+
+.show-all-button {
+  border: none;
+  background-color: transparent;
+  color: $color-green-2;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.network-button {
+  background-color: transparent;
+  border: none;
+  color: $color-white;
+  @include gradient-border();
+}

@@ -12,7 +12,12 @@ type Props = {
   networks: Network[]
 }
 const NetworksList: FC<Props> = ({ networks }) => {
-  const { setChosenNetwork } = useStore()
+  const { setChosenNetwork, setIsOpenModal, setIsNetworks } = useStore()
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+    setIsNetworks(true);
+  }
 
   return (
     <div className={styles['networks-list']}>
@@ -25,9 +30,9 @@ const NetworksList: FC<Props> = ({ networks }) => {
           </Typography>
         </div>
 
-        <Typography variant="body2" variantWeight="semibold" color="green">
+        <button className={styles['edit-button']} onClick={handleOpenModal}>
           EDIT
-        </Typography>
+        </button>
       </div>
 
       {networks.map(({ id, name }) => (

@@ -48,3 +48,8 @@ html,
 .MuiModal-backdrop {
   background-color: rgba(0, 0, 0, 0.9);
 }
+
+.MuiInputBase-input::placeholder {
+  color: $color-white;
+  opacity: 1;
+}

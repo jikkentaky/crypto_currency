@@ -14,7 +14,7 @@ type Props = {
 
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
-export default function Bubbles({ coins = [] }: Props) {
+export default function Bubbles({ coins }: Props) {
   const bubbleSortRef = useRef<PriceChangePercentage | null>(null);
   const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
     bubbleSortRef.current = state.resolution || PriceChangePercentage.HOUR;
@@ -148,7 +148,7 @@ export default function Bubbles({ coins = [] }: Props) {
 
         const isMatched = !searchCoin
           ? false
-          : circle.symbol.toLowerCase().includes(searchCoin.toLowerCase());
+          : circle.symbol.toLowerCase().startsWith(searchCoin.toLowerCase());
 
         circle.isSearched = isMatched;
       });

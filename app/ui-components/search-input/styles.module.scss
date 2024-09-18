@@ -1,5 +1,6 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .search-field {
   width: 100%;
@@ -9,8 +10,15 @@
 .search-field>div {
   height: 48px;
 
-  color: $color-light-grey-1;
+  color: $color-white;
   border: 1px solid $color-grey-8;
   border-radius: 0;
   background-color: $color-grey-2;
+}
+
+.search-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }

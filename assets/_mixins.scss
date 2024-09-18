@@ -1,5 +1,5 @@
-@import '@/assets/utils/variables';
-@import '@/assets/utils/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/variables-colors';
 
 @mixin flex-center {
   display: flex;
@@ -21,24 +21,6 @@
   }
 }
 
-@mixin full {
-  @media (min-width: #{$media-1920-width}) {
-    @content;
-  }
-}
-
-@mixin laptop {
-  @media (min-width: $media-1600-width) and (max-width: #{$media-1920-width - 1px}) {
-    @content;
-  }
-}
-
-@mixin desctop {
-  @media (min-width: $media-1200-width) and (max-width: #{$media-1600-width - 1px}) {
-    @content;
-  }
-}
-
 @mixin mobile() {
   @media (max-width: #{$media-1200-width - 1px}) {
     @content;
@@ -48,5 +30,35 @@
 @mixin component-to-hide($min-width, $max-width) {
   @media (min-width: $min-width) and (max-width: $max-width) {
     display: none !important;
+  }
+}
+
+@mixin gradient-border($width: 1px) {
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: $width;
+    background: linear-gradient(rgba(161, 44, 153, 1),
+        rgba(206, 60, 105, 1),
+        rgba(214, 87, 39, 1),
+        rgba(252, 249, 64, 1),
+        rgba(33, 34, 241, 1),
+        rgba(127, 36, 175, 1));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
   }
 }

@@ -1,6 +1,6 @@
 const MaestroIcon = ({ size = '24' }) => {
   return (
-    <a href="https://www.maestrobots.com/" target="_blank" rel="noopener noreferrer">
+    <a href="https://www.maestrobots.com/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={size} height={size} viewBox="0 0 41 41" fill="none"><script />
         <circle cx="20.5" cy="20.5" r="20" fill="url(#pattern0_13_42517)" />
         <defs>
