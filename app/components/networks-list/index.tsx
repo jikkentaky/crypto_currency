@@ -7,6 +7,7 @@ import { Network } from '@/types/network.type'
 import { NetworkIcon } from '@/app/ui-components/icons'
 import { useStore } from '@/store'
 import { Typography } from '@/app/ui-components/typography'
+import Image from 'next/image'
 
 type Props = {
   networks: Network[]
@@ -35,11 +36,23 @@ const NetworksList: FC<Props> = ({ networks }) => {
         </button>
       </div>
 
-      {networks.map(({ id, name }) => (
-        <button key={id} className={styles.button} onClick={() => setChosenNetwork({ id, name })}>
-          {name}
+      {networks.map(({ id, name }) => {
+        const imageName = name.toLowerCase().replace(/\s+/g, '-');
+        const path = `/static/assets/networks-icons/${imageName}.png`;
+
+        return (
+            <button key={id} className={styles.button} onClick={() => setChosenNetwork({id, name})}>
+              <Image
+                src={path}
+                alt={`${name} icon`}
+                width={24}
+                height={24}
+                className={styles.img}
+              />
+              <span>{name}</span>
         </button>
-      ))}
+        )
+      })}
     </div>
   )
 }
