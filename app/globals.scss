@@ -3,6 +3,7 @@
 @import './assets/variables-colors';
 @import './assets/variables';
 
+
 * {
   box-sizing: border-box;
 }
@@ -10,7 +11,7 @@
 html {
   color: $color-white;
 
-  font-family: $ff-lato;
+  font-family: $ff-start-2p;
 }
 
 html,
@@ -49,7 +50,9 @@ html,
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-.MuiInputBase-input::placeholder {
+.MuiOutlinedInput-input {
   color: $color-white;
+  font-family: $ff-start-2p !important;
+  font-size: $fs-8;
   opacity: 1;
 }

@@ -1,24 +1,24 @@
 import { ChangeEvent, FC } from 'react';
-import { BaseTextFieldProps, InputAdornment, TextField } from '@mui/material';
+import { BaseTextFieldProps, TextField } from '@mui/material';
 import styles from './styles.module.scss';
+import { SearchIcon } from '../icons';
 
 type Props = BaseTextFieldProps & {
+  width?: string;
   icon?: JSX.Element;
   onChange: (value: string) => void;
 };
 
-const SearchInput: FC<Props> = ({ placeholder, value, label, icon, onChange }) => {
+const SearchInput: FC<Props> = ({ placeholder, value, width = '215px', onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
   return (
-    <>
-      {label && (
-        <label htmlFor="outlined-basic" className={styles['search-label']}>
-          {label}
-        </label>
-      )}
+    <div className={styles['search-wrapper']}>
+      <label htmlFor="outlined-basic" className={styles['search-label']}>
+        <SearchIcon /> Search
+      </label>
 
       <TextField
         id="outlined-basic"
@@ -27,15 +27,18 @@ const SearchInput: FC<Props> = ({ placeholder, value, label, icon, onChange }) =
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              {icon}
-            </InputAdornment>
-          ),
+        sx={{
+          '&': {
+            width: width + ' !important',
+          },
+          '& .MuiInputBase-input::placeholder': {
+            fontFamily: '"Press Start 2P", cursive',
+            color: '#fff',
+            opacity: 1,
+          }
         }}
       />
-    </>
+    </div>
   );
 };
 

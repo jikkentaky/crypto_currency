@@ -1,5 +1,6 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .button-group {
   width: 100%;
@@ -8,16 +9,16 @@
 
 .button {
   width: 100%;
+  border-radius: 0;
   padding: 16px 14px !important;
 
-  border-color: $color-grey-8 !important;
+  // border-color: $color-grey-8 !important;
 
-  font-size: $fs-16 !important;
-  font-weight: $fw-800 !important;
-  line-height: $fs-16 !important;
+  font-size: $fs-11 !important;
+  line-height: 0;
+  @include gradient-border();
 
   &:hover {
-    color: #000 !important;
-    background-color: $color-green-1 !important;
+    background-color: $color-dark-blue !important;
   }
 }

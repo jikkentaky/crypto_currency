@@ -26,8 +26,8 @@ const Aside: FC = () => {
 
   const filteredNetworks = useMemo(
     () =>
-      networkList?.filter(({ name }) =>
-        name.toLowerCase().includes(searchNetwork.toLowerCase().trim()),
+      networkList?.filter(({ name, isVisible }) =>
+        name.toLowerCase().includes(searchNetwork.toLowerCase().trim()) && isVisible,
       ),
     [searchNetwork, networkList],
   )
@@ -38,7 +38,8 @@ const Aside: FC = () => {
         <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 
         <SearchInput
-          placeholder="Search network"
+          width='170px'
+          placeholder="Search network..."
           value={searchNetwork}
           onChange={setSearchNetwork}
         />

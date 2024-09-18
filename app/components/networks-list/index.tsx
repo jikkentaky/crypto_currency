@@ -36,21 +36,26 @@ const NetworksList: FC<Props> = ({ networks }) => {
         </button>
       </div>
 
-      {networks.map(({ id, name }) => {
+      {networks.map(({ id, name, isVisible }) => {
         const imageName = name.toLowerCase().replace(/\s+/g, '-');
         const path = `/static/assets/networks-icons/${imageName}.png`;
 
         return (
-            <button key={id} className={styles.button} onClick={() => setChosenNetwork({id, name})}>
-              <Image
-                src={path}
-                alt={`${name} icon`}
-                width={24}
-                height={24}
-                className={styles.img}
-              />
-              <span>{name}</span>
-        </button>
+          <button
+            key={id}
+            className={styles.button}
+            onClick={() => setChosenNetwork({ id, name, isVisible })}
+          >
+            <Image
+              loading='lazy'
+              src={path}
+              alt={`${name} icon`}
+              width={24}
+              height={24}
+              className={styles.img}
+            />
+            <span>{name}</span>
+          </button>
         )
       })}
     </div>

@@ -3,13 +3,11 @@
 
 .body1 {
   font-size: $fs-16;
-  font-weight: $fw-800;
   line-height: 0;
 }
 
 .body2 {
   font-size: $fs-14;
-  font-weight: $fw-600;
   line-height: 0;
 }
 
@@ -19,18 +17,6 @@
 
 .regular {
   font-weight: $fw-400;
-}
-
-.medium {
-  font-weight: $fw-500;
-}
-
-.semibold {
-  font-weight: $fw-600;
-}
-
-.bold {
-  font-weight: $fw-700;
 }
 
 .green {

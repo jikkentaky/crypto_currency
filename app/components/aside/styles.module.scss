@@ -1,5 +1,6 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .aside {
   width: 310px;
@@ -14,17 +15,13 @@
   flex-direction: column;
   gap: 24px;
 
-  padding: 24px 16px;
+  padding: 14px 16px;
 
-  background-color: $color-grey-1;
+  background-color: $color-black;
+  @include gradient-border(1px);
 }
 
 .title {
   margin: 0;
-
-  color: $color-white;
-
-  font-family: $ff-lato;
-  font-size: $fs-28;
-  font-weight: $fw-700;
+  font-size: $fs-20;
 }

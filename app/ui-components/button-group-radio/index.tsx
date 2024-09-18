@@ -32,11 +32,11 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, setResolution }) => 
       className={styles['button-group']}
       sx={{
         '.MuiToggleButton-root': {
+          font: 'inherit',
           color: '#fff',
         },
         '.Mui-selected': {
-          backgroundColor: '#00dc3e !important',
-          color: '#000',
+          backgroundColor: '#261E51 !important',
         },
       }}
     >
