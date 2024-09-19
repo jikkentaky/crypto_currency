@@ -52,6 +52,7 @@ async function fetchFilterTokens(
           }
         }`
       }, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${process.env.DEFINED_API_KEY}`

@@ -14,7 +14,7 @@
 
   inset: 50% auto auto 50%;
   @include gradient-border();
-  background-color: $color-grey-11;
+  background-color: $color-black-2;
 
   &:focus {
     outline: none;

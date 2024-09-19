@@ -1,8 +1,10 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .main {
   background-color: $color-grey-4;
+  position: relative;
 }
 
 .container {
@@ -12,7 +14,6 @@
 
 .header {
   font-size: $fs-8;
-  position: relative;
   z-index: 2;
   padding: 3px;
   border: 1px solid $color-light-grey-3;
@@ -22,9 +23,9 @@
 
 .content-wrapper {
   display: flex;
-  margin-top: -2px;
+  position: relative;
 }
 
 .content {
-  background-color: $color-grey-4;
+  background-color: $color-black;
 }

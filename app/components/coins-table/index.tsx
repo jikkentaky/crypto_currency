@@ -3,13 +3,12 @@
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
 import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row, } from "@tanstack/react-table"
-import { memo, useCallback, useMemo, useState } from "react"
+import { memo, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
-import classNames from "classnames"
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
@@ -109,7 +108,7 @@ const CoinsTable = () => {
         size: 170,
         header: () => (
           <span>
-            24H VOLUME
+            24H VOL
           </span>
         ),
       }),
@@ -121,7 +120,7 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles.up]: value < 0 })} />
+              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
               {formattedValue}
             </p>
           );
@@ -140,7 +139,7 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles.up]: value < 0 })} />
+              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
               {formattedValue}
             </p>
           );
@@ -159,7 +158,7 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles.up]: value < 0 })} />
+              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
               {formattedValue}
             </p>
           );
@@ -178,7 +177,7 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles.up]: value < 0 })} />
+              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
               {formattedValue}
             </p>
           );
@@ -219,74 +218,64 @@ const CoinsTable = () => {
     onSortingChange: setSorting,
   });
 
-  const cellClass = useCallback((columnId: string, value: number) => {
-    const isChangeColumn = columnId === 'change1' || columnId === 'change4' || columnId === 'change12' || columnId === 'change24';
-
-    return cn(styles['table-cell'], {
-      [styles['positive']]: isChangeColumn && value > 0,
-      [styles['negative']]: isChangeColumn && value < 0,
-      [styles['neutral']]: isChangeColumn && value === 0,
-      [styles['border']]: isChangeColumn,
-    });
-  }, []);
-
   return (
-    <div className={styles.container}>
-      <table className={styles['table']}>
-        <thead className={styles['table-head']}>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  className={cn(styles['table-th'], {
-                    [styles.links]: header.id === 'links',
-                  })}
-                  key={header.id}
-                  onClick={() => toggleSorting(header.column.id)}
-                  style={{ width: `${header.getSize()}px`, }}
-                >
-                  <div className={cn(header.id === 'links' && styles.end, styles['table-th-content'])}>
-                    <SortArrowIcon className={cn(header.column.getIsSorted() == 'asc' && styles.up)} />
+    <div className={styles.border}>
+      <div className={styles.container}>
+        <table className={styles['table']}>
+          <thead className={styles['table-head']}>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    className={cn(styles['table-th'], {
+                      [styles.links]: header.id === 'links',
+                    })}
+                    key={header.id}
+                    onClick={() => toggleSorting(header.column.id)}
+                    style={{ width: `${header.getSize()}px`, }}
+                  >
+                    <div className={cn(header.id === 'links' && styles.end, styles['table-th-content'])}>
+                      <SortArrowIcon className={cn(header.column.getIsSorted() == 'asc' && styles.up)} />
 
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())
-                    }
-                  </div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-
-        {tableData && tableData.length > 0 && (
-          <tbody className={styles['table-body']}>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} row={row} cellClass={cellClass} />
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())
+                      }
+                    </div>
+                  </th>
+                ))}
+              </tr>
             ))}
-          </tbody>
-        )}
-      </table>
+          </thead>
+
+          {tableData && tableData.length > 0 && (
+            <tbody className={styles['table-body']}>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id} row={row} />
+              ))}
+            </tbody>
+          )}
+        </table>
+      </div>
     </div>
   );
 };
 
 export { CoinsTable };
 
-const TableRow = memo(({ row, cellClass }: { row: Row<TokenFilterResultType>, cellClass: (columnId: string, value: number) => string }) => {
-
+const TableRow = memo(({ row }: { row: Row<TokenFilterResultType> }) => {
   return (
     <tr key={row.id} className={styles['table-row']}>
       {row.getVisibleCells().map((cell) => {
-        const columnId = cell.column.id;
-        const value = Number(cell.getValue());
-
         return (
-          <td className={cellClass(columnId, value)} key={cell.id}>
+          <td
+            className={cn(styles['table-cell'])}
+            key={cell.id}
+          >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
           </td>
         );
       })}
-    </tr>
+    </tr >
   );
 });

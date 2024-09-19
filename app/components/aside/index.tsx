@@ -32,25 +32,22 @@ const Aside: FC = () => {
   )
 
   return (
-    <div>
+    <aside className={styles.aside}>
+      <div className={styles['top-part']}>
+        <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 
-      <aside className={styles.aside}>
-        <div className={styles['top-part']}>
-          <h1 className={styles.title}>ONCHAINBUBBLES</h1>
+        <SearchInput
+          width='170px'
+          placeholder="Search network..."
+          value={searchNetwork}
+          onChange={setSearchNetwork}
+        />
+      </div>
 
-          <SearchInput
-            width='170px'
-            placeholder="Search network..."
-            value={searchNetwork}
-            onChange={setSearchNetwork}
-          />
-        </div>
-
-        <div className={styles['bottom-part']}>
-          {filteredNetworks && <NetworksList networks={filteredNetworks} />}
-        </div>
-      </aside>
-    </div>
+      <div className={styles['bottom-part']}>
+        {filteredNetworks && <NetworksList networks={filteredNetworks} />}
+      </div>
+    </aside>
   )
 }
 
