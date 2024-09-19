@@ -11,7 +11,6 @@ import { getNetworks } from '@/app/api/lib';
 const Aside: FC = () => {
   const { searchNetwork, networkList, setSearchNetwork, setNetworkList } = useStore()
 
-
   useEffect(() => {
     const fetchNetworks = async () => {
       const networks = await getNetworks()
@@ -33,22 +32,25 @@ const Aside: FC = () => {
   )
 
   return (
-    <aside className={styles.aside}>
-      <div className={styles['top-part']}>
-        <h1 className={styles.title}>ONCHAINBUBBLES</h1>
+    <div>
 
-        <SearchInput
-          width='170px'
-          placeholder="Search network..."
-          value={searchNetwork}
-          onChange={setSearchNetwork}
-        />
-      </div>
+      <aside className={styles.aside}>
+        <div className={styles['top-part']}>
+          <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 
-      <div className={styles['bottom-part']}>
-        {filteredNetworks && <NetworksList networks={filteredNetworks} />}
-      </div>
-    </aside>
+          <SearchInput
+            width='170px'
+            placeholder="Search network..."
+            value={searchNetwork}
+            onChange={setSearchNetwork}
+          />
+        </div>
+
+        <div className={styles['bottom-part']}>
+          {filteredNetworks && <NetworksList networks={filteredNetworks} />}
+        </div>
+      </aside>
+    </div>
   )
 }
 

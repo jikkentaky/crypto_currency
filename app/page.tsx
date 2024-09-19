@@ -8,14 +8,20 @@ export default function Home() {
   return (
     <main className={styles.main} >
       <div className={styles.container}>
-        <Aside />
+        <div className={styles.header}>
+          onchainbubbles.exe
+        </div>
 
-        <div className={styles.content}>
-          <Header />
+        <div className={styles['content-wrapper']}>
+          <Aside />
 
-          <BubblesPage />
+          <div className={styles.content}>
+            <Header />
 
-          <CoinsTable />
+            <BubblesPage />
+
+            <CoinsTable />
+          </div>
         </div>
       </div>
     </main>

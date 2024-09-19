@@ -12,7 +12,9 @@
 }
 
 .table-head {
+  position: relative;
   background-color: $color-grey-5;
+  z-index: 2;
 }
 
 .table-th {

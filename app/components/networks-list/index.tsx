@@ -26,7 +26,7 @@ const NetworksList: FC<Props> = ({ networks }) => {
         <div className={styles['network-block']}>
           <NetworkIcon />
 
-          <Typography variant="body2" variantWeight="semibold">
+          <Typography>
             All networks
           </Typography>
         </div>

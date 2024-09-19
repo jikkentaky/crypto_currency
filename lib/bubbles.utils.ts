@@ -68,9 +68,9 @@ export class BubblesUtils {
             circle.isHovered
           );
 
-          const fontSize = circle.radius * 0.5;
+          const fontSize = circle.radius * 0.3;
           const isFullSize = circle.radius * 0.5 < 20;
-          const isTextVisible = fontSize >= 20;
+          const isTextVisible = fontSize >= 10;
 
           if (imageSprite) {
             imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5);
@@ -79,11 +79,13 @@ export class BubblesUtils {
           }
 
           const textStyle = new PIXI.TextStyle({
+            fontFamily: "Press Start 2P, sans-serif",
             fontSize: isTextVisible ? fontSize + "px" : "1px",
             fill: "#ffffff",
           });
 
           const text2Style = new PIXI.TextStyle({
+            fontFamily: "Press Start 2P, sans-serif",
             fontSize: isTextVisible ? fontSize * 0.5 + "px" : "1px",
             fill: "#ffffff",
           });
