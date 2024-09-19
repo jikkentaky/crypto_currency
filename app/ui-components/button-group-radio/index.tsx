@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material';
 import styles from './styles.module.scss';
 import { PriceChangePercentage, Resolution } from '@/types/bubbles.type';
+import cn from 'classnames';
 
 type CustomToggleButton = ToggleButtonProps & {
   value: string;
@@ -32,20 +33,25 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, setResolution }) => 
       className={styles['button-group']}
       sx={{
         '.MuiToggleButton-root': {
+          font: 'inherit',
           color: '#fff',
         },
         '.Mui-selected': {
-          backgroundColor: '#00dc3e !important',
-          color: '#000',
+          backgroundColor: '#261E51 !important',
         },
       }}
     >
       {buttons.map(({ value, content }) => (
-        <ToggleButton key={value} value={value} className={styles.button}>
+        <ToggleButton
+          key={value}
+          value={value}
+          className={cn(styles.button, { [styles.selected]: value === resolution })}
+        >
           {content}
         </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+      ))
+      }
+    </ToggleButtonGroup >
   );
 };
 

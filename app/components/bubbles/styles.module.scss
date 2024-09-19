@@ -1,0 +1,42 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.title-wrapper {
+  position: relative;
+  z-index: 1;
+  @include flex-between();
+}
+
+.show-all-button {
+  border: none;
+  background-color: transparent;
+  color: $color-green-2;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.networks-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  overflow: auto;
+  max-height: 340px;
+}
+
+.network-button {
+  height: 48px;
+  width: 194px;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  color: $color-white;
+  @include flex-between();
+  @include gradient-border(2px);
+}
+
+.network-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

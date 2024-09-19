@@ -57,7 +57,7 @@ const TokenInfo = () => {
             variantWeight='medium'
             color={chosenToken[resolutions] > 0 ? 'green' : 'red'}
           >
-            {`$${Number(chosenToken.priceUSD).toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
+            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
           </Typography>
         </div>
       </div>

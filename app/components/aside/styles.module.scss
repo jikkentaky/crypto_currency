@@ -1,30 +1,44 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .aside {
-  width: 310px;
-  height: 100%;
+  min-width: 310px;
+  height: 100vh;
+  overflow: auto;
+  top: 0;
+  z-index: 1;
 
-  border: 1px solid $color-grey-10;
-  background-color: $color-grey-4;
+  @include gradient-border(1px);
+  background: linear-gradient(160deg, rgba(161, 44, 153, 0.1),
+      rgba(0, 0, 0, 1),
+      rgba(206, 60, 105, 0.2),
+      rgba(214, 87, 39, 0.2),
+      rgba(252, 249, 64, 0.1),
+      rgba(33, 34, 241, 0.1),
+      rgba(127, 36, 175, 0.1),
+    );
+  position: sticky;
 }
 
 .top-part {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 24px;
 
-  padding: 24px 16px;
+  padding: 14px 16px;
 
-  background-color: $color-grey-1;
+  background-color: $color-black;
+  @include gradient-border(1px);
+}
+
+.bottom-part {
+  @include gradient-border();
 }
 
 .title {
   margin: 0;
-
-  color: $color-white;
-
-  font-family: $ff-lato;
-  font-size: $fs-28;
-  font-weight: $fw-700;
+  font-size: $fs-20;
 }

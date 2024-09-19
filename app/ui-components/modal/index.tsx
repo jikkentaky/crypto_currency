@@ -4,16 +4,21 @@ import Modal from '@mui/material/Modal';
 import styles from './styles.module.scss'
 import { useStore } from '@/store';
 import { CloseIcon } from '@/app/ui-components/icons';
+import { Typography } from '@/app/ui-components/typography';
 
 type Props = {
-  isNetworkModal?: boolean
   children: React.ReactNode
 }
 
-const ModalComponent: React.FC<Props> = ({ isNetworkModal, children }) => {
-  const { isOpenModal, setIsOpenModal } = useStore()
+const ModalComponent: React.FC<Props> = ({ children }) => {
+  const { isOpenModal, isNetworks, setIsOpenModal, setIsNetworks } = useStore()
+
   const handleClose = () => {
     setIsOpenModal(false)
+
+    if (isNetworks) {
+      setIsNetworks(false)
+    }
   };
 
   return (
@@ -26,7 +31,14 @@ const ModalComponent: React.FC<Props> = ({ isNetworkModal, children }) => {
       >
         <div className={styles.content}>
           <div className={styles['title-wrapper']}>
-            {isNetworkModal && <h2>Favorite networks</h2>}
+            {isNetworks &&
+              <div>
+                <h2>Favorite networks</h2>
+
+                <Typography>
+                  Toggle network visibility throughout the app.
+                </Typography>
+              </div>}
 
             <button className={styles['icon-wrapper']} onClick={handleClose}>
               <CloseIcon />

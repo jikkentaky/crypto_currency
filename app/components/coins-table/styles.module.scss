@@ -1,5 +1,6 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
 
 .container {
   height: 840px;
@@ -8,22 +9,33 @@
 }
 
 .table {
+  padding: 1px 1px 0 1px;
   width: 100%;
-}
-
-.table-head {
-  background-color: $color-grey-5;
+  position: relative;
+  z-index: 2;
+  // border-image-source: linear-gradient(rgba(161, 44, 153, 1),
+  //     rgba(206, 60, 105, 1),
+  //     rgba(214, 87, 39, 1),
+  //     rgba(252, 249, 64, 1),
+  //     rgba(33, 34, 241, 1),
+  //     rgba(127, 36, 175, 1));
+  // border-width: 1px;
+  // border-style: solid;
+  border-collapse: separate;
 }
 
 .table-th {
   position: sticky;
   top: 0;
-  z-index: 1;
-  background-color: $color-grey-1;
+  z-index: 4;
   padding: 16px;
-  font-size: $fs-14;
-  font-weight: $fw-900;
+  font-size: $fs-11;
   cursor: pointer;
+  border: 1px solid $color-grey-13;
+  -webkit-box-shadow: 0px 0px 0px 1px inset rgba($color-light-grey-3, 0.75);
+  -moz-box-shadow: 0px 0px 0px 1px inset rgba($color-light-grey-3, 0.75);
+  box-shadow: 0px 0px 0px 1px inset rgba($color-light-grey-3, 0.75);
+  background-color: $color-black-2;
 }
 
 .table-th-content {
@@ -37,22 +49,31 @@
   justify-content: flex-end;
 }
 
+.border {
+  width: 100%;
+  border-image-slice: 50 50;
+  border-image-source: linear-gradient(rgba(161, 44, 153, 1),
+      rgba(206, 60, 105, 1),
+      rgba(214, 87, 39, 1),
+      rgba(252, 249, 64, 1),
+      rgba(33, 34, 241, 1),
+      rgba(127, 36, 175, 1));
+  border-width: 1px;
+  border-style: solid;
+}
+
 .table-row {
-
-  &:nth-child(even) {
-    background-color: $color-grey-6;
-  }
-
-  &:nth-child(odd) {
-    background-color: $color-grey-7;
-  }
+  background-color: $color-black-2;
+  border: 1px solid $color-grey-13;
+  -webkit-box-shadow: 0px 0px 0px 1px inset rgba($color-grey-13, 0.75);
+  -moz-box-shadow: 0px 0px 0px 1px inset rgba($color-grey-13, 0.75);
+  box-shadow: 0px 0px 0px 1px inset rgba($color-grey-13, 0.75);
 }
 
 .table-cell {
-  font-size: $fs-14;
-  font-weight: $fw-600;
+  font-size: $fs-11;
   text-align: center;
-  height: 100%;
+  height: 40px;
 
   &:last-child {
     display: flex;
@@ -86,12 +107,16 @@
   background-color: 'transparent';
 }
 
-.border {
-  border: 1px solid $color-grey-10;
-}
-
 .up {
   transform: rotate(180deg);
+}
+
+.up-r {
+  transform: rotate(180deg);
+
+  & path {
+    fill: $color-red-5;
+  }
 }
 
 .price-change {

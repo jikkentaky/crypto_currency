@@ -28,12 +28,16 @@ export type Circle = {
   vx: number
   vy: number
   color: string
-  dragging: boolean
+  dragging?: boolean
   targetRadius: number
   symbol: string
   coinName: string
   radius: number
+  previousColor: string | null
+  previousHovered: boolean
+  isHovered: boolean
   isSearched: boolean
+  isPreviousSearched: boolean
   graphicSprite: Sprite | null
   [PriceChangePercentage.HOUR]: number
   [PriceChangePercentage.FOUR_HOURS]: number
@@ -41,4 +45,5 @@ export type Circle = {
   [PriceChangePercentage.DAY]: number
   image: string | null | undefined
   text2: Text | null
+  previousText2: string | null
 }

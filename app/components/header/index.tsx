@@ -26,9 +26,9 @@ const Header = () => {
       </div>
 
       <SearchInput
-        placeholder="Search cryptocurrency"
-        setSearchInput={setSearchCoin}
-        searchInput={searchCoin}
+        placeholder="Enter cryptocurrency..."
+        onChange={setSearchCoin}
+        value={searchCoin}
       />
     </header>
   )

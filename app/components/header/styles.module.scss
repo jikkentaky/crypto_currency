@@ -1,21 +1,24 @@
 @import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-right: 8px;
 
   width: 100%;
   min-width: 1600px;
-  height: 68px;
-  padding: 10px;
 
-  background-color: $color-grey-1;
+  background-color: $color-black;
   gap: 20px;
+  @include gradient-border();
 
   &>div:nth-child(2) {
     width: 100%;
     max-width: 390px;
+    font-family: $ff-start-2p;
   }
 }
 

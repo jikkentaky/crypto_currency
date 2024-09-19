@@ -21,13 +21,13 @@ async function fetchFilterTokens(
           filterTokens(
             filters: {
             trendingIgnored: false
-                network: [${networkId}]
+            network: [${networkId}]
           }
-                rankings: {
-                  attribute: trendingScore
-                  direction: DESC
-               }
-                limit: 70
+            rankings: {
+              attribute: trendingScore
+              direction: DESC
+            }
+            limit: 70
           ) {
               results {
                 change1
@@ -52,6 +52,7 @@ async function fetchFilterTokens(
           }
         }`
       }, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${process.env.DEFINED_API_KEY}`

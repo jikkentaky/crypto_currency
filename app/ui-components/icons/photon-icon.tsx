@@ -1,6 +1,6 @@
 const PhotonIcon = ({ size = '24' }) => {
   return (
-    <a href="https://photon-sol.tinyastro.io/" target="_blank" rel="noopener noreferrer">
+    <a href="https://photon-sol.tinyastro.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
       <svg width={size} height={size} viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_13_42518)">
           <path d="M20.4873 23.658V40.4404L16.129 36.082C15.9851 35.9382 15.8767 35.7629 15.8125 35.57L14.509 31.6598C14.4286 31.4187 14.4363 31.1569 14.5308 30.921C15.4362 28.6574 16.8909 26.655 18.7638 25.0943L20.4873 23.658Z" fill="url(#paint0_linear_13_42518)" />

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Lato } from 'next/font/google'
+import { Press_Start_2P } from 'next/font/google'
 import "./globals.scss";
 
-const lato = Lato({
+const start2p = Press_Start_2P({
   subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '900', '700'],
+  display: 'auto',
+  weight: ['400'],
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -19,10 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={lato.className}>
-      <body
-        className={''}
-      >
+    <html lang="en" className={start2p.className}>
+      <body>
         {children}
       </body>
     </html>

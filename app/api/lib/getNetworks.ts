@@ -30,22 +30,24 @@ async function fetchNetworks() {
 
     const topNetworks = [1, 1399811149, 8453, 728126428, 56, 10, 81457, 43114, 250, 137, 531,]
 
-    const filteredNetworks = data.data.getNetworks.sort((a, b) => {
-      const indexA = topNetworks.indexOf(a.id);
-      const indexB = topNetworks.indexOf(b.id);
+    const filteredNetworks = data.data.getNetworks
+      .map(network => ({ ...network, isVisible: true }))
+      .sort((a, b) => {
+        const indexA = topNetworks.indexOf(a.id);
+        const indexB = topNetworks.indexOf(b.id);
 
-      if (indexA === -1 && indexB === -1) {
-        return 0;
-      }
-      if (indexA === -1) {
-        return 1;
-      }
-      if (indexB === -1) {
-        return -1;
-      }
+        if (indexA === -1 && indexB === -1) {
+          return 0;
+        }
+        if (indexA === -1) {
+          return 1;
+        }
+        if (indexB === -1) {
+          return -1;
+        }
 
-      return indexA - indexB;
-    });
+        return indexA - indexB;
+      });
 
     return filteredNetworks
   } catch (error) {

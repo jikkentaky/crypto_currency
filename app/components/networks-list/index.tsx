@@ -8,12 +8,18 @@ import { NetworkIcon } from '@/app/ui-components/icons'
 import { useStore } from '@/store'
 import { Typography } from '@/app/ui-components/typography'
 import Image from 'next/image'
+import cn from 'classnames'
 
 type Props = {
   networks: Network[]
 }
 const NetworksList: FC<Props> = ({ networks }) => {
-  const { setChosenNetwork } = useStore()
+  const { chosenNetwork, setChosenNetwork, setIsOpenModal, setIsNetworks } = useStore()
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+    setIsNetworks(true);
+  }
 
   return (
     <div className={styles['networks-list']}>
@@ -21,23 +27,31 @@ const NetworksList: FC<Props> = ({ networks }) => {
         <div className={styles['network-block']}>
           <NetworkIcon />
 
-          <Typography variant="body2" variantWeight="semibold">
+          <Typography>
             All networks
           </Typography>
         </div>
 
-        <Typography variant="body2" variantWeight="semibold" color="green">
+        <button className={styles['edit-button']} onClick={handleOpenModal}>
           EDIT
-        </Typography>
+        </button>
       </div>
 
-      {networks.map(({ id, name }) => {
-        const imageName = name.toLowerCase().replace(/\s+/g, '-');
-        const path = `/static/assets/networks-icons/${imageName}.png`;
+      <div className={styles['networks']}>
+        {networks.map(({ id, name, isVisible }) => {
+          const imageName = name.toLowerCase().replace(/\s+/g, '-');
+          const path = `/static/assets/networks-icons/${imageName}.png`;
 
-        return (
-            <button key={id} className={styles.button} onClick={() => setChosenNetwork({id, name})}>
+          return (
+            <button
+              key={id}
+              className={cn(styles.button,
+                { [styles.selected]: chosenNetwork?.id === id })
+              }
+              onClick={() => setChosenNetwork({ id, name, isVisible })}
+            >
               <Image
+                loading='lazy'
                 src={path}
                 alt={`${name} icon`}
                 width={24}
@@ -45,10 +59,11 @@ const NetworksList: FC<Props> = ({ networks }) => {
                 className={styles.img}
               />
               <span>{name}</span>
-        </button>
-        )
-      })}
-    </div>
+            </button>
+          )
+        })}
+      </div>
+    </div >
   )
 }
 

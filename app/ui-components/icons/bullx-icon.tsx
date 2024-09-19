@@ -1,6 +1,6 @@
 const BullxIcon = ({ size = '24' }) => {
   return (
-    <a href="https://bull-x.io/" target="_blank" rel="noopener noreferrer">
+    <a href="https://bull-x.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
       <svg width={size} height={size} viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_13_42519)">
           <mask id="mask0_13_42519" maskUnits="userSpaceOnUse" x="0" y="4" width="41" height="33">

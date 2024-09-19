@@ -13,6 +13,10 @@ interface UseStore {
   isLoading: boolean
   isOpenModal: boolean
   chosenToken: TokenFilterResultType | null
+  isNetworks: boolean
+  networkList: Network[] | null
+  setNetworkList: (networkList: Network[]) => void
+  setIsNetworks: (isNetworks: boolean) => void
   setModalResolution: (resolution: Resolution) => void
   setChosenToken: (tokenAddress: string) => void
   setIsOpenModal: (isOpenModal: boolean) => void
@@ -29,11 +33,13 @@ export const useStore = create<UseStore>()((set, get) => ({
   chosenNetwork: { id: 1, name: 'Ethereum' },
   resolution: PriceChangePercentage.HOUR,
   modalResolution: Resolution.HOUR,
+  networkList: null,
   searchCoin: '',
   searchNetwork: '',
   isLoading: false,
   isOpenModal: false,
   chosenToken: null,
+  isNetworks: false,
   setChosenToken: (tokenAddress) => {
     const { topTokensList } = get()
     if (topTokensList) {
@@ -41,6 +47,8 @@ export const useStore = create<UseStore>()((set, get) => ({
       set({ chosenToken })
     }
   },
+  setNetworkList: (networkList) => set({ networkList }),
+  setIsNetworks: (isNetworks) => set({ isNetworks }),
   setIsOpenModal: (isOpenModal) => set({ isOpenModal }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setResolution: (resolution) => set({ resolution }),
