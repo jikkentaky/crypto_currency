@@ -15,6 +15,7 @@ import { SearchIcon, VisibilityOn, VisibilityOff } from "@/app/ui-components/ico
 import { Typography } from "@mui/material";
 import Image from 'next/image'
 import { Network } from "@/types/network.type";
+import cn from "classnames";
 
 export default function BubblesPage() {
   const {
@@ -126,7 +127,7 @@ export default function BubblesPage() {
                 const path = `/static/assets/networks-icons/${imageName}.png`;
 
                 return (
-                  <button key={id} className={styles['network-button']} onClick={() => toggleVisibility(id)} title={name}>
+                  <button key={id} className={cn(styles['network-button'], { [styles['inactive']]: !isVisible })} onClick={() => toggleVisibility(id)} title={name}>
                     <div className={styles['network-block']}>
                       <Image
                         loading='lazy'

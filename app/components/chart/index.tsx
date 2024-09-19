@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { ChartComponent } from "./chart-component"
 import { getBars } from "@/app/api/lib"
 import { Loader } from "@/app/ui-components/loader"
+import styles from './styles.module.scss'
 
 const buttons = [
   { value: Resolution.HOUR, content: '1H' },
@@ -46,7 +47,7 @@ const Chart = () => {
   }, [modalResolution])
 
   return (
-    <div>
+    <div className={styles.container}>
       {(data && !isLoading) && <ChartComponent data={data} />}
 
       {isLoading && <Loader height={300} />}

@@ -1,2 +1,8 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
+@import '@/assets/mixins';
+
+.container {
+  padding: 1px;
+  @include gradient-border();
+}
