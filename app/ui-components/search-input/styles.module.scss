@@ -1,13 +1,18 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
 @import '@/assets/mixins';
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .search-wrapper {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
+
+  input::placeholder {
+    position: relative;
+    z-index: 3;
+    font-family: "Press Start 2P", system-ui;
+  }
 }
 
 .search-label {

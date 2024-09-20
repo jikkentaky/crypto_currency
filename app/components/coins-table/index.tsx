@@ -9,7 +9,6 @@ import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
-import Image from 'next/image'
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();

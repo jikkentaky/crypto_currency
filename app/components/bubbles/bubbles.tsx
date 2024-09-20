@@ -156,6 +156,6 @@ export default function Bubbles({ coins }: Props) {
   }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
 
   return (
-    <div style={{ height: "721px" }} ref={appRef}></div>
+    <div style={{ height: height }} ref={appRef}></div>
   );
 }

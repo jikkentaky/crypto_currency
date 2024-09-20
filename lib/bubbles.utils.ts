@@ -12,7 +12,7 @@ export type GenerateCirclesParams = {
 };
 
 export const appConfig = {
-  width: typeof window !== "undefined" ? window.innerWidth - 310 : 100,
+  width: typeof window !== "undefined" ? window.innerWidth - 320 : 100,
   height: 720,
   speed: 0.005,
   elasticity: 0.005,
