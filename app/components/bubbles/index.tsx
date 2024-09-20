@@ -127,7 +127,16 @@ export default function BubblesPage() {
                 const path = `/static/assets/networks-icons/${imageName}.png`;
 
                 return (
-                  <button key={id} className={cn(styles['network-button'], { [styles['inactive']]: !isVisible })} onClick={() => toggleVisibility(id)} title={name}>
+                  <button
+                    key={id}
+                    className={cn(styles['network-button'],
+                      {
+                        [styles['inactive']]: !isVisible,
+                        [styles['active']]: isVisible 
+                      })}
+                    onClick={() => toggleVisibility(id)}
+                    title={name}
+                  >
                     <div className={styles['network-block']}>
                       <Image
                         loading='lazy'

@@ -13,11 +13,15 @@ const Aside: FC = () => {
 
   useEffect(() => {
     const fetchNetworks = async () => {
-      const networks = await getNetworks()
+      try {
+        const networks = await getNetworks()
 
-      if (!networks) return
+        if (!networks) return
 
-      setNetworkList(networks);
+        setNetworkList(networks);
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     fetchNetworks()

@@ -23,6 +23,7 @@ const Chart = () => {
   const { modalResolution, setModalResolution, chosenToken, chosenNetwork } = useStore()
 
   const [data, setData] = useState<any>(null)
+  console.log("🚀 ~ Chart ~ data:", data)
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchInitialData = async () => {
@@ -55,7 +56,7 @@ const Chart = () => {
       <ButtonGroupRadio
         buttons={buttons}
         resolution={modalResolution}
-        // @ts-ignore
+        // @ts-expect-error
         setResolution={setModalResolution}
       />
     </div>

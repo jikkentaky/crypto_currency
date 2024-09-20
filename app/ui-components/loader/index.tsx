@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { appConfig } from '@/lib/bubbles.utils';
 
 type Props = {
   height?: number

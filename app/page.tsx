@@ -19,7 +19,7 @@ export default function Home() {
             <Header />
 
             <BubblesPage />
-            
+
             <CoinsTable />
           </div>
         </div>

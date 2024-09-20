@@ -30,7 +30,7 @@ interface UseStore {
 
 export const useStore = create<UseStore>()((set, get) => ({
   topTokensList: null,
-  chosenNetwork: { id: 1, name: 'Ethereum' },
+  chosenNetwork: { id: 1, name: 'Ethereum', isVisible: true },
   resolution: PriceChangePercentage.HOUR,
   modalResolution: Resolution.HOUR,
   networkList: null,

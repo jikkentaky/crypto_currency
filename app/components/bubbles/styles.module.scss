@@ -33,12 +33,18 @@
   color: $color-white;
   @include flex-between();
 
-  opacity: 0.3;
+
+}
+
+.active {
+  @include gradient-border(2px);
+  border: none;
+  opacity: 1;
 }
 
 .inactive {
-  @include gradient-border(2px);
-  border: none;
+  opacity: 0.2;
+  border: 2px solid $color-grey-13;
 }
 
 .network-block {

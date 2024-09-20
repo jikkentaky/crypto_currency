@@ -7,7 +7,6 @@ import { Circle, PriceChangePercentage, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
-import styles from "./styles.module.scss";
 
 type Props = {
   coins: TokenFilterResult[];

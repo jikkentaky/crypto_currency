@@ -14,12 +14,13 @@ export const ChartComponent = (props: any) => {
     } = {},
   } = props;
 
-  const chartContainerRef = useRef<any>(null);
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(
     () => {
+      if (!chartContainerRef || !chartContainerRef.current) return;
       const handleResize = () => {
-        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+        chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
 
       const chart = createChart(chartContainerRef.current, {

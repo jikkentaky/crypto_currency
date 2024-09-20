@@ -9,6 +9,7 @@ import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
+import Image from 'next/image'
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
@@ -105,7 +106,6 @@ const CoinsTable = () => {
             ${info.getValue().toLocaleString('en-US')}
           </span>
         ),
-        size: 170,
         header: () => (
           <span>
             24H VOL
@@ -146,7 +146,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            4 HOUR
+            4 H
           </span>
         ),
       }),
@@ -165,7 +165,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            12 HOUR
+            12 H
           </span>
         ),
       }),
@@ -197,7 +197,6 @@ const CoinsTable = () => {
           <BullxIcon />
           <BonkIcon />
         </div>,
-        minSize: 500,
         header: () => (
           <span>
             LINKS
@@ -211,7 +210,7 @@ const CoinsTable = () => {
     data: tableData || [],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    columnResizeMode: 'onChange',
+    // columnResizeMode: 'onChange',
     state: {
       sorting,
     },
@@ -221,6 +220,7 @@ const CoinsTable = () => {
   return (
     <div className={styles.border}>
       <div className={styles.container}>
+        {/* <div className={styles.tableWrapper}> */}
         <table className={styles['table']}>
           <thead className={styles['table-head']}>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -257,6 +257,7 @@ const CoinsTable = () => {
           )}
         </table>
       </div>
+      {/* </div> */}
     </div>
   );
 };
