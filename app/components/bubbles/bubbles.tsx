@@ -102,7 +102,7 @@ export default function Bubbles({ coins }: Props) {
 
       circle.isSearched = !searchCoin
         ? false
-        : circle.symbol.toLowerCase().includes(searchCoin.toLowerCase());
+        : circle.symbol.toLowerCase().startsWith(searchCoin.toLowerCase());
 
       circle.isPreviousSearched = circle.isSearched;
     }

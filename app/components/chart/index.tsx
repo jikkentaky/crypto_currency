@@ -8,6 +8,7 @@ import { ChartComponent } from "./chart-component"
 import { getBars } from "@/app/api/lib"
 import { Loader } from "@/app/ui-components/loader"
 import styles from './styles.module.scss'
+import { Bar } from "@/types/bar.type"
 
 const buttons = [
   { value: Resolution.HOUR, content: '1H' },
@@ -22,8 +23,7 @@ const buttons = [
 const Chart = () => {
   const { modalResolution, setModalResolution, chosenToken, chosenNetwork } = useStore()
 
-  const [data, setData] = useState<any>(null)
-  console.log("🚀 ~ Chart ~ data:", data)
+  const [data, setData] = useState<Bar[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchInitialData = async () => {

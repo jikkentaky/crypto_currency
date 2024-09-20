@@ -1,8 +1,10 @@
 'use server';
 
 import { getChartArgs } from "@/lib/getChartArgs";
+import { Bar } from "@/types/bar.type";
 import { Resolution } from "@/types/bubbles.type";
 import axios from "axios";
+import { Time } from "lightweight-charts";
 import { unstable_cache } from "next/cache";
 
 async function fetchBars(
@@ -10,7 +12,7 @@ async function fetchBars(
   resolution: Resolution,
   quoteToken: string,
 ) {
-  const bars = [];
+  const bars: Bar[] = [];
 
   const { from, to, countBack, currentResolution } = getChartArgs(resolution);
 
