@@ -42,10 +42,8 @@ export default function BubblesPage() {
   return (
     <>
       {(isLoading || !topTokensList)
-        ? <Loader height={window.innerHeight} />
-        : (!isLoading && topTokensList) &&
-        <Bubbles key={chosenNetwork.id} coins={topTokensList} />
-      }
+        ? <Loader height={720} />
+        : (!isLoading && topTokensList) && <Bubbles key={chosenNetwork.id} coins={topTokensList} />}
 
       <ModalComponent>
         {!isNetworks
