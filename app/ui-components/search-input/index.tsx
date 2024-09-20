@@ -32,10 +32,16 @@ const SearchInput: FC<Props> = ({ placeholder, value, width = '215px', onChange 
           '&': {
             width: width + ' !important',
           },
+          '& .MuiInputBase-input': {
+            fontFamily: '"Press Start 2P", system-ui',
+            color: '#fff',
+            fontSize: '8px',
+          },
           '& .MuiInputBase-input::placeholder': {
             fontFamily: '"Press Start 2P", system-ui',
             color: '#fff',
             opacity: 1,
+            fontSize: '8px',
           }
         }}
       />

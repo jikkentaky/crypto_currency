@@ -30,12 +30,12 @@
   z-index: 1;
 
   height: 100%;
-  // max-height: 1502px;
   margin: 0;
   padding: 0;
   padding: 24px 16px;
 
   list-style: none;
+  @include gradient-border();
 }
 
 .edit-button {

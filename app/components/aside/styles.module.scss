@@ -10,7 +10,6 @@
   top: 0;
   z-index: 1;
 
-  @include gradient-border(1px);
   background: linear-gradient(160deg, rgba(161, 44, 153, 0.1),
       rgba(0, 0, 0, 1),
       rgba(206, 60, 105, 0.2),
@@ -36,7 +35,7 @@
 }
 
 .bottom-part {
-  @include gradient-border();
+  // @include gradient-border();
 }
 
 .title {

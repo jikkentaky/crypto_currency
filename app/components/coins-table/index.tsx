@@ -11,7 +11,7 @@ import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 
 const CoinsTable = () => {
-  const { topTokensList, isLoading } = useStore();
+  const { topTokensList } = useStore();
 
   const tableData = useMemo(() => topTokensList, [topTokensList]);
 

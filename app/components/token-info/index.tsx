@@ -3,11 +3,10 @@
 import { useStore } from "@/store"
 import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
-import { convertToBillions } from "@/lib/convertToBillions"
-import { convertToMillions } from "@/lib/convertToMillions"
+import { convertToBillions } from "@/lib/convert-to-billions"
+import { convertToMillions } from "@/lib/convert-to-millions"
 import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
-import Image from 'next/image'
 
 const TokenInfo = () => {
   const { chosenToken, resolution, modalResolution } = useStore()

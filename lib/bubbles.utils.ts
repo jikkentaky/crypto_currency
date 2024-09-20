@@ -1,9 +1,8 @@
-"use client";
 import * as PIXI from "pixi.js";
-
 import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChangePercentage } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
+import { calculateMinCircleSize } from "./calc-min-size-circle";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
@@ -18,8 +17,9 @@ export const appConfig = {
   elasticity: 0.005,
   wallDamping: 0.5,
   maxCircleSize: 160,
-  minCircleSize: typeof window !== "undefined" ? (window.innerWidth ? (window.innerWidth > 920 ? 50 : 30) : 25) : 25,
+  minCircleSize: calculateMinCircleSize(),
 };
+
 const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleSize } = appConfig;
 
 const changeSizeStep = 2;
