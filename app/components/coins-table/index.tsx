@@ -11,7 +11,7 @@ import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 
 const CoinsTable = () => {
-  const { topTokensList } = useStore();
+  const { topTokensList, isLoading } = useStore();
 
   const tableData = useMemo(() => topTokensList, [topTokensList]);
 
@@ -145,7 +145,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            4 H
+            4H
           </span>
         ),
       }),
@@ -164,7 +164,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            12 H
+            12H
           </span>
         ),
       }),
@@ -183,7 +183,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            24 HOUR
+            24H
           </span>
         ),
       }),
@@ -209,7 +209,7 @@ const CoinsTable = () => {
     data: tableData || [],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    // columnResizeMode: 'onChange',
+    columnResizeMode: 'onChange',
     state: {
       sorting,
     },
@@ -217,9 +217,8 @@ const CoinsTable = () => {
   });
 
   return (
-    <div className={styles.border}>
+    topTokensList?.length && <div className={styles.border}>
       <div className={styles.container}>
-        {/* <div className={styles.tableWrapper}> */}
         <table className={styles['table']}>
           <thead className={styles['table-head']}>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -230,11 +229,19 @@ const CoinsTable = () => {
                       [styles.links]: header.id === 'links',
                     })}
                     key={header.id}
-                    onClick={() => toggleSorting(header.column.id)}
+                    onClick={() => {
+                      if (header.id === 'links') return;
+
+                      toggleSorting(header.column.id)
+                    }}
                     style={{ width: `${header.getSize()}px`, }}
                   >
                     <div className={cn(header.id === 'links' && styles.end, styles['table-th-content'])}>
-                      <SortArrowIcon className={cn(header.column.getIsSorted() == 'asc' && styles.up)} />
+                      {header.id !== 'links' &&
+                        <SortArrowIcon
+                          className={cn(header.column.getIsSorted() == 'asc' && styles.up)}
+                        />
+                      }
 
                       {header.isPlaceholder
                         ? null
@@ -256,7 +263,6 @@ const CoinsTable = () => {
           )}
         </table>
       </div>
-      {/* </div> */}
     </div>
   );
 };

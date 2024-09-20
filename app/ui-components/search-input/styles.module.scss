@@ -11,7 +11,8 @@
   input::placeholder {
     position: relative;
     z-index: 3;
-    font-family: "Press Start 2P", system-ui;
+    font-family: $ff-start-2p;
+    font-size: $fs-8;
   }
 }
 

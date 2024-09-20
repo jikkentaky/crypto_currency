@@ -18,7 +18,7 @@ export const appConfig = {
   elasticity: 0.005,
   wallDamping: 0.5,
   maxCircleSize: 160,
-  minCircleSize: typeof window !== "undefined" ? (window.innerWidth ? (window.innerWidth > 920 ? 55 : 35) : 35) : 35,
+  minCircleSize: typeof window !== "undefined" ? (window.innerWidth ? (window.innerWidth > 920 ? 50 : 30) : 25) : 25,
 };
 const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleSize } = appConfig;
 
