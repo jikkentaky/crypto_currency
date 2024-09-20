@@ -1,5 +1,6 @@
 export type TokenFilterResult = {
   __typename?: 'TokenFilterResult';
+  rank: number;
   age?: number;
   buyCount1?: number;
   buyCount4?: number;
@@ -57,6 +58,7 @@ export type TokenFilterResult = {
 
 export type EnhancedToken = {
   __typename?: 'EnhancedToken';
+  rank: number;
   address: string;
   circulatingSupply?: string;
   cmcId?: number;

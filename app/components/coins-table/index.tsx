@@ -2,43 +2,46 @@
 
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row, } from "@tanstack/react-table"
-import { memo, useMemo, useState } from "react"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row } from "@tanstack/react-table"
+import { memo, useCallback, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
+import { sortFilterTokens } from "@/app/api/lib";
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
 
-  const tableData = useMemo(() => topTokensList, [topTokensList]);
+  const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
+
+  useMemo(() => {
+    setTableData(topTokensList);
+  }, [topTokensList]);
 
   const columnHelper = createColumnHelper<TokenFilterResultType>();
 
-  const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'RANK', desc: false }]);
+  const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'rank', desc: false }]);
 
-  const toggleSorting = (columnId: string) => {
+  const toggleSorting = useCallback((columnId: string) => {
     setSorting((oldSorting) => {
       const currentSort = oldSorting.find((sort) => sort.id === columnId);
 
-      if (!currentSort) {
-        return [{ id: columnId, desc: false }];
-      }
+      const desc = currentSort ? !currentSort.desc : false;
+      const newSorting = [{ id: columnId, desc }];
 
-      if (currentSort.desc) {
-        return [{ id: columnId, desc: false }];
-      }
+      sortFilterTokens(tableData, columnId as keyof TokenFilterResultType, newSorting[0].desc ? 'desc' : 'asc')
+        .then(setTableData);
 
-      return [{ id: columnId, desc: true }];
+      return newSorting;
     });
-  };
+  }, [tableData]);
 
   const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
     () => [
-      columnHelper.accessor((_row, index) => (index + 1).toString(), {
-        id: 'RANK',
+      columnHelper.accessor((row) => row.rank, {
+        id: 'rank',
         cell: (info) => <p>{info.getValue()}</p>,
         header: () => (
           <span>
@@ -216,6 +219,7 @@ const CoinsTable = () => {
       sorting,
     },
     onSortingChange: setSorting,
+    manualSorting: true,
   });
 
   return (
