@@ -3,7 +3,6 @@
 @import '@/assets/mixins';
 
 .aside {
-  max-width: 310px;
   width: 100%;
   height: 100vh;
   overflow: auto;
@@ -34,11 +33,8 @@
   @include gradient-border(1px);
 }
 
-.bottom-part {
-  // @include gradient-border();
-}
-
 .title {
   margin: 0;
   font-size: $fs-20;
+  letter-spacing: -1px;
 }

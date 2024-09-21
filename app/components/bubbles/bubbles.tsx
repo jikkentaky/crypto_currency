@@ -1,12 +1,13 @@
 "use client";
 
-import { appConfig, BubblesUtils } from "@/lib/bubbles.utils";
+import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
 import * as PIXI from 'pixi.js';
 import { Circle, PriceChangePercentage, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
+import { appConfig } from "@/lib/config";
 
 type Props = {
   coins: TokenFilterResult[];

@@ -2,22 +2,12 @@ import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChangePercentage } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
-import { calculateMinCircleSize } from "./calc-min-size-circle";
+import { appConfig } from "./config";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
   bubbleSort: PriceChangePercentage;
   scalingFactor: number;
-};
-
-export const appConfig = {
-  width: typeof window !== "undefined" ? window.innerWidth - 320 : 100,
-  height: 720,
-  speed: 0.005,
-  elasticity: 0.005,
-  wallDamping: 0.5,
-  maxCircleSize: 160,
-  minCircleSize: calculateMinCircleSize(),
 };
 
 const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleSize } = appConfig;

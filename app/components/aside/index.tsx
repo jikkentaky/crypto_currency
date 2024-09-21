@@ -7,6 +7,7 @@ import { useStore } from '@/store';
 import { SearchInput } from '@/app/ui-components/search-input';
 import { NetworksList } from '@/app/components/networks-list';
 import { getNetworks } from '@/app/api/lib';
+import { appConfig } from '@/lib/config';
 
 const Aside: FC = () => {
   const { searchNetwork, networkList, setSearchNetwork, setNetworkList } = useStore()
@@ -36,7 +37,7 @@ const Aside: FC = () => {
   )
 
   return (
-    <aside className={styles.aside}>
+    <aside className={styles.aside} style={{ maxWidth: `${appConfig.aside}px` }}>
       <div className={styles['top-part']}>
         <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 
