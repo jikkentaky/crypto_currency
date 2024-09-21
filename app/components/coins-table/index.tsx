@@ -126,7 +126,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            HOUR
+            1H
           </span>
         ),
       }),

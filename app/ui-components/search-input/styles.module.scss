@@ -7,13 +7,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-
-  input::placeholder {
-    position: relative;
-    z-index: 3;
-    font-family: $ff-start-2p;
-    font-size: $fs-8;
-  }
 }
 
 .search-label {

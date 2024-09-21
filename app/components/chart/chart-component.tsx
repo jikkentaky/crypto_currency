@@ -81,6 +81,6 @@ export const ChartComponent: FC<Props> = (props) => {
   );
 
   return (
-    isLoading ? <Loader height={385} /> : <div ref={chartContainerRef} />
+    isLoading ? <Loader height={'385px'} /> : <div ref={chartContainerRef} />
   );
 };

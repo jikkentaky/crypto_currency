@@ -51,7 +51,7 @@ const Chart = () => {
     <div className={styles.container}>
       {(data && !isLoading) && <ChartComponent data={data} />}
 
-      {isLoading && <Loader height={300} />}
+      {isLoading && <Loader height={'300px'} />}
 
       <ButtonGroupRadio
         buttons={buttons}

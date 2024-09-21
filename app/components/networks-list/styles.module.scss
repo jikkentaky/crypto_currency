@@ -26,8 +26,6 @@
 
 .networks-list {
   overflow-y: auto;
-  position: relative;
-  z-index: 1;
 
   height: 100%;
   margin: 0;
@@ -76,6 +74,8 @@
 }
 
 .networks {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
