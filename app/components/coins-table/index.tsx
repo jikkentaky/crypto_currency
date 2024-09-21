@@ -2,7 +2,7 @@
 
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row } from "@tanstack/react-table"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, ColumnSort, Row } from "@tanstack/react-table"
 import { memo, useCallback, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
@@ -211,13 +211,9 @@ const CoinsTable = () => {
     columns,
     data: tableData || [],
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    columnResizeMode: 'onChange',
     state: {
       sorting,
     },
-    onSortingChange: setSorting,
-    manualSorting: true,
   });
 
   return (
