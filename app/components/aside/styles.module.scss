@@ -3,9 +3,10 @@
 @import '@/assets/mixins';
 
 .aside {
+  max-height: 100vh;
   width: 100%;
-  height: 100vh;
-  overflow: auto;
+  max-width: 300px;
+  overflow: hidden;
   top: 0;
   z-index: 1;
 
@@ -37,4 +38,9 @@
   margin: 0;
   font-size: $fs-20;
   letter-spacing: -1px;
+}
+
+.bottom-part {
+  padding-bottom: 20px;
+  @include gradient-border();
 }

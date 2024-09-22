@@ -37,7 +37,7 @@ const Aside: FC = () => {
   )
 
   return (
-    <aside className={styles.aside} style={{ maxWidth: `${appConfig.aside}px` }}>
+    <aside className={styles.aside} style={{ minWidth: `${appConfig.aside}px` }}>
       <div className={styles['top-part']}>
         <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 
