@@ -60,8 +60,9 @@ async function fetchFilterTokens(
     }
     );
 
-    const result = data.data.filterTokens.results.map((token) => ({
+    const result = data.data.filterTokens.results.map((token, index) => ({
       ...token,
+      rank: index+1,
       change1: Number(token.change1),
       change4: Number(token.change4),
       change12: Number(token.change12),

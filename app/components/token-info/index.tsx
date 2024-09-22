@@ -3,17 +3,20 @@
 import { useStore } from "@/store"
 import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
-import { convertToBillions } from "@/lib/convertToBillions"
-import { convertToMillions } from "@/lib/convertToMillions"
+import { convertToBillions } from "@/lib/convert-to-billions"
+import { convertToMillions } from "@/lib/convert-to-millions"
 import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 
 const TokenInfo = () => {
   const { chosenToken, resolution, modalResolution } = useStore()
+  const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
+
+  useEffect(() => {
+    getPriceChange(modalResolution)
+  }, [modalResolution])
 
   if (!chosenToken) return
-
-  const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
 
   const getPriceChange = (res: Resolution) => {
     switch (res) {
@@ -33,10 +36,6 @@ const TokenInfo = () => {
         setResolutions(PriceChangePercentage.HOUR)
     }
   }
-
-  useEffect(() => {
-    getPriceChange(modalResolution)
-  }, [modalResolution])
 
   return (
     chosenToken && <div className={styles['token-info']}>

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { ChartComponent } from "./chart-component"
 import { getBars } from "@/app/api/lib"
 import { Loader } from "@/app/ui-components/loader"
+import styles from './styles.module.scss'
+import { Bar } from "@/types/bar.type"
 
 const buttons = [
   { value: Resolution.HOUR, content: '1H' },
@@ -21,7 +23,7 @@ const buttons = [
 const Chart = () => {
   const { modalResolution, setModalResolution, chosenToken, chosenNetwork } = useStore()
 
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<Bar[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchInitialData = async () => {
@@ -46,15 +48,15 @@ const Chart = () => {
   }, [modalResolution])
 
   return (
-    <div>
+    <div className={styles.container}>
       {(data && !isLoading) && <ChartComponent data={data} />}
 
-      {isLoading && <Loader height={300} />}
+      {isLoading && <Loader height={'300px'} />}
 
       <ButtonGroupRadio
         buttons={buttons}
         resolution={modalResolution}
-        // @ts-ignore
+        // @ts-expect-error
         setResolution={setModalResolution}
       />
     </div>

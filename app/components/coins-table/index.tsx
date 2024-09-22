@@ -2,43 +2,46 @@
 
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, getSortedRowModel, ColumnSort, Row, } from "@tanstack/react-table"
-import { memo, useMemo, useState } from "react"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, ColumnSort, Row } from "@tanstack/react-table"
+import { memo, useCallback, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
+import { sortFilterTokens } from "@/app/api/lib";
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
 
-  const tableData = useMemo(() => topTokensList, [topTokensList]);
+  const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
+
+  useMemo(() => {
+    setTableData(topTokensList);
+  }, [topTokensList]);
 
   const columnHelper = createColumnHelper<TokenFilterResultType>();
 
-  const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'RANK', desc: false }]);
+  const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'rank', desc: false }]);
 
-  const toggleSorting = (columnId: string) => {
+  const toggleSorting = useCallback((columnId: string) => {
     setSorting((oldSorting) => {
       const currentSort = oldSorting.find((sort) => sort.id === columnId);
 
-      if (!currentSort) {
-        return [{ id: columnId, desc: false }];
-      }
+      const desc = currentSort ? !currentSort.desc : false;
+      const newSorting = [{ id: columnId, desc }];
 
-      if (currentSort.desc) {
-        return [{ id: columnId, desc: false }];
-      }
+      sortFilterTokens(tableData, columnId as keyof TokenFilterResultType, newSorting[0].desc ? 'desc' : 'asc')
+        .then(setTableData);
 
-      return [{ id: columnId, desc: true }];
+      return newSorting;
     });
-  };
+  }, [tableData]);
 
   const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
     () => [
-      columnHelper.accessor((_row, index) => (index + 1).toString(), {
-        id: 'RANK',
+      columnHelper.accessor((row) => row.rank, {
+        id: 'rank',
         cell: (info) => <p>{info.getValue()}</p>,
         header: () => (
           <span>
@@ -105,7 +108,6 @@ const CoinsTable = () => {
             ${info.getValue().toLocaleString('en-US')}
           </span>
         ),
-        size: 170,
         header: () => (
           <span>
             24H VOL
@@ -127,7 +129,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            HOUR
+            1H
           </span>
         ),
       }),
@@ -146,7 +148,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            4 HOUR
+            4H
           </span>
         ),
       }),
@@ -165,7 +167,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            12 HOUR
+            12H
           </span>
         ),
       }),
@@ -184,7 +186,7 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            24 HOUR
+            24H
           </span>
         ),
       }),
@@ -197,7 +199,6 @@ const CoinsTable = () => {
           <BullxIcon />
           <BonkIcon />
         </div>,
-        minSize: 500,
         header: () => (
           <span>
             LINKS
@@ -210,16 +211,13 @@ const CoinsTable = () => {
     columns,
     data: tableData || [],
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    columnResizeMode: 'onChange',
     state: {
       sorting,
     },
-    onSortingChange: setSorting,
   });
 
   return (
-    <div className={styles.border}>
+    topTokensList?.length && <div className={styles.border}>
       <div className={styles.container}>
         <table className={styles['table']}>
           <thead className={styles['table-head']}>
@@ -231,11 +229,19 @@ const CoinsTable = () => {
                       [styles.links]: header.id === 'links',
                     })}
                     key={header.id}
-                    onClick={() => toggleSorting(header.column.id)}
+                    onClick={() => {
+                      if (header.id === 'links') return;
+
+                      toggleSorting(header.column.id)
+                    }}
                     style={{ width: `${header.getSize()}px`, }}
                   >
                     <div className={cn(header.id === 'links' && styles.end, styles['table-th-content'])}>
-                      <SortArrowIcon className={cn(header.column.getIsSorted() == 'asc' && styles.up)} />
+                      {header.id !== 'links' &&
+                        <SortArrowIcon
+                          className={cn(header.column.getIsSorted() == 'asc' && styles.up)}
+                        />
+                      }
 
                       {header.isPlaceholder
                         ? null

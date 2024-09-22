@@ -23,8 +23,6 @@
 
 .token-item {
   min-width: 85px;
-
-  &:last-child {
-    margin-top: 2px;
-  }
+  display: flex;
+  flex-direction: column;
 }

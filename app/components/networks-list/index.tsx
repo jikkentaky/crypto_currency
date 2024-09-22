@@ -22,48 +22,50 @@ const NetworksList: FC<Props> = ({ networks }) => {
   }
 
   return (
-    <div className={styles['networks-list']}>
-      <div className={styles['network-wrapper']}>
-        <div className={styles['network-block']}>
-          <NetworkIcon />
+    <div>
+      <div className={styles['networks-list']}>
+        <div className={styles['network-wrapper']}>
+          <div className={styles['network-block']}>
+            <NetworkIcon />
 
-          <Typography>
-            All networks
-          </Typography>
+            <Typography>
+              All networks
+            </Typography>
+          </div>
+
+          <button className={styles['edit-button']} onClick={handleOpenModal}>
+            EDIT
+          </button>
         </div>
 
-        <button className={styles['edit-button']} onClick={handleOpenModal}>
-          EDIT
-        </button>
-      </div>
+        <div className={styles['networks']}>
+          {networks.map(({ id, name, isVisible }) => {
+            const imageName = name.toLowerCase().replace(/\s+/g, '-');
+            const path = `/static/assets/networks-icons/${imageName}.png`;
 
-      <div className={styles['networks']}>
-        {networks.map(({ id, name, isVisible }) => {
-          const imageName = name.toLowerCase().replace(/\s+/g, '-');
-          const path = `/static/assets/networks-icons/${imageName}.png`;
-
-          return (
-            <button
-              key={id}
-              className={cn(styles.button,
-                { [styles.selected]: chosenNetwork?.id === id })
-              }
-              onClick={() => setChosenNetwork({ id, name, isVisible })}
-            >
-              <Image
-                loading='lazy'
-                src={path}
-                alt={`${name} icon`}
-                width={24}
-                height={24}
-                className={styles.img}
-              />
-              <span>{name}</span>
-            </button>
-          )
-        })}
-      </div>
-    </div >
+            return (
+              <button
+                key={id}
+                className={cn(styles.button,
+                  { [styles.selected]: chosenNetwork?.id === id })
+                }
+                onClick={() => setChosenNetwork({ id, name, isVisible })}
+              >
+                <Image
+                  loading='lazy'
+                  src={path}
+                  alt={`${name} icon`}
+                  width={24}
+                  height={24}
+                  className={styles.img}
+                />
+                <span>{name}</span>
+              </button>
+            )
+          })}
+        </div>
+      </div >
+    </div>
   )
 }
 

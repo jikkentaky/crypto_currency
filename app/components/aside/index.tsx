@@ -7,17 +7,22 @@ import { useStore } from '@/store';
 import { SearchInput } from '@/app/ui-components/search-input';
 import { NetworksList } from '@/app/components/networks-list';
 import { getNetworks } from '@/app/api/lib';
+import { appConfig } from '@/lib/config';
 
 const Aside: FC = () => {
   const { searchNetwork, networkList, setSearchNetwork, setNetworkList } = useStore()
 
   useEffect(() => {
     const fetchNetworks = async () => {
-      const networks = await getNetworks()
+      try {
+        const networks = await getNetworks()
 
-      if (!networks) return
+        if (!networks) return
 
-      setNetworkList(networks);
+        setNetworkList(networks);
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     fetchNetworks()
@@ -32,7 +37,7 @@ const Aside: FC = () => {
   )
 
   return (
-    <aside className={styles.aside}>
+    <aside className={styles.aside} style={{ minWidth: `${appConfig.aside}px` }}>
       <div className={styles['top-part']}>
         <h1 className={styles.title}>ONCHAINBUBBLES</h1>
 

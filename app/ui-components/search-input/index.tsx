@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from 'react';
 import { BaseTextFieldProps, TextField } from '@mui/material';
 import styles from './styles.module.scss';
 import { SearchIcon } from '../icons';
+import '@/app/globals.scss';
 
 type Props = BaseTextFieldProps & {
   width?: string;
@@ -31,10 +32,16 @@ const SearchInput: FC<Props> = ({ placeholder, value, width = '215px', onChange 
           '&': {
             width: width + ' !important',
           },
+          '& .MuiInputBase-input': {
+            fontFamily: '"Press Start 2P", system-ui',
+            color: '#fff',
+            fontSize: '8px !important',
+          },
           '& .MuiInputBase-input::placeholder': {
-            fontFamily: '"Press Start 2P", cursive',
+            fontFamily: '"Press Start 2P", system-ui',
             color: '#fff',
             opacity: 1,
+            fontSize: '8px !important',
           }
         }}
       />

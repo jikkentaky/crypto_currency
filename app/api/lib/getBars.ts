@@ -1,6 +1,7 @@
 'use server';
 
-import { getChartArgs } from "@/lib/getChartArgs";
+import { getChartArgs } from "@/lib/get-chart-args";
+import { Bar } from "@/types/bar.type";
 import { Resolution } from "@/types/bubbles.type";
 import axios from "axios";
 import { unstable_cache } from "next/cache";
@@ -10,7 +11,7 @@ async function fetchBars(
   resolution: Resolution,
   quoteToken: string,
 ) {
-  const bars = [];
+  const bars: Bar[] = [];
 
   const { from, to, countBack, currentResolution } = getChartArgs(resolution);
 

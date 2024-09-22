@@ -1,8 +1,24 @@
 import { Loader } from '@/app/ui-components/loader';
+import { useStore } from '@/store';
+import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
-export const ChartComponent = (props: any) => {
+type Colors = {
+  backgroundColor?: string;
+  lineColor?: string;
+  textColor?: string;
+  areaTopColor?: string;
+  areaBottomColor?: string;
+}
+
+type Props = {
+  data: Bar[];
+  colors?: Colors;
+}
+
+export const ChartComponent: FC<Props> = (props) => {
+  const { isLoading } = useStore();
   const {
     data,
     colors: {
@@ -14,12 +30,13 @@ export const ChartComponent = (props: any) => {
     } = {},
   } = props;
 
-  const chartContainerRef = useRef<any>(null);
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(
     () => {
+      if (!chartContainerRef || !chartContainerRef.current) return;
       const handleResize = () => {
-        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+        chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
 
       const chart = createChart(chartContainerRef.current, {
@@ -64,6 +81,6 @@ export const ChartComponent = (props: any) => {
   );
 
   return (
-    props.isLoading ? <Loader height={385} /> : <div ref={chartContainerRef} />
+    isLoading ? <Loader height={'385px'} /> : <div ref={chartContainerRef} />
   );
 };

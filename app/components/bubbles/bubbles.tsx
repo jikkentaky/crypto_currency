@@ -1,13 +1,13 @@
 "use client";
 
-import { appConfig, BubblesUtils } from "@/lib/bubbles.utils";
+import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
 import * as PIXI from 'pixi.js';
 import { Circle, PriceChangePercentage, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
-import styles from "./styles.module.scss";
+import { appConfig } from "@/lib/config";
 
 type Props = {
   coins: TokenFilterResult[];
@@ -103,7 +103,7 @@ export default function Bubbles({ coins }: Props) {
 
       circle.isSearched = !searchCoin
         ? false
-        : circle.symbol.toLowerCase().includes(searchCoin.toLowerCase());
+        : circle.symbol.toLowerCase().startsWith(searchCoin.toLowerCase());
 
       circle.isPreviousSearched = circle.isSearched;
     }
@@ -157,6 +157,6 @@ export default function Bubbles({ coins }: Props) {
   }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
 
   return (
-    <div style={{ height: "721px" }} ref={appRef}></div>
+    <div style={{ height: height }} ref={appRef}></div>
   );
 }

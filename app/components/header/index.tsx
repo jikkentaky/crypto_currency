@@ -20,7 +20,7 @@ const Header = () => {
         <ButtonGroupRadio
           buttons={buttons}
           resolution={resolution}
-          // @ts-ignore
+          // @ts-expect-error
           setResolution={setResolution}
         />
       </div>
