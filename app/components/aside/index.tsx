@@ -8,7 +8,7 @@ import { SearchInput } from '@/app/ui-components/search-input';
 import { NetworksList } from '@/app/components/networks-list';
 import { getNetworks } from '@/app/api/lib';
 import { appConfig } from '@/lib/config';
-import { useWindowDimensions } from '@/hooks/use-windows-dimensions';
+import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 import cn from 'classnames';
 
 const Aside: FC = () => {

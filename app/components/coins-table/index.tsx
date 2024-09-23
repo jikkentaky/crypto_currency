@@ -10,12 +10,10 @@ import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-c
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 import { sortFilterTokens } from "@/app/api/lib";
-// import { useWindowDimensions } from "@/hooks/use-windows-dimensions"
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
   const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
-  // const { width, height } = useWindowDimensions();
 
   useMemo(() => {
     setTableData(topTokensList);

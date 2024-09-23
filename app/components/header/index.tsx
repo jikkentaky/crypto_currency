@@ -5,7 +5,7 @@ import { useStore } from '@/store'
 import { ButtonGroupRadio } from '@/app/ui-components/button-group-radio'
 import { SearchInput } from '@/app/ui-components/search-input'
 import cn from 'classnames'
-import { useWindowDimensions } from '@/hooks/use-windows-dimensions'
+import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 
 const buttons = [
   { value: PriceChangePercentage.HOUR, content: '1H' },
