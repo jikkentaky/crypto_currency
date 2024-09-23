@@ -12,15 +12,37 @@
 
   background-color: $color-black;
   gap: 20px;
-  @include gradient-border();
+  border: 1px solid $color-grey-13;
+
 
   &>div:nth-child(2) {
     width: 100%;
     max-width: 390px;
     font-family: $ff-start-2p;
   }
+
+  @include responsive {
+    padding: 12px 16px;
+    height: 60px
+  }
+}
+
+.gradient {
+  @include gradient-border();
+}
+
+.title {
+  display: none;
+
+  @include responsive {
+    display: block;
+    font-size: $fs-26;
+    line-height: 0;
+  }
 }
 
 .buttons-wrapper {
   max-width: 400px;
+
+  @include component-to-hide(1px, $media-1100-width);
 }

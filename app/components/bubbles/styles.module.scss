@@ -1,0 +1,14 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+$header-height: 60px;
+$footer-height: 78px;
+
+.container {
+  // max-width: 1600px;
+
+  // @include responsive {
+  //   height: calc(100vh - $footer-height) !important;
+  // }
+}

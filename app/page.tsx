@@ -3,6 +3,7 @@ import BubblesPage from "./components/bubbles";
 import { CoinsTable } from "./components/coins-table";
 import { Header } from "./components/header";
 import styles from './styles.module.scss';
+import { Footer } from "./ui-components/footer";
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
             <BubblesPage />
 
             <CoinsTable />
+
+            <Footer />
           </div>
         </div>
       </div>

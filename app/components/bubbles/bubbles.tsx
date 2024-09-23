@@ -8,12 +8,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 import { appConfig } from "@/lib/config";
+import styles from './styles.module.scss';
 
 type Props = {
   coins: TokenFilterResult[];
 };
 
-const { width, height, maxCircleSize, minCircleSize } = appConfig;
+const { width, aside, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins }: Props) {
   const bubbleSortRef = useRef<PriceChangePercentage | null>(null);
@@ -47,8 +48,9 @@ export default function Bubbles({ coins }: Props) {
     const text2Sprites: PIXI.Text[] = [];
     const circleGraphics: PIXI.Sprite[] = [];
 
+
     const app = new PIXI.Application({
-      width: width,
+      width,
       height,
       backgroundColor: "0x000000",
       eventMode: "dynamic",
@@ -157,6 +159,6 @@ export default function Bubbles({ coins }: Props) {
   }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
 
   return (
-    <div style={{ height: height }} ref={appRef}></div>
+    <div style={{ height: height }} ref={appRef} className={styles.container}></div>
   );
 }
