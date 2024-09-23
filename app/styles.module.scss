@@ -21,6 +21,8 @@
   border: 1px solid $color-light-grey-3;
   box-shadow: -2px -2px 1px $color-white;
   background: linear-gradient(90deg, rgba(0, 0, 128, 1), rgba(16, 132, 208, 1));
+
+  @include component-to-hide(1px, $media-1100-width);
 }
 
 .content-wrapper {

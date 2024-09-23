@@ -1,10 +1,13 @@
 import { calculateMinCircleSize } from "./calc-min-size-circle";
 
-export const asideWidth = 310;
+const aside = 310;
+const scrollWidth = 10;
 
 export const appConfig = {
-  aside: 300,
-  width: typeof window !== "undefined" ? window.innerWidth - asideWidth : 100,
+  aside,
+  width: typeof window !== "undefined"
+    ? Math.min(window.innerWidth - aside - scrollWidth, 1920 - aside)
+    : 375,
   height: 720,
   speed: 0.005,
   elasticity: 0.005,

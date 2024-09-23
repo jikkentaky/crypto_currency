@@ -12,7 +12,7 @@ const calculateMinCircleSize = () => {
   } else if (width > 720) {
     return 35;
   } else {
-    return 25;
+    return 32;
   }
 }
 

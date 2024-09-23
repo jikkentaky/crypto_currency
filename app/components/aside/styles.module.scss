@@ -3,9 +3,8 @@
 @import '@/assets/mixins';
 
 .aside {
-  max-height: 100vh;
+  height: 100%;
   width: 100%;
-  max-width: 300px;
   overflow: hidden;
   top: 0;
   z-index: 1;
@@ -19,6 +18,15 @@
       rgba(127, 36, 175, 0.1),
     );
   position: sticky;
+  @include component-to-hide(1px, $media-1100-width);
+}
+
+.large-screen {
+  max-height: calc(100vh - $small-header);
+}
+
+.medium-screen {
+  max-height: calc($header + $coins-table + $bubbles-scene);
 }
 
 .top-part {
@@ -41,6 +49,6 @@
 }
 
 .bottom-part {
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
   @include gradient-border();
 }

@@ -8,9 +8,12 @@ import { SearchInput } from '@/app/ui-components/search-input';
 import { NetworksList } from '@/app/components/networks-list';
 import { getNetworks } from '@/app/api/lib';
 import { appConfig } from '@/lib/config';
+import { useWindowDimensions } from '@/hooks/use-windows-dimensions';
+import cn from 'classnames';
 
 const Aside: FC = () => {
   const { searchNetwork, networkList, setSearchNetwork, setNetworkList } = useStore()
+  const { width } = useWindowDimensions()
 
   useEffect(() => {
     const fetchNetworks = async () => {
@@ -37,9 +40,20 @@ const Aside: FC = () => {
   )
 
   return (
-    <aside className={styles.aside} style={{ minWidth: `${appConfig.aside}px` }}>
+    <aside
+      className={cn(styles.aside, {
+        [styles['large-screen']]: width >= 1920,
+        [styles['medium-screen']]: width <= 1920
+      })}
+      style={{
+        minWidth: `${appConfig.aside}px`,
+        maxWidth: `${appConfig.aside}px`
+      }}
+    >
       <div className={styles['top-part']}>
-        <h1 className={styles.title}>ONCHAINBUBBLES</h1>
+        <h1 className={styles.title}>
+          ONCHAINBUBBLES
+        </h1>
 
         <SearchInput
           width='170px'

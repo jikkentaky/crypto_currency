@@ -21,8 +21,8 @@
   }
 }
 
-@mixin mobile() {
-  @media (max-width: #{$media-1200-width - 1px}) {
+@mixin responsive() {
+  @media (max-width: #{$media-1100-width}) {
     @content;
   }
 }
