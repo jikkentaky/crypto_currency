@@ -20,8 +20,14 @@ async function fetchFilterTokens(
         query: `{
           filterTokens(
             filters: {
-            trendingIgnored: false
-            network: [${networkId}]
+              network: [${networkId}]
+              trendingIgnored: false
+              liquidity: { gt: 1000 }
+              change24: { gt: 0.25 }
+              txnCount24: { gt: 200 }
+              volume24: { gt: 50000 }
+              buyCount24: { gt: 100 }
+              sellCount24: { gt: 100 }
           }
             rankings: {
               attribute: trendingScore
@@ -62,7 +68,7 @@ async function fetchFilterTokens(
 
     const result = data.data.filterTokens.results.map((token, index) => ({
       ...token,
-      rank: index+1,
+      rank: index + 1,
       change1: Number(token.change1),
       change4: Number(token.change4),
       change12: Number(token.change12),

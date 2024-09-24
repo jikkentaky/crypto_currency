@@ -24,10 +24,10 @@ export class PixiUtils {
       setIsOpenModal(true);
     });
 
-    // container.on('touchstart', () => {
-    //   setChosenToken(circle.id);
-    //   setIsOpenModal(true);
-    // });
+    container.on('touchstart', () => {
+      setChosenToken(circle.id);
+      setIsOpenModal(true);
+    });
 
     return container;
   };
