@@ -1,23 +1,29 @@
 import { ChangeEvent, FC } from 'react';
 import { BaseTextFieldProps, TextField } from '@mui/material';
 import styles from './styles.module.scss';
-import { SearchIcon } from '../icons';
-import '@/app/globals.scss';
+import { SearchIcon } from '@/app/ui-components/icons';
+import cn from 'classnames';
 
 type Props = BaseTextFieldProps & {
+  isHide?: boolean;
   width?: string;
   icon?: JSX.Element;
   onChange: (value: string) => void;
 };
 
-const SearchInput: FC<Props> = ({ placeholder, value, width = '215px', onChange }) => {
+const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '215px', onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
   return (
     <div className={styles['search-wrapper']}>
-      <label htmlFor="outlined-basic" className={styles['search-label']}>
+      <label
+        htmlFor="outlined-basic"
+        className={cn(styles['search-label'], {
+          [styles['hide']]: !isHide
+        })}
+      >
         <SearchIcon /> Search
       </label>
 

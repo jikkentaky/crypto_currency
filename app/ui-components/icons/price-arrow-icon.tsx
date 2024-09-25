@@ -1,5 +1,4 @@
 import { FC } from "react"
-// import styles from '@/app/components/coins-table/styles.module.scss'
 
 type Props = {
   className?: string

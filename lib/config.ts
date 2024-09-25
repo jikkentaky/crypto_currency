@@ -1,3 +1,4 @@
+import { PriceChangePercentage } from "@/types/bubbles.type";
 import { calculateMinCircleSize } from "./calc-min-size-circle";
 
 const aside = 310;
@@ -17,7 +18,7 @@ const height = typeof window !== "undefined"
     : 720
   : 100
 
-export const appConfig = {
+const appConfig = {
   aside,
   width,
   height,
@@ -27,3 +28,12 @@ export const appConfig = {
   maxCircleSize: 160,
   minCircleSize: calculateMinCircleSize(),
 };
+
+const PriceChangeButtons = [
+  { value: PriceChangePercentage.HOUR, content: '1H' },
+  { value: PriceChangePercentage.FOUR_HOURS, content: '4H' },
+  { value: PriceChangePercentage.TWELVE_HOURS, content: '12H' },
+  { value: PriceChangePercentage.DAY, content: '1D' },
+]
+
+export { appConfig, PriceChangeButtons }

@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 import cn from 'classnames'
 
 import styles from './styles.module.scss'
 
 type TypographyProps = {
-  children?: string
+  children?: ReactNode
   variantWeight?: 'inherit' | 'regular' | 'medium' | 'semibold' | 'bold'
   variant?: 'body1' | 'body2'
   className?: string
