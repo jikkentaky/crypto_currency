@@ -29,11 +29,18 @@ const appConfig = {
   minCircleSize: calculateMinCircleSize(),
 };
 
-const PriceChangeButtons = [
+const priceChangeButtons = [
   { value: PriceChangePercentage.HOUR, content: '1H' },
   { value: PriceChangePercentage.FOUR_HOURS, content: '4H' },
   { value: PriceChangePercentage.TWELVE_HOURS, content: '12H' },
-  { value: PriceChangePercentage.DAY, content: '1D' },
+  { value: PriceChangePercentage.DAY, content: '24H' },
 ]
 
-export { appConfig, PriceChangeButtons }
+const mobileResolution = {
+  change1: "1H",
+  change4: "4H",
+  change12: "12H",
+  change24: "24H",
+}
+
+export { appConfig, priceChangeButtons, mobileResolution }

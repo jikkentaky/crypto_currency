@@ -9,14 +9,16 @@ import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 type Props = {
   className?: string
   children: ReactNode;
+  open: boolean;
+  onClose: (value: boolean) => void;
 }
 
-const MobileModal: FC<Props> = ({ children, className = '' }) => {
-  const { isOpenMobileMenu, isNetworks, setIsOpenMobileMenu, setIsNetworks, setSearchNetwork } = useStore()
+const MobileModal: FC<Props> = ({ children, className = '', open, onClose }) => {
+  const { isNetworks, setIsOpenMobileMenu, setIsNetworks, setSearchNetwork } = useStore()
   const { width } = useWindowDimensions()
 
   const handleClose = () => {
-    setIsOpenMobileMenu(false)
+    onClose(false)
     setSearchNetwork('')
 
     if (isNetworks) {
@@ -32,8 +34,8 @@ const MobileModal: FC<Props> = ({ children, className = '' }) => {
 
   return (
     <Modal
-      open={isOpenMobileMenu}
-      onClose={handleBack}
+      open={open}
+      onClose={onClose}
     >
       <div className={cn(styles.content, className)}>
         {isShowNetworkContent && <button className={styles['icon-back']} onClick={handleBack}>

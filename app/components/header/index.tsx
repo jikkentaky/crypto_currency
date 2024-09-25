@@ -5,8 +5,7 @@ import { ButtonGroupRadio } from '@/app/ui-components/button-group-radio'
 import { SearchInput } from '@/app/ui-components/search-input'
 import cn from 'classnames'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
-import { PriceChangeButtons } from '@/lib/config'
-
+import { priceChangeButtons } from '@/lib/config'
 
 const Header = () => {
   const { searchCoin, resolution, setResolution, setSearchCoin } = useStore()
@@ -22,7 +21,7 @@ const Header = () => {
 
       <div className={styles['buttons-wrapper']}>
         <ButtonGroupRadio
-          buttons={PriceChangeButtons}
+          buttons={priceChangeButtons}
           resolution={resolution}
           // @ts-expect-error
           setResolution={setResolution}

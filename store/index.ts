@@ -16,6 +16,10 @@ interface UseStore {
   chosenToken: TokenFilterResultType | null
   isNetworks: boolean
   networkList: Network[] | null
+  selectedModalResolution: Resolution
+  isOpenMobileTimeFrame: boolean
+  setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame: boolean) => void
+  setSelectedModalResolution: (selectedModalResolution: Resolution) => void
   setNetworkList: (networkList: Network[]) => void
   setIsOpenMobileMenu: (isOpenMobileMenu: boolean) => void
   setIsNetworks: (isNetworks: boolean) => void
@@ -31,6 +35,7 @@ interface UseStore {
 }
 
 export const useStore = create<UseStore>()((set, get) => ({
+  isOpenMobileTimeFrame: false,
   isOpenMobileMenu: false,
   topTokensList: null,
   chosenNetwork: { id: 1, name: 'Ethereum', isVisible: true },
@@ -43,6 +48,7 @@ export const useStore = create<UseStore>()((set, get) => ({
   isOpenModal: false,
   chosenToken: null,
   isNetworks: false,
+  selectedModalResolution: Resolution.HOUR,
   setChosenToken: (tokenAddress) => {
     const { topTokensList } = get()
     if (topTokensList) {
@@ -50,6 +56,8 @@ export const useStore = create<UseStore>()((set, get) => ({
       set({ chosenToken })
     }
   },
+  setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame) => set({ isOpenMobileTimeFrame }),
+  setSelectedModalResolution: (selectedModalResolution) => set({ selectedModalResolution }),
   setIsOpenMobileMenu: (isOpenMobileMenu) => set({ isOpenMobileMenu }),
   setNetworkList: (networkList) => set({ networkList }),
   setIsNetworks: (isNetworks) => set({ isNetworks }),

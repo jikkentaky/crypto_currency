@@ -1,0 +1,80 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.networks-search {
+  margin-bottom: 24px;
+
+  &>div {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 64px 24px 24px;
+
+    &>div {
+      width: 100% !important;
+
+      &>div {
+        height: 40px;
+      }
+    }
+  }
+}
+
+.networks {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+  min-height: 100%;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.button {
+  padding: 11px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  width: 100%;
+  color: $color-white;
+  font-size: $fs-11;
+  border: 1px solid $color-grey-13;
+  border-right: 0;
+  border-left: 0;
+  background-color: transparent;
+}
+
+.title {
+  padding: 24px;
+  color: $color-black;
+  font-size: $fs-11;
+  height: 48px;
+  margin: 0;
+  background: linear-gradient(-90deg, rgba(161, 44, 153, 1),
+      rgba(206, 60, 105, 1),
+      rgba(214, 87, 39, 1),
+      rgba(252, 249, 64, 1),
+      rgba(33, 34, 241, 1),
+      rgba(127, 36, 175, 1));
+}
+
+.edit {
+  z-index: 2;
+  display: flex;
+  background-color: $color-black;
+  border-top: 1px solid $color-grey-13;
+  align-items: center;
+  padding: 14px 24px;
+  gap: 8px;
+  font-size: $fs-11;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: $color-dark-blue;
+}
