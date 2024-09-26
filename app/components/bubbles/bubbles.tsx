@@ -14,7 +14,7 @@ type Props = {
   coins: TokenFilterResult[];
 };
 
-const { width, aside, height, maxCircleSize, minCircleSize } = appConfig;
+const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins }: Props) {
   const bubbleSortRef = useRef<PriceChangePercentage | null>(null);

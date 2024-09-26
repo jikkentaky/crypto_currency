@@ -1,0 +1,47 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  // max-height: 85vh;
+
+  // inset: 15% auto auto 50%;
+  // @include gradient-border();
+  // transform: translate(-50%, 0);
+  background-color: $color-black-2;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.title-wrapper {
+  display: flex;
+}
+
+.icon-back,
+.icon-close {
+  position: absolute;
+  z-index: 2;
+  border: none;
+  top: 24px;
+  padding: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.icon-close {
+  right: 24px;
+  padding-right: 0;
+}
+
+.icon-back {
+  left: 24px;
+  padding-left: 0;
+}

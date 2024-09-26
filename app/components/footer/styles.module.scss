@@ -1,0 +1,54 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.footer {
+  display: none;
+
+  @include responsive {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    height: 78px;
+    padding: 12px 16px;
+    border: 1px solid $color-grey-13;
+  }
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+
+.networks-chose-modal,
+.networks-modal,
+.timeframe {
+  @include gradient-border();
+}
+
+.networks-chose-modal {
+  max-height: 85vh;
+  inset: 15% auto auto 50%;
+  transform: translate(-50%, 0);
+
+}
+
+.networks-modal {
+  max-height: 100vh;
+  inset: 0 auto auto 0;
+  transform: translate(0, 0);
+}
+
+$timeframe-modal-height: 281px;
+
+.timeframe {
+  max-height: 33.5%;
+  position: fixed;
+  inset: 0 auto auto 50%;
+  transform: translate(-50%, 0);
+  top: calc(100vh - $timeframe-modal-height);
+}

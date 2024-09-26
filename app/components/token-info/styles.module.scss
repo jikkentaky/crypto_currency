@@ -1,18 +1,22 @@
 @import '@/assets/variables-colors';
 @import '@/assets/variables';
-
-
+@import '@/assets/mixins';
 
 .token-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between();
+
+  @include responsive {
+    flex-direction: column;
+    gap: 32px;
+  }
 }
 
 .token-image-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .token-image {
@@ -25,4 +29,23 @@
   min-width: 85px;
   display: flex;
   flex-direction: column;
+  font-size: $fs-12;
+}
+
+.token-info-items {
+  width: 50%;
+  @include flex-between();
+  gap: 32px;
+
+  @include responsive {
+    width: 100%;
+    gap: 16px;
+  }
+}
+
+.font {
+
+  @include responsive {
+    font-size: $fs-10;
+  }
 }

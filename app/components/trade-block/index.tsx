@@ -2,8 +2,11 @@ import { Typography } from '@/app/ui-components/typography'
 import styles from './styles.module.scss'
 import { BBIcon, BonkIcon, BullxIcon, MaestroIcon, PhotonIcon } from '@/app/ui-components/icons'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
+import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 
 const TradeBlock = () => {
+  const { width } = useWindowDimensions()
+
   return (
     <div className={styles['trade-block']}>
       <Typography className={styles['title']}>Trade now</Typography>

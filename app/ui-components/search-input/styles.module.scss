@@ -14,7 +14,9 @@
   align-items: center;
   gap: 8px;
   font-size: $fs-11;
+}
 
+.hide {
   @include component-to-hide(1px, $media-1100-width);
 }
 

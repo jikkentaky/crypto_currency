@@ -7,10 +7,12 @@ import { Typography } from '@/app/ui-components/typography';
 import { Network } from '@/types/network.type';
 import Image from 'next/image';
 import cn from 'classnames';
+import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 
 const NetworksModalContent = () => {
   const { isNetworks, networkList, setNetworkList } = useStore()
   const [searchNetwork, setSearchNetwork] = useState('');
+  const { width } = useWindowDimensions();
 
   const filteredNetworks = useMemo(
     () =>
@@ -53,10 +55,26 @@ const NetworksModalContent = () => {
     setNetworkList(updatedNetworkList);
     localStorage.setItem('networkList', JSON.stringify(updatedNetworkList));
   };
+
+  const isMobileContent = isNetworks && width < 1100;
+
   return (
-    <>
+    <div className={cn(styles.container, { [styles['mobile-container']]: isMobileContent })}>
+      {isMobileContent && <div>
+        <h2 className={styles.title}>Favorite networks</h2>
+
+        <Typography>
+          Toggle network visibility
+        </Typography>
+
+        <Typography>
+          throughout the app.
+        </Typography>
+      </div>}
+
       <div className={styles['search-block']}>
         <SearchInput
+          isHide
           label={<><SearchIcon /> Search</>}
           placeholder="Enter network..."
           onChange={setSearchNetwork}
@@ -103,7 +121,7 @@ const NetworksModalContent = () => {
           );
         })}
       </div>
-    </>
+    </div >
   )
 }
 
