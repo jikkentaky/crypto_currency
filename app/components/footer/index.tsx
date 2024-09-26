@@ -4,7 +4,7 @@ import { MobileButton } from '@/app/ui-components/mobile-button'
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
 import { MobileNetworksIcon, PriceArrowIcon } from '@/app/ui-components/icons';
-import { MobileModal } from '@/app/components/mobile-modal';
+import { MobileModal } from '@/app/ui-components/mobile-modal';
 import cn from 'classnames';
 import { NetworksModalContent } from '../networks-modal-content';
 import { mobileResolution } from '@/lib/config';
@@ -32,6 +32,7 @@ const Footer = () => {
 
       <MobileButton onClick={handleToggleTimeFrame}>
         {mobileResolution[resolution]}
+        <PriceArrowIcon className={styles.rotate} />
       </MobileButton>
 
       <MobileModal

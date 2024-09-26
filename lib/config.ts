@@ -1,5 +1,6 @@
 import { PriceChangePercentage } from "@/types/bubbles.type";
-import { calculateMinCircleSize } from "./calc-min-size-circle";
+import { calculateMinCircleSize } from "./calc-min-circle-size";
+import { calculateMaxCircleSize } from "./calc-max-circle-size";
 
 const aside = 310;
 const scrollWidth = 9;
@@ -25,7 +26,7 @@ const appConfig = {
   speed: 0.005,
   elasticity: 0.005,
   wallDamping: 0.5,
-  maxCircleSize: 160,
+  maxCircleSize: calculateMaxCircleSize(),
   minCircleSize: calculateMinCircleSize(),
 };
 

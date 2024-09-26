@@ -3,12 +3,12 @@
 
 .body1 {
   font-size: $fs-11;
-  line-height: 0;
+  line-height: $fs-14;
 }
 
 .body2 {
-  font-size: $fs-8;
-  line-height: 0;
+  font-size: $fs-12;
+  line-height: $fs-14;
 }
 
 .inherit {

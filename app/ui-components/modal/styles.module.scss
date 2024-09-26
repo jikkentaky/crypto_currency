@@ -3,11 +3,9 @@
 @import '@/assets/mixins';
 
 .content {
-  position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 910px;
+  max-width: 910px;
   padding: 45px;
 
   transform: translate(-50%, -50%);
@@ -18,6 +16,11 @@
 
   &:focus {
     outline: none;
+  }
+
+  @include responsive {
+    min-height: 100vh;
+    padding: 25px;
   }
 }
 

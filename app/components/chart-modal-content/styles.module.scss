@@ -1,0 +1,13 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include responsive {
+    gap: 32px;
+  }
+}

@@ -7,10 +7,13 @@ import { convertToBillions } from "@/lib/convert-to-billions"
 import { convertToMillions } from "@/lib/convert-to-millions"
 import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
+import { useWindowDimensions } from "@/hooks/use-window-dimensions"
+import cn from 'classnames'
 
 const TokenInfo = () => {
   const { chosenToken, resolution, modalResolution } = useStore()
   const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
+  const { width } = useWindowDimensions()
 
   useEffect(() => {
     getPriceChange(modalResolution)
@@ -47,13 +50,20 @@ const TokenInfo = () => {
           className={styles['token-image']}
         />
 
-        <div className={styles['token-item']}>
-          <Typography>
-            {`${chosenToken.token.name} (${chosenToken.token.symbol})`}
+        <div className={styles['token-item']} >
+          <Typography
+            variant="body2">
+            {width > 430
+              ? `${chosenToken.token.name.length > 10
+                ? chosenToken.token.name.slice(0, 10) + '...'
+                : chosenToken.token.name} (${chosenToken.token.symbol})`
+              : `(${chosenToken.token.symbol})`
+            }
           </Typography>
 
           <Typography
             variantWeight='medium'
+            variant="body2"
             color={chosenToken[resolutions] > 0 ? 'green' : 'red'}
           >
             {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
@@ -61,36 +71,38 @@ const TokenInfo = () => {
         </div>
       </div>
 
-      <div className={styles['token-item']}>
-        <Typography variant='body2' variantWeight='medium'>
-          Market Cap
-        </Typography>
+      <div className={styles['token-info-items']}>
+        <div className={styles['token-item']}>
+          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+            Market Cap
+          </Typography>
 
-        <Typography >
-          {`$${convertToBillions(chosenToken.marketCap)}`}
-        </Typography>
+          <Typography className={styles.font}>
+            {`$${convertToBillions(chosenToken.marketCap)}`}
+          </Typography>
+        </div>
+
+        <div className={styles['token-item']}>
+          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+            Total Supply
+          </Typography>
+
+          <Typography className={styles.font}>
+            {`$${convertToBillions(+chosenToken.token.totalSupply)}`}
+          </Typography>
+        </div>
+
+        <div className={styles['token-item']}>
+          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+            24H Vol
+          </Typography>
+
+          <Typography className={styles.font}>
+            {`$${convertToMillions(chosenToken.marketCap)}`}
+          </Typography>
+        </div>
       </div>
-
-      <div className={styles['token-item']}>
-        <Typography variant='body2' variantWeight='medium'>
-          Total Supply
-        </Typography>
-
-        <Typography >
-          {`$${convertToBillions(+chosenToken.token.totalSupply)}`}
-        </Typography>
-      </div>
-
-      <div className={styles['token-item']}>
-        <Typography variant='body2' variantWeight='medium'>
-          24H Vol
-        </Typography>
-
-        <Typography >
-          {`$${convertToMillions(chosenToken.marketCap)}`}
-        </Typography>
-      </div>
-    </div>
+    </div >
   )
 }
 

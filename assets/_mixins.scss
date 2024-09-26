@@ -62,3 +62,10 @@
     mask-composite: exclude;
   }
 }
+
+@mixin text-ellipsis($_width) {
+  overflow: hidden;
+  max-width: $_width;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -9,13 +9,13 @@ type CustomToggleButton = ToggleButtonProps & {
   content: string;
 };
 
-type Props = {
+type Props = ToggleButtonProps & {
   buttons: CustomToggleButton[];
   resolution: PriceChangePercentage | Resolution;
   setResolution: (value: PriceChangePercentage | Resolution) => void;
 };
 
-const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, setResolution }) => {
+const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className, setResolution }) => {
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
     newAlignment: string,
@@ -30,7 +30,7 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, setResolution }) => 
       exclusive
       onChange={handleChange}
       aria-label="price-change"
-      className={styles['button-group']}
+      className={cn(className, styles['button-group'])}
       sx={{
         '.MuiToggleButton-root': {
           font: 'inherit',

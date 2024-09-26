@@ -54,6 +54,7 @@ const Chart = () => {
       {isLoading && <Loader height={'300px'} />}
 
       <ButtonGroupRadio
+        className={styles.buttons}
         buttons={buttons}
         resolution={modalResolution}
         // @ts-expect-error
