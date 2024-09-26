@@ -48,10 +48,12 @@ const Chart = () => {
   }, [modalResolution])
 
   return (
-    <div className={styles.container}>
-      {(data && !isLoading) && <ChartComponent data={data} />}
+    <div>
+      <div className={styles.container}>
+        {(data && !isLoading) && <ChartComponent data={data} />}
 
-      {isLoading && <Loader height={'300px'} />}
+        {isLoading && <Loader height={'300px'} />}
+      </div>
 
       <ButtonGroupRadio
         className={styles.buttons}
