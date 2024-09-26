@@ -6,6 +6,7 @@ import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 
 const TradeBlock = () => {
   const { width } = useWindowDimensions()
+  const isMobileWidth = width < 1100
 
   return (
     <div className={styles['trade-block']}>
@@ -23,17 +24,24 @@ const TradeBlock = () => {
         <div className={styles['about']}>
           <Typography className={styles['about-subtitle']}>About</Typography>
 
-          <ul className={styles['social-list']}>
+          {!isMobileWidth && <ul className={styles['social-list']}>
             <li><TwitterIcon /></li>
             <li><TwitterIcon /></li>
             <li><TwitterIcon /></li>
             <li><TwitterIcon /></li>
-          </ul>
+          </ul>}
         </div>
 
-        <Typography>
+        <Typography className={styles['about-description']}>
           ONDO is the governance token for Flux FInance and the Ondo DAO.
         </Typography>
+
+        {isMobileWidth && <ul className={styles['mobile-social-list']}>
+          <li><TwitterIcon /></li>
+          <li><TwitterIcon /></li>
+          <li><TwitterIcon /></li>
+          <li><TwitterIcon /></li>
+        </ul>}
       </div>
     </div>
   )
