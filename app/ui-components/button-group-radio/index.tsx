@@ -18,8 +18,9 @@ type Props = ToggleButtonProps & {
 const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className, setResolution }) => {
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
-    newAlignment: string,
+    alignment: string,
   ) => {
+    const newAlignment = alignment || resolution;
     setResolution(newAlignment as PriceChangePercentage | Resolution)
   }
 
