@@ -1,4 +1,5 @@
 import { Loader } from '@/app/ui-components/loader';
+import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 import { useStore } from '@/store';
 import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
@@ -19,6 +20,8 @@ type Props = {
 
 export const ChartComponent: FC<Props> = (props) => {
   const { isLoading } = useStore();
+  const { width } = useWindowDimensions();
+
   const {
     data,
     colors: {
@@ -31,6 +34,7 @@ export const ChartComponent: FC<Props> = (props) => {
   } = props;
 
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
+  const height = width > 1100 ? 385 : 300;
 
   useEffect(
     () => {
@@ -45,7 +49,7 @@ export const ChartComponent: FC<Props> = (props) => {
           textColor,
         },
         width: chartContainerRef.current.clientWidth,
-        height: 300,
+        height,
         grid: {
           vertLines: {
             visible: false,
@@ -81,6 +85,6 @@ export const ChartComponent: FC<Props> = (props) => {
   );
 
   return (
-    isLoading ? <Loader height={'385px'} /> : <div ref={chartContainerRef} />
+    isLoading ? <Loader /> : <div ref={chartContainerRef} style={{ height: `${height}px` }} />
   );
 };

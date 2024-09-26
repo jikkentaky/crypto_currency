@@ -6,8 +6,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-height: 100vh;
 
   @include responsive {
-    gap: 32px;
+    gap: 3vh;
   }
 }

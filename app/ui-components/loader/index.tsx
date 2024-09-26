@@ -7,8 +7,18 @@ type Props = {
 }
 
 const Loader: React.FC<Props> = ({ height }) => {
+
   return (
-    <Box sx={{ display: 'flex', width: '100%', height: `${height}`, justifyContent: 'center', alignItems: 'center', backgroundColor: '#0a0a0a' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        width: '100%',
+        minHeight: '300px',
+        height: height || '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#0a0a0a'
+      }}>
       <CircularProgress sx={{ color: '#00dc3e' }} size={80} />
     </Box>
   );
