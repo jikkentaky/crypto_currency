@@ -25,7 +25,7 @@ export const ChartComponent: FC<Props> = (props) => {
   const {
     data,
     colors: {
-      backgroundColor = '#2a2a2a',
+      backgroundColor = '#0a0a0a',
       lineColor = '#9CBC72',
       textColor = 'white',
       areaTopColor = 'rgba(156, 188, 114, 0.9)',

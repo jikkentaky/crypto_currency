@@ -48,7 +48,6 @@ export default function Bubbles({ coins }: Props) {
     const text2Sprites: PIXI.Text[] = [];
     const circleGraphics: PIXI.Sprite[] = [];
 
-
     const app = new PIXI.Application({
       width,
       height,
