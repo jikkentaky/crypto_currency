@@ -7,13 +7,10 @@ import { convertToBillions } from "@/lib/convert-to-billions"
 import { convertToMillions } from "@/lib/convert-to-millions"
 import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
-import { useWindowDimensions } from "@/hooks/use-window-dimensions"
-import cn from 'classnames'
 
 const TokenInfo = () => {
   const { chosenToken, resolution, modalResolution } = useStore()
   const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
-  const { width } = useWindowDimensions()
 
   useEffect(() => {
     getPriceChange(modalResolution)

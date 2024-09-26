@@ -14,7 +14,7 @@ type Props = {
 }
 
 const MobileModal: FC<Props> = ({ children, className = '', open, onClose }) => {
-  const { isNetworks, setIsOpenMobileMenu, setIsNetworks, setSearchNetwork } = useStore()
+  const { isNetworks, setIsNetworks, setSearchNetwork } = useStore()
   const { width } = useWindowDimensions()
 
   const handleClose = () => {
