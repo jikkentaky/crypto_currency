@@ -10,7 +10,7 @@ $top-part: 130px;
   gap: 16px;
 
   @include responsive {
-    min-height: calc(100dvh - $top-part);
+    max-height: calc(100dvh - $top-part);
     justify-content: space-between;
   }
 }
