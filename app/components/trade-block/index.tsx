@@ -1,6 +1,5 @@
 import { Typography } from '@/app/ui-components/typography'
 import styles from './styles.module.scss'
-import { BonkIcon, BullxIcon } from '@/app/ui-components/icons'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 import Image from 'next/image';
