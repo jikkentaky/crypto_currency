@@ -11,6 +11,8 @@ const TradeBlock = () => {
   const blazingPath = `/static/assets/networks-icons/blazing.png`;
   const maestroPath = `/static/assets/networks-icons/maestro.png`;
   const photonPath = `/static/assets/networks-icons/photon.png`;
+  const bonkPath = `/static/assets/networks-icons/bonk.png`;
+  const bulxPath = `/static/assets/networks-icons/bulx.png`;
 
   return (
     <div className={styles['trade-block']}>
@@ -23,8 +25,8 @@ const TradeBlock = () => {
               loading='lazy'
               src={blazingPath}
               alt={`Blazing bot`}
-              width={35}
-              height={35}
+              width={40}
+              height={40}
             />
           </a>
         </li>
@@ -34,8 +36,8 @@ const TradeBlock = () => {
               loading='lazy'
               src={maestroPath}
               alt={`Maestro`}
-              width={35}
-              height={35}
+              width={40}
+              height={40}
             />
           </a>
         </li>
@@ -45,13 +47,33 @@ const TradeBlock = () => {
               loading='lazy'
               src={photonPath}
               alt={`Photon`}
-              width={35}
-              height={35}
+              width={40}
+              height={40}
             />
           </a>
         </li>
-        <li className={styles.item}><BullxIcon size='40' /></li>
-        <li className={styles.item}> <BonkIcon size='40' /></li>
+        <li className={styles.item}>
+          <a href="https://bull-x.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
+            <Image
+              loading='lazy'
+              src={bulxPath}
+              alt={`Bulx`}
+              width={40}
+              height={40}
+            />
+          </a>
+        </li>
+        <li className={styles.item}>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
+            <Image
+              loading='lazy'
+              src={bonkPath}
+              alt={`Bonk`}
+              width={40}
+              height={40}
+            />
+          </a>
+        </li>
       </ul>
 
       <div>

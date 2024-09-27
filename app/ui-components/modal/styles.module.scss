@@ -19,8 +19,9 @@
   }
 
   @include responsive {
-    min-height: 100vh;
-    padding: 34px 16px 16px;
+    max-height: 100dvh;
+    height: 100dvh;
+    padding: 24px 10px;
   }
 }
 
