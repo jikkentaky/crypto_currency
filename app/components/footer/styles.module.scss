@@ -32,28 +32,22 @@
 }
 
 .networks-chose-modal {
-  max-height: 85dvh;
-  inset: 15% auto auto 50%;
+  max-height: 778px;
+  left: 50%;
   transform: translate(-50%);
   position: fixed;
   bottom: 0;
+  padding-bottom: 48px;
 }
 
 .networks-modal {
   max-height: 100dvh;
   inset: 0 auto auto 0;
   transform: translate(0, 0);
+  padding-bottom: 48px;
 }
 
 $timeframe-modal-height: 281px;
-
-// .timeframe {
-//   max-height: 33.5%;
-//   position: fixed;
-//   inset: 0 auto auto 50%;
-//   transform: translate(-50%, 0);
-//   top: calc(100vh - $timeframe-modal-height);
-// }
 
 .timeframe {
   position: fixed;
