@@ -8,9 +8,9 @@ $top-part: 110px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: calc(100dvh - $top-part);
 
   @include responsive {
+    min-height: calc(100dvh - $top-part);
     justify-content: space-between;
   }
 }

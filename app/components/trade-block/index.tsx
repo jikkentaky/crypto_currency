@@ -1,21 +1,55 @@
 import { Typography } from '@/app/ui-components/typography'
 import styles from './styles.module.scss'
-import { BBIcon, BonkIcon, BullxIcon, MaestroIcon, PhotonIcon } from '@/app/ui-components/icons'
+import { BonkIcon, BullxIcon } from '@/app/ui-components/icons'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
+import Image from 'next/image';
 
 const TradeBlock = () => {
   const { width } = useWindowDimensions()
   const isMobileWidth = width < 1100
+  const blazingPath = `/static/assets/networks-icons/blazing.png`;
+  const maestroPath = `/static/assets/networks-icons/maestro.png`;
+  const photonPath = `/static/assets/networks-icons/photon.png`;
 
   return (
     <div className={styles['trade-block']}>
       <Typography className={styles['title']}>Trade now</Typography>
 
       <ul className={styles['list']}>
-        <li className={styles.item}><BBIcon size='40' /></li>
-        <li className={styles.item}><MaestroIcon size='40' /></li>
-        <li className={styles.item}><PhotonIcon size='40' /></li>
+        <li className={styles.item}>
+          <a href="https://app.blazingbot.com/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
+            <Image
+              loading='lazy'
+              src={blazingPath}
+              alt={`Blazing bot`}
+              width={35}
+              height={35}
+            />
+          </a>
+        </li>
+        <li className={styles.item}>
+          <a href="https://www.maestrobots.com/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
+            <Image
+              loading='lazy'
+              src={maestroPath}
+              alt={`Maestro`}
+              width={35}
+              height={35}
+            />
+          </a>
+        </li>
+        <li className={styles.item}>
+          <a href="https://photon-sol.tinyastro.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
+            <Image
+              loading='lazy'
+              src={photonPath}
+              alt={`Photon`}
+              width={35}
+              height={35}
+            />
+          </a>
+        </li>
         <li className={styles.item}><BullxIcon size='40' /></li>
         <li className={styles.item}> <BonkIcon size='40' /></li>
       </ul>
