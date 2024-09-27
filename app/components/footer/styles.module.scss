@@ -6,6 +6,7 @@
   display: none;
 
   @include responsive {
+    position: relative;
     display: flex;
     justify-content: center;
     gap: 8px;
@@ -35,7 +36,7 @@
   inset: 15% auto auto 50%;
   transform: translate(-50%);
   position: fixed;
-  bottom: env(safe-area-inset-bottom);
+  bottom: 0;
 }
 
 .networks-modal {
@@ -56,7 +57,7 @@ $timeframe-modal-height: 281px;
 
 .timeframe {
   position: fixed;
-  bottom: env(safe-area-inset-bottom);
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
