@@ -61,5 +61,6 @@ $timeframe-modal-height: 281px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-height: 33.5%;
+  max-height: $timeframe-modal-height;
+  padding-bottom: 48px;
 }

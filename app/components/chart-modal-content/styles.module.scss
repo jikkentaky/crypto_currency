@@ -2,7 +2,7 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-$top-part: 110px;
+$top-part: 120px;
 
 .container {
   display: flex;
@@ -11,7 +11,6 @@ $top-part: 110px;
   min-height: calc(100dvh - $top-part);
 
   @include responsive {
-    gap: 5px;
     justify-content: space-between;
   }
 }
