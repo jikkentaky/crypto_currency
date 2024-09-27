@@ -50,12 +50,6 @@ const TokenInfo = () => {
         <div className={styles['token-item']} >
           <Typography
             variant="body2">
-            {/* {width > 430
-              ? `${chosenToken.token.name.length > 10
-                ? chosenToken.token.name.slice(0, 10) + '...'
-                : chosenToken.token.name} (${chosenToken.token.symbol})`
-              : `(${chosenToken.token.symbol})`
-            } */}
             {`${chosenToken.token.name} (${chosenToken.token.symbol})`}
           </Typography>
 
