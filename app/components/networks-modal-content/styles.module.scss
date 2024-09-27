@@ -68,7 +68,7 @@ $top-part-header: 276px;
   max-height: 340px;
 
   @include responsive {
-    max-height: calc(100vh - $top-part-header);
+    max-height: calc(100dvh - $top-part-header);
   }
 }
 
