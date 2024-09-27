@@ -7,7 +7,6 @@ type Props = {
 }
 
 const Loader: React.FC<Props> = ({ height = '260px' }) => {
-  console.log("🚀 ~ height:", height)
 
   return (
     <Box

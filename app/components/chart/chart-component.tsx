@@ -1,6 +1,4 @@
-import { Loader } from '@/app/ui-components/loader';
 import { useWindowDimensions } from '@/hooks/use-window-dimensions';
-import { useStore } from '@/store';
 import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { FC, useEffect, useRef } from 'react';
@@ -19,7 +17,6 @@ type Props = {
 }
 
 export const ChartComponent: FC<Props> = (props) => {
-  const { isLoading } = useStore();
   const { width } = useWindowDimensions();
 
   const {
