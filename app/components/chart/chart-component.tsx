@@ -34,7 +34,7 @@ export const ChartComponent: FC<Props> = (props) => {
   } = props;
 
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
-  const height = width > 1100 ? 385 : 300;
+  const height = width > 1100 ? 385 : 260;
 
   useEffect(
     () => {
@@ -85,6 +85,6 @@ export const ChartComponent: FC<Props> = (props) => {
   );
 
   return (
-    isLoading ? <Loader /> : <div ref={chartContainerRef} style={{ height: `${height}px` }} />
+    <div ref={chartContainerRef} style={{ height: `${height}px` }} />
   );
 };

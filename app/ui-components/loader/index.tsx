@@ -6,14 +6,15 @@ type Props = {
   height?: string
 }
 
-const Loader: React.FC<Props> = ({ height }) => {
+const Loader: React.FC<Props> = ({ height = '260px' }) => {
+  console.log("🚀 ~ height:", height)
 
   return (
     <Box
       sx={{
         display: 'flex',
         width: '100%',
-        minHeight: '300px',
+        minHeight: '260px',
         height: height || '100%',
         justifyContent: 'center',
         alignItems: 'center',
