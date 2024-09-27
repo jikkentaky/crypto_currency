@@ -2,16 +2,16 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-$top-part: 130px;
+$top-part: 110px;
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: calc(100vh - $top-part);
+  min-height: calc(100dvh - $top-part);
 
   @include responsive {
-    gap: 0;
+    gap: 5px;
     justify-content: space-between;
   }
 }

@@ -31,7 +31,7 @@
 }
 
 .networks-chose-modal {
-  max-height: 85vh;
+  max-height: 85dvh;
   inset: 15% auto auto 50%;
   transform: translate(-50%);
   position: fixed;
@@ -39,7 +39,7 @@
 }
 
 .networks-modal {
-  max-height: 100vh;
+  max-height: 100dvh;
   inset: 0 auto auto 0;
   transform: translate(0, 0);
 }
