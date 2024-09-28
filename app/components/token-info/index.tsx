@@ -5,13 +5,13 @@ import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
 import { convertToBillions } from "@/lib/convert-to-billions"
 import { convertToMillions } from "@/lib/convert-to-millions"
-import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
+import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 
 const TokenInfo = () => {
-  const { chosenToken, resolution, modalResolution } = useStore()
-  const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
+  const { chosenToken, modalResolution } = useStore()
+  const [resolutions, setResolutions] = useState(SORTING_BY.HOUR)
 
   useEffect(() => {
     getPriceChange(modalResolution)
@@ -22,19 +22,19 @@ const TokenInfo = () => {
   const getPriceChange = (res: Resolution) => {
     switch (res) {
       case Resolution.HOUR:
-        setResolutions(PriceChangePercentage.HOUR)
+        setResolutions(SORTING_BY.HOUR)
 
       case Resolution.FOUR_HOURS:
-        setResolutions(PriceChangePercentage.FOUR_HOURS)
+        setResolutions(SORTING_BY.FOUR_HOURS)
 
       case Resolution.TWELVE_HOURS:
-        setResolutions(PriceChangePercentage.TWELVE_HOURS)
+        setResolutions(SORTING_BY.TWELVE_HOURS)
 
       case Resolution.DAY:
-        setResolutions(PriceChangePercentage.DAY)
+        setResolutions(SORTING_BY.DAY)
 
       default:
-        setResolutions(PriceChangePercentage.HOUR)
+        setResolutions(SORTING_BY.HOUR)
     }
   }
 
@@ -57,9 +57,9 @@ const TokenInfo = () => {
 
           <Typography
             variantWeight='medium'
-            color={chosenToken[resolutions] > 0 ? 'green' : 'red'}
+            color={parseInt(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
           >
-            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
+            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${parseInt(chosenToken[resolutions].toString()).toFixed(2)}%)`}
           </Typography>
         </div>
       </div>
@@ -91,7 +91,7 @@ const TokenInfo = () => {
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToMillions(chosenToken.marketCap)}`}
+            {`$${convertToMillions(+chosenToken.volume24)}`}
           </Typography>
         </div>
       </div>

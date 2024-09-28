@@ -6,6 +6,8 @@ import { SearchInput } from '@/app/ui-components/search-input'
 import cn from 'classnames'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 import { priceChangeButtons } from '@/lib/config'
+import { Typography } from '@/app/ui-components/typography'
+import { CustomSelect } from '@/app/ui-components/select'
 
 const Header = () => {
   const { searchCoin, resolution, setResolution, setSearchCoin } = useStore()
@@ -23,15 +25,19 @@ const Header = () => {
         <ButtonGroupRadio
           buttons={priceChangeButtons}
           resolution={resolution}
-          // @ts-expect-error
           setResolution={setResolution}
         />
+
+        <Typography className={styles.sort}>Sort by</Typography>
+
+        <CustomSelect />
       </div>
 
       <SearchInput
         placeholder="Enter cryptocurrency..."
         onChange={setSearchCoin}
         value={searchCoin}
+        className={styles.search}
       />
     </header>
   )

@@ -43,6 +43,7 @@ async function fetchFilterTokens(
                 priceUSD
                 marketCap
                 volume24
+                liquidity
                 quoteToken
                 token {
                   address

@@ -51,15 +51,10 @@
 .title {
   padding: 14px 24px;
   color: $color-black;
-  font-size: $fs-20;
+  font-size: $fs-22;
   height: 48px;
   margin: 0;
-  background: linear-gradient(-90deg, rgba(161, 44, 153, 1),
-      rgba(206, 60, 105, 1),
-      rgba(214, 87, 39, 1),
-      rgba(252, 249, 64, 1),
-      rgba(33, 34, 241, 1),
-      rgba(127, 36, 175, 1));
+  background: $color-gradient;
 }
 
 .edit {

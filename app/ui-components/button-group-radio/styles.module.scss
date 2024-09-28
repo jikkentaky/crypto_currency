@@ -19,9 +19,7 @@
   font-size: $fs-20 !important;
   line-height: 0;
 
-  &:hover {
-    background-color: $color-dark-blue !important;
-  }
+  @include hover('background-color', $color-dark-blue);
 }
 
 .selected {

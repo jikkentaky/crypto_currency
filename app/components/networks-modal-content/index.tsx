@@ -64,11 +64,7 @@ const NetworksModalContent = () => {
         <h2 className={styles.title}>Favorite networks</h2>
 
         <Typography>
-          Toggle network visibility
-        </Typography>
-
-        <Typography>
-          throughout the app.
+          Toggle network visibility throughout the app.
         </Typography>
       </div>}
 

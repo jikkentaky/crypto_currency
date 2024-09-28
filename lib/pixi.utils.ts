@@ -1,6 +1,6 @@
 "use client";
 
-import { Circle, PriceChangePercentage } from "@/types/bubbles.type";
+import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
@@ -61,7 +61,7 @@ export class PixiUtils {
     return text;
   };
 
-  static createText2 = (circle: Circle, bubbleSort: PriceChangePercentage) => {
+  static createText2 = (circle: Circle, bubbleSort: SORTING_BY) => {
     const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 

@@ -3,7 +3,7 @@
 import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
 import * as PIXI from 'pixi.js';
-import { Circle, PriceChangePercentage, } from "@/types/bubbles.type";
+import { Circle, SORTING_BY, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
@@ -16,9 +16,9 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins }: Props) {
-  const bubbleSortRef = useRef<PriceChangePercentage | null>(null);
+  const bubbleSortRef = useRef<SORTING_BY | null>(null);
   const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
-    bubbleSortRef.current = state.resolution || PriceChangePercentage.HOUR;
+    bubbleSortRef.current = state.resolution as SORTING_BY | null || SORTING_BY.HOUR;
     return state;
   });
 
@@ -28,12 +28,12 @@ export default function Bubbles({ coins }: Props) {
   const appInstance = useRef<PIXI.Application | null>(null);
 
   const scalingFactor = useMemo(() => {
-    return BubblesUtils.getScalingFactor(coins, bubbleSort);
+    return BubblesUtils.getScalingFactor(coins, bubbleSort as SORTING_BY);
   }, [bubbleSort, coins]);
 
   useEffect(() => {
     if (coins && chosenNetwork) {
-      const scalingFactor = BubblesUtils.getScalingFactor(coins, PriceChangePercentage.HOUR);
+      const scalingFactor = BubblesUtils.getScalingFactor(coins, SORTING_BY.HOUR);
       const shapes = BubblesUtils.generateCircles(coins, scalingFactor);
       setCircles(shapes);
     }
@@ -94,7 +94,7 @@ export default function Bubbles({ coins }: Props) {
       textSprites.push(text);
 
       // Create the second text
-      const text2 = PixiUtils.createText2(circle, PriceChangePercentage.HOUR);
+      const text2 = PixiUtils.createText2(circle, SORTING_BY.HOUR);
 
       container.addChild(text2);
       text2Sprites.push(text2);
@@ -131,13 +131,13 @@ export default function Bubbles({ coins }: Props) {
       const min = minCircleSize;
 
       circles.forEach((circle) => {
-        if (!circle[bubbleSort]) return;
+        if (!circle[bubbleSort as SORTING_BY]) return;
 
-        const radius = Math.abs(Math.floor(circle[bubbleSort] * scalingFactor));
+        const radius = Math.abs(Math.floor(circle[bubbleSort as SORTING_BY] * scalingFactor));
         circle.targetRadius = radius > max ? max : radius > min ? radius : min;
-        circle.color = circle[bubbleSort] > 0 ? "green" : "red";
+        circle.color = circle[bubbleSort as SORTING_BY] > 0 ? "green" : "red";
 
-        const newText2Value = circle[bubbleSort].toFixed(2) + "%";
+        const newText2Value = circle[bubbleSort as SORTING_BY].toFixed(2) + "%";
 
         if (circle.text2) {
           if (!circle.previousText2) {

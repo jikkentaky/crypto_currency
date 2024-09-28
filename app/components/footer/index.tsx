@@ -32,7 +32,7 @@ const Footer = () => {
       </MobileButton>
 
       <MobileButton onClick={handleToggleTimeFrame}>
-        {mobileResolution[resolution]}
+        {mobileResolution[resolution as keyof typeof mobileResolution]}
         <PriceArrowIcon className={styles.rotate} />
       </MobileButton>
 

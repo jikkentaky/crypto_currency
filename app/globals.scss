@@ -23,6 +23,9 @@ html,
   width: 8px;
   height: 8px;
 
+  @include responsive {
+    width: 4px;
+  }
 
   &-track {
     width: 100%;
@@ -39,9 +42,7 @@ html,
     border: 1px solid $color-grey-2;
     background-color: $color-dark-pink;
 
-    &:hover {
-      background-color: color.adjust($color-dark-blue, $lightness: 10%);
-    }
+    @include hover('background-color', color.adjust($color-dark-blue, $lightness: 10%));
   }
 }
 
@@ -58,4 +59,29 @@ html,
   font-family: $ff-jersey !important;
   font-size: $fs-20;
   opacity: 1;
+}
+
+// .MuiBackdrop-root {
+//   background-color: transparent;
+// }
+
+.MuiPaper-root {
+  background-color: $color-black-2;
+  border-radius: 0;
+  border: 1px solid $color-grey-13;
+  color: $color-white;
+}
+
+.MuiMenuItem-root {
+  font-family: $ff-jersey;
+
+  @include hover ('background', $color-dark-blue);
+}
+
+.MuiMenuItem-root[aria-selected='true'] {
+  background: $color-gradient;
+}
+
+.MuiList-padding {
+  padding: 0;
 }

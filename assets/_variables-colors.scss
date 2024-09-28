@@ -32,6 +32,14 @@ $color-white: #fff;
 $color-dark-blue: #261E51;
 $color-dark-pink: #622851;
 
+$color-gradient: linear-gradient(-90deg, rgba(161, 44, 153, 1),
+    rgba(206, 60, 105, 1),
+    rgba(214, 87, 39, 1),
+    rgba(252, 249, 64, 1),
+    rgba(33, 34, 241, 1),
+    rgba(127, 36, 175, 1));
+
+
 $aside: 310px;
 $small-header: 16px;
 $header: 47px;

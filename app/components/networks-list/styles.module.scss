@@ -61,9 +61,7 @@
   background-color: transparent;
   text-align: start;
 
-  &:hover {
-    background-color: $color-dark-blue;
-  }
+  @include hover('background-color', $color-dark-blue);
 
   &:active {
     background-color: $color-light-grey-2;

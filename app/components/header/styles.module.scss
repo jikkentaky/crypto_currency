@@ -42,7 +42,15 @@
 }
 
 .buttons-wrapper {
+  display: flex;
+  align-items: center;
   max-width: 400px;
 
   @include component-to-hide(1px, $media-1100-width);
+}
+
+.sort {
+  padding: 17px 32px 18px 16px;
+  width: max-content;
+  text-wrap: nowrap;
 }
