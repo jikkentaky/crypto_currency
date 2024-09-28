@@ -3,15 +3,12 @@ import styles from './styles.module.scss'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
 import Image from 'next/image';
+import { PlatformLink } from '../platform-link';
+import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from '@/lib/config';
 
 const TradeBlock = () => {
   const { width } = useWindowDimensions()
   const isMobileWidth = width < 1100
-  const blazingPath = `/static/assets/networks-icons/blazing.png`;
-  const maestroPath = `/static/assets/networks-icons/maestro.png`;
-  const photonPath = `/static/assets/networks-icons/photon.png`;
-  const bonkPath = `/static/assets/networks-icons/bonk.png`;
-  const bulxPath = `/static/assets/networks-icons/bulx.png`;
 
   return (
     <div className={styles['trade-block']}>
@@ -19,59 +16,21 @@ const TradeBlock = () => {
 
       <ul className={styles['list']}>
         <li className={styles.item}>
-          <a href="https://app.blazingbot.com/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
-            <Image
-              loading='lazy'
-              src={blazingPath}
-              alt={`Blazing bot`}
-              width={40}
-              height={40}
-            />
-          </a>
+          <PlatformLink path={blazingPath} href="https://app.blazingbot.com/" />
         </li>
         <li className={styles.item}>
-          <a href="https://www.maestrobots.com/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
-            <Image
-              loading='lazy'
-              src={maestroPath}
-              alt={`Maestro`}
-              width={40}
-              height={40}
-            />
-          </a>
+          <PlatformLink path={maestroPath} href="https://www.maestrobots.com/" />
+        </li>
+
+        <li className={styles.item}>
+          <PlatformLink path={photonPath} href="https://photon-sol.tinyastro.io/" />
+        </li>
+
+        <li className={styles.item}>
+          <PlatformLink path={bulxPath} href="https://bull-x.io/" />
         </li>
         <li className={styles.item}>
-          <a href="https://photon-sol.tinyastro.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
-            <Image
-              loading='lazy'
-              src={photonPath}
-              alt={`Photon`}
-              width={40}
-              height={40}
-            />
-          </a>
-        </li>
-        <li className={styles.item}>
-          <a href="https://bull-x.io/" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
-            <Image
-              loading='lazy'
-              src={bulxPath}
-              alt={`Bulx`}
-              width={40}
-              height={40}
-            />
-          </a>
-        </li>
-        <li className={styles.item}>
-          <a href="#" target="_blank" rel="noopener noreferrer" style={{ position: 'relative', zIndex: 1 }}>
-            <Image
-              loading='lazy'
-              src={bonkPath}
-              alt={`Bonk`}
-              width={40}
-              height={40}
-            />
-          </a>
+          <PlatformLink path={bonkPath} href="#" />
         </li>
       </ul>
 

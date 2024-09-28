@@ -46,11 +46,11 @@ export class PixiUtils {
   };
 
   static createText = (circle: Circle) => {
-    const fontSize = circle.radius * 0.3;
+    const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 
     const textStyle = new PIXI.TextStyle({
-      fontFamily: "Press Start 2P, sans-serif",
+      fontFamily: "Jersey 10, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });
@@ -62,11 +62,11 @@ export class PixiUtils {
   };
 
   static createText2 = (circle: Circle, bubbleSort: PriceChangePercentage) => {
-    const fontSize = circle.radius * 0.3;
+    const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 
     const text2Style = new PIXI.TextStyle({
-      fontFamily: "Press Start 2P, sans-serif",
+      fontFamily: "Jersey 10, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });

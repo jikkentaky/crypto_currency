@@ -40,7 +40,7 @@
 .edit-button {
   position: relative;
   z-index: 1;
-  font-size: $fs-11;
+  font-size: $fs-20;
   background-color: transparent;
   color: $color-green-2;
   border: none;
@@ -53,7 +53,7 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  font-size: $fs-11;
+  font-size: $fs-20;
 
   cursor: pointer;
   box-shadow: -1px -1px 1px $color-light-grey-3;

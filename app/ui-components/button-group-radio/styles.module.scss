@@ -6,6 +6,7 @@
   width: 100%;
   display: flex;
   background-color: $color-black-2 !important;
+  border-bottom: 1px solid $color-grey-13;
 }
 
 .button {
@@ -15,7 +16,7 @@
   border: 1px solid $color-grey-13;
   border-bottom: 0;
 
-  font-size: $fs-11 !important;
+  font-size: $fs-20 !important;
   line-height: 0;
 
   &:hover {

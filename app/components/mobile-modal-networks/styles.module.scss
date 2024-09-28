@@ -41,7 +41,7 @@
   gap: 8px;
   width: 100%;
   color: $color-white;
-  font-size: $fs-11;
+  font-size: $fs-20;
   border: 1px solid $color-grey-13;
   border-right: 0;
   border-left: 0;
@@ -49,9 +49,9 @@
 }
 
 .title {
-  padding: 24px;
+  padding: 14px 24px;
   color: $color-black;
-  font-size: $fs-11;
+  font-size: $fs-20;
   height: 48px;
   margin: 0;
   background: linear-gradient(-90deg, rgba(161, 44, 153, 1),
@@ -70,7 +70,7 @@
   align-items: center;
   padding: 14px 24px;
   gap: 8px;
-  font-size: $fs-11;
+  font-size: $fs-20;
   cursor: pointer;
 }
 

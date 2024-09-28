@@ -8,7 +8,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 import { appConfig } from "@/lib/config";
-import styles from './styles.module.scss';
 
 type Props = {
   coins: TokenFilterResult[];
@@ -158,6 +157,6 @@ export default function Bubbles({ coins }: Props) {
   }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
 
   return (
-    <div style={{ height: height }} ref={appRef} className={styles.container}></div>
+    <div style={{ height: height }} ref={appRef}></div>
   );
 }

@@ -47,15 +47,13 @@ const TokenInfo = () => {
           className={styles['token-image']}
         />
 
-        <div className={styles['token-item']} >
-          <Typography
-            variant="body2">
+        <div className={styles['token-price']} >
+          <Typography>
             {`${chosenToken.token.name} (${chosenToken.token.symbol})`}
           </Typography>
 
           <Typography
             variantWeight='medium'
-            variant="body2"
             color={chosenToken[resolutions] > 0 ? 'green' : 'red'}
           >
             {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
@@ -65,7 +63,7 @@ const TokenInfo = () => {
 
       <div className={styles['token-info-items']}>
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             Market Cap
           </Typography>
 
@@ -75,7 +73,7 @@ const TokenInfo = () => {
         </div>
 
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             Total Supply
           </Typography>
 
@@ -85,7 +83,7 @@ const TokenInfo = () => {
         </div>
 
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             24H Vol
           </Typography>
 

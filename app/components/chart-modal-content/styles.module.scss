@@ -9,9 +9,13 @@
 
   @include responsive {
     max-height: 100dvh;
+    position: relative;
+    z-index: 1;
     height: 100dvh;
     overflow-y: auto;
     gap: 32px;
+    padding-right: 6px;
+    padding-left: 6px;
     justify-content: space-between;
   }
 }

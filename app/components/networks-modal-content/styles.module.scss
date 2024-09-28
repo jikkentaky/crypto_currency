@@ -2,7 +2,7 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-$top-part-header: 276px;
+$top-part-header: 328px;
 
 .container {
   display: flex;
@@ -15,14 +15,13 @@ $top-part-header: 276px;
 }
 
 .mobile-container {
-
   @include responsive {
     margin: 64px 24px 24px 24px;
   }
 }
 
 .title {
-  font-size: $fs-12;
+  font-size: $fs-24;
   margin-bottom: 4px;
 }
 
@@ -52,6 +51,7 @@ $top-part-header: 276px;
 
 .show-all-button {
   border: none;
+  font-size: $fs-20;
   background-color: transparent;
   color: $color-green-2;
   text-decoration-line: underline;
