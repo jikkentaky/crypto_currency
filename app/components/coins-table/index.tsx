@@ -11,6 +11,7 @@ import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 import { sortFilterTokens } from "@/app/api/lib";
 import { PlatformLink } from "../platform-link"
 import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from "@/lib/config"
+import Image from 'next/image'
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
@@ -55,11 +56,13 @@ const CoinsTable = () => {
           const row = info.row.original;
           return (
             <p className={styles['col-name']} title={row.token.name}>
-              <img
+              <Image
                 loading="lazy"
-                src={row.token.info.imageThumbUrl}
+                src={row.token.info.imageThumbUrl || ''}
+                width={20}
+                height={20}
                 alt={row.token.name}
-                style={{ width: '20px', height: '20px', marginRight: '8px' }}
+                style={{ marginRight: '8px' }}
               />
 
               {info.getValue()}

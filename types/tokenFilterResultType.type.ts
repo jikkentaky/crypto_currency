@@ -129,8 +129,8 @@ export type TokenInfo = {
   description?: string;
   id: string;
   imageLargeUrl?: string;
-  imageSmallUrl?: string;
-  imageThumbUrl?: string;
+  imageSmallUrl: string;
+  imageThumbUrl: string;
   isScam?: boolean;
   name: string;
   networkId: number;

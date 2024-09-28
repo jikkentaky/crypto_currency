@@ -7,6 +7,7 @@ import { convertToBillions } from "@/lib/convert-to-billions"
 import { convertToMillions } from "@/lib/convert-to-millions"
 import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
+import Image from "next/image"
 
 const TokenInfo = () => {
   const { chosenToken, resolution, modalResolution } = useStore()
@@ -40,9 +41,11 @@ const TokenInfo = () => {
   return (
     chosenToken && <div className={styles['token-info']}>
       <div className={styles['token-image-wrapper']}>
-        <img
+        <Image
           loading='lazy'
-          src={chosenToken.token.info.imageSmallUrl}
+          src={chosenToken.token.info.imageSmallUrl || ''}
+          width={40}
+          height={40}
           alt={chosenToken.token.name}
           className={styles['token-image']}
         />
