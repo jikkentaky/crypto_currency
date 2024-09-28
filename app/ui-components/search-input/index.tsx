@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from 'react';
 import { BaseTextFieldProps, TextField } from '@mui/material';
 import styles from './styles.module.scss';
-import { SearchIcon } from '@/app/ui-components/icons';
 import cn from 'classnames';
+import Image from 'next/image';
 
 type Props = BaseTextFieldProps & {
   isHide?: boolean;
@@ -24,7 +24,11 @@ const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '2
           [styles['hide']]: !isHide
         })}
       >
-        <SearchIcon /> Search
+        <Image
+          src="/static/assets/networks-icons/search.png"
+          alt="search-icon" width={16} height={16}
+        />
+        Search
       </label>
 
       <TextField

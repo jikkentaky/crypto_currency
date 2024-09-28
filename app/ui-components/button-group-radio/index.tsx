@@ -54,6 +54,7 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setR
         <ToggleButton
           key={value}
           value={value}
+          disabled={sortBy !== 'PRICE_CHANGE' as SORT_BY && !isOpenModal}
           className={cn(styles.button, { [styles.selected]: value === resolution })}
         >
           {content}

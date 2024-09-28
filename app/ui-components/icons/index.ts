@@ -1,5 +1,4 @@
 export { NetworkIcon } from './network-icon'
-export { SearchIcon } from './search-icon'
 export { CloseIcon } from './close-icon'
 export { VisibilityOff } from './visibility-off-icon'
 export { VisibilityOn } from './visibility-on-icon'

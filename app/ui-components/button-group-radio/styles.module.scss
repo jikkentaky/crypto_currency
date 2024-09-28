@@ -10,6 +10,7 @@
 }
 
 .button {
+  min-width: 54px;
   width: 100%;
   border-radius: 0;
   padding: 16px 14px !important;
@@ -20,6 +21,11 @@
   line-height: 0;
 
   @include hover('background-color', $color-dark-blue);
+
+  &:disabled {
+    border: 1px solid $color-grey-13;
+    color: $color-grey-1;
+  }
 }
 
 .selected {

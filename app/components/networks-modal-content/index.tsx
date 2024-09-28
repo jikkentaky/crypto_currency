@@ -2,7 +2,7 @@ import { useStore } from '@/store';
 import styles from './styles.module.scss'
 import { useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '@/app/ui-components/search-input';
-import { SearchIcon, VisibilityOff, VisibilityOn } from '@/app/ui-components/icons';
+import { VisibilityOff, VisibilityOn } from '@/app/ui-components/icons';
 import { Typography } from '@/app/ui-components/typography';
 import { Network } from '@/types/network.type';
 import Image from 'next/image';
@@ -71,7 +71,15 @@ const NetworksModalContent = () => {
       <div className={styles['search-block']}>
         <SearchInput
           isHide
-          label={<><SearchIcon /> Search</>}
+          label={
+            <>
+              <Image
+                src="/static/assets/networks-icons/search.png"
+                alt="search-icon" width={16} height={16}
+              />
+              Search
+            </>
+          }
           placeholder="Enter network..."
           onChange={setSearchNetwork}
           value={searchNetwork}

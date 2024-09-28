@@ -7,13 +7,10 @@
   align-items: center;
   justify-content: space-between;
   padding-right: 8px;
-
   width: 100%;
-
   background-color: $color-black;
   gap: 20px;
-  border: 1px solid $color-grey-13;
-
+  @include gradient-border(1px);
 
   &>div:nth-child(2) {
     width: 100%;
@@ -22,13 +19,14 @@
   }
 
   @include responsive {
+    border: 1px solid $color-grey-13;
     padding: 12px 16px;
-    height: 60px
-  }
-}
+    height: 60px;
 
-.gradient {
-  @include gradient-border();
+    &::before {
+      content: none;
+    }
+  }
 }
 
 .title {
