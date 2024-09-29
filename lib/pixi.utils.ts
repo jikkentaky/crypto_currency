@@ -1,7 +1,8 @@
 "use client";
 
-import { Circle, PriceChangePercentage } from "@/types/bubbles.type";
+import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
+import { defaultPath } from "./config";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
 
@@ -33,24 +34,28 @@ export class PixiUtils {
   };
 
   static createImageSprite = (circle: Circle) => {
-    const imgUrl = circle.image || '/images/unknown.png';
-
+    const imgUrl = circle.image || defaultPath;
     const imageSprite = PIXI.Sprite.from(imgUrl);
     const isFullSize = circle.radius * 0.3 < 10;
 
     imageSprite.anchor.set(0.5);
-    imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5);
-    imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5);
-    imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
+
+    const scaleFactor = isFullSize ? 1.2 : 0.5;
+    imageSprite.width = circle.radius * scaleFactor;
+    imageSprite.height = circle.radius * scaleFactor;
+
+    const posY = isFullSize ? 0 : -circle.radius / 2;
+    imageSprite.position.set(0, posY);
+
     return imageSprite;
   };
 
   static createText = (circle: Circle) => {
-    const fontSize = circle.radius * 0.3;
+    const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 
     const textStyle = new PIXI.TextStyle({
-      fontFamily: "Press Start 2P, sans-serif",
+      fontFamily: "Jersey 10, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });
@@ -61,12 +66,12 @@ export class PixiUtils {
     return text;
   };
 
-  static createText2 = (circle: Circle, bubbleSort: PriceChangePercentage) => {
-    const fontSize = circle.radius * 0.3;
+  static createText2 = (circle: Circle, bubbleSort: SORTING_BY) => {
+    const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 
     const text2Style = new PIXI.TextStyle({
-      fontFamily: "Press Start 2P, sans-serif",
+      fontFamily: "Jersey 10, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });

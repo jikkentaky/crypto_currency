@@ -1,4 +1,4 @@
-import { PriceChangePercentage } from "@/types/bubbles.type";
+import { SORTING_BY } from "@/types/bubbles.type";
 import { calculateMinCircleSize } from "./calc-min-circle-size";
 import { calculateMaxCircleSize } from "./calc-max-circle-size";
 
@@ -31,10 +31,10 @@ const appConfig = {
 };
 
 const priceChangeButtons = [
-  { value: PriceChangePercentage.HOUR, content: '1H' },
-  { value: PriceChangePercentage.FOUR_HOURS, content: '4H' },
-  { value: PriceChangePercentage.TWELVE_HOURS, content: '12H' },
-  { value: PriceChangePercentage.DAY, content: '24H' },
+  { value: SORTING_BY.HOUR, content: '1H' },
+  { value: SORTING_BY.FOUR_HOURS, content: '4H' },
+  { value: SORTING_BY.TWELVE_HOURS, content: '12H' },
+  { value: SORTING_BY.DAY, content: '24H' },
 ]
 
 const mobileResolution = {
@@ -44,4 +44,21 @@ const mobileResolution = {
   change24: "24H",
 }
 
-export { appConfig, priceChangeButtons, mobileResolution }
+const blazingPath = `/static/assets/images/blazing.png`;
+const maestroPath = `/static/assets/images/maestro.png`;
+const photonPath = `/static/assets/images/photon.png`;
+const bonkPath = `/static/assets/images/bonk.png`;
+const bulxPath = `/static/assets/images/bulx.png`;
+const defaultPath = `/static/assets/images/default.jpg`;
+
+export {
+  appConfig,
+  priceChangeButtons,
+  mobileResolution,
+  blazingPath,
+  maestroPath,
+  photonPath,
+  bonkPath,
+  bulxPath,
+  defaultPath,
+}

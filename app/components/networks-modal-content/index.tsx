@@ -1,8 +1,8 @@
 import { useStore } from '@/store';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '@/app/ui-components/search-input';
-import { SearchIcon, VisibilityOff, VisibilityOn } from '@/app/ui-components/icons';
+import { VisibilityOff, VisibilityOn } from '@/app/ui-components/icons';
 import { Typography } from '@/app/ui-components/typography';
 import { Network } from '@/types/network.type';
 import Image from 'next/image';
@@ -10,8 +10,9 @@ import cn from 'classnames';
 import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 
 const NetworksModalContent = () => {
-  const { isNetworks, networkList, setNetworkList } = useStore()
+  const { isNetworks, networkList, setNetworkList } = useStore();
   const [searchNetwork, setSearchNetwork] = useState('');
+  const [isShowAll, setIsShowAll] = useState(true);
   const { width } = useWindowDimensions();
 
   const filteredNetworks = useMemo(
@@ -20,12 +21,18 @@ const NetworksModalContent = () => {
         name.toLowerCase().startsWith(searchNetwork.toLowerCase().trim()),
       ),
     [searchNetwork, networkList],
-  )
+  );
 
   useEffect(() => {
     if (!isNetworks) return;
 
     const savedNetworkList = localStorage.getItem('networkList');
+    const savedIsShowAll = localStorage.getItem('isShowAll');
+
+    if (savedIsShowAll !== null) {
+      setIsShowAll(JSON.parse(savedIsShowAll));
+    }
+
     if (savedNetworkList && networkList) {
       const parsedNetworkList = JSON.parse(savedNetworkList);
       const updatedNetworkList = networkList.map(network => {
@@ -47,13 +54,15 @@ const NetworksModalContent = () => {
     localStorage.setItem('networkList', JSON.stringify(updatedNetworkList));
   };
 
-  const showAllNetworks = () => {
-    const updatedNetworkList = networkList?.map(network => ({ ...network, isVisible: true }));
+  const toggleAllNetworks = () => {
+    const updatedNetworkList = networkList?.map(network => ({ ...network, isVisible: !isShowAll }));
 
     if (!updatedNetworkList) return;
 
     setNetworkList(updatedNetworkList);
     localStorage.setItem('networkList', JSON.stringify(updatedNetworkList));
+    localStorage.setItem('isShowAll', JSON.stringify(!isShowAll));
+    setIsShowAll(!isShowAll);
   };
 
   const isMobileContent = isNetworks && width < 1100;
@@ -64,33 +73,42 @@ const NetworksModalContent = () => {
         <h2 className={styles.title}>Favorite networks</h2>
 
         <Typography>
-          Toggle network visibility
-        </Typography>
-
-        <Typography>
-          throughout the app.
+          Toggle network visibility throughout the app.
         </Typography>
       </div>}
 
       <div className={styles['search-block']}>
         <SearchInput
           isHide
-          label={<><SearchIcon /> Search</>}
+          label={
+            <>
+              <Image
+                src="/static/assets/images/search.png"
+                alt="search-icon" width={16} height={16}
+              />
+              Search
+            </>
+          }
           placeholder="Enter network..."
           onChange={setSearchNetwork}
           value={searchNetwork}
         />
       </div>
 
-      <div className={styles['title-wrapper']} onClick={showAllNetworks}>
+      <div className={styles['title-wrapper']}>
         <Typography>Network list</Typography>
-        <button className={styles['show-all-button']}>SHOW ALL</button>
+        <button
+          className={styles['show-all-button']}
+          onClick={toggleAllNetworks}
+        >
+          {isShowAll ? 'HIDE ALL' : 'SHOW ALL'}
+        </button>
       </div>
 
       <div className={styles['networks-list']}>
         {filteredNetworks?.map(({ id, name, isVisible }) => {
           const imageName = name.toLowerCase().replace(/\s+/g, '-');
-          const path = `/static/assets/networks-icons/${imageName}.png`;
+          const path = `/static/assets/images/${imageName}.png`;
 
           return (
             <button
@@ -121,8 +139,8 @@ const NetworksModalContent = () => {
           );
         })}
       </div>
-    </div >
-  )
+    </div>
+  );
 }
 
-export { NetworksModalContent }
+export { NetworksModalContent };

@@ -20,7 +20,7 @@ export type TokenFilterResult = {
   holders?: number;
   isScam?: boolean;
   lastTransaction?: number;
-  liquidity?: string;
+  liquidity: string;
   low1?: string;
   low4?: string;
   low12?: string;
@@ -50,10 +50,11 @@ export type TokenFilterResult = {
   uniqueTransactions4?: number;
   uniqueTransactions12?: number;
   uniqueTransactions24?: number;
-  volume1?: string;
-  volume4?: string;
-  volume12?: string;
+  volume1: string;
+  volume4: string;
+  volume12: string;
   volume24: number;
+  image: string;
 };
 
 export type EnhancedToken = {
@@ -129,8 +130,8 @@ export type TokenInfo = {
   description?: string;
   id: string;
   imageLargeUrl?: string;
-  imageSmallUrl?: string;
-  imageThumbUrl?: string;
+  imageSmallUrl: string;
+  imageThumbUrl: string;
   isScam?: boolean;
   name: string;
   networkId: number;

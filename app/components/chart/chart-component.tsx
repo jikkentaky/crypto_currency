@@ -1,6 +1,4 @@
-import { Loader } from '@/app/ui-components/loader';
 import { useWindowDimensions } from '@/hooks/use-window-dimensions';
-import { useStore } from '@/store';
 import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { FC, useEffect, useRef } from 'react';
@@ -19,7 +17,6 @@ type Props = {
 }
 
 export const ChartComponent: FC<Props> = (props) => {
-  const { isLoading } = useStore();
   const { width } = useWindowDimensions();
 
   const {
@@ -34,7 +31,7 @@ export const ChartComponent: FC<Props> = (props) => {
   } = props;
 
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
-  const height = width > 1100 ? 385 : 300;
+  const height = width > 1100 ? 385 : 260;
 
   useEffect(
     () => {
@@ -85,6 +82,6 @@ export const ChartComponent: FC<Props> = (props) => {
   );
 
   return (
-    isLoading ? <Loader /> : <div ref={chartContainerRef} style={{ height: `${height}px` }} />
+    <div ref={chartContainerRef} style={{ height: `${height}px` }} />
   );
 };

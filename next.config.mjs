@@ -10,6 +10,9 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   reactStrictMode: true,
+  images: {
+    domains: ['token-media.defined.fi'],
+  },
 };
 
 export default nextConfig;

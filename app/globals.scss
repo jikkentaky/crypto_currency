@@ -11,7 +11,7 @@
 html {
   color: $color-white;
 
-  font-family: $ff-start-2p;
+  font-family: $ff-jersey;
 }
 
 html,
@@ -23,6 +23,9 @@ html,
   width: 8px;
   height: 8px;
 
+  @include responsive {
+    width: 4px;
+  }
 
   &-track {
     width: 100%;
@@ -36,12 +39,10 @@ html,
 
   &-thumb {
     @include gradient-border(1px);
-    border: 1px solid $color-grey-2;
+    border: 1px solid $color-grey-13;
     background-color: $color-dark-pink;
 
-    &:hover {
-      background-color: color.adjust($color-dark-blue, $lightness: 10%);
-    }
+    @include hover('background-color', color.adjust($color-dark-blue, $lightness: 10%));
   }
 }
 
@@ -50,12 +51,33 @@ html,
 }
 
 .MuiModal-backdrop {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
 .MuiOutlinedInput-input {
-  color: $color-white;
-  font-family: $ff-start-2p !important;
-  font-size: $fs-8;
-  opacity: 1;
+  color: $color-white !important;
+  font-family: $ff-jersey !important;
+  font-size: $fs-20 !important;
+  opacity: 1 !important;
+}
+
+.MuiPaper-root {
+  background-color: $color-black-2 !important;
+  border-radius: 0 !important;
+  border: 1px solid $color-grey-13 !important;
+  color: $color-white !important;
+}
+
+.MuiMenuItem-root {
+  font-family: $ff-jersey !important;
+
+  @include hover ('background', $color-dark-blue);
+}
+
+.MuiMenuItem-root[aria-selected='true'] {
+  background: $color-gradient !important;
+}
+
+.MuiList-padding {
+  padding: 0 !important;
 }

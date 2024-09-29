@@ -1,8 +1,9 @@
 import { Typography } from '@/app/ui-components/typography'
 import styles from './styles.module.scss'
-import { BBIcon, BonkIcon, BullxIcon, MaestroIcon, PhotonIcon } from '@/app/ui-components/icons'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
+import { PlatformLink } from '@/app/components/platform-link';
+import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from '@/lib/config';
 
 const TradeBlock = () => {
   const { width } = useWindowDimensions()
@@ -13,11 +14,23 @@ const TradeBlock = () => {
       <Typography className={styles['title']}>Trade now</Typography>
 
       <ul className={styles['list']}>
-        <li className={styles.item}><BBIcon size='40' /></li>
-        <li className={styles.item}><MaestroIcon size='40' /></li>
-        <li className={styles.item}><PhotonIcon size='40' /></li>
-        <li className={styles.item}><BullxIcon size='40' /></li>
-        <li className={styles.item}> <BonkIcon size='40' /></li>
+        <li className={styles.item}>
+          <PlatformLink path={blazingPath} href="https://app.blazingbot.com/" />
+        </li>
+        <li className={styles.item}>
+          <PlatformLink path={maestroPath} href="https://www.maestrobots.com/" />
+        </li>
+
+        <li className={styles.item}>
+          <PlatformLink path={photonPath} href="https://photon-sol.tinyastro.io/" />
+        </li>
+
+        <li className={styles.item}>
+          <PlatformLink path={bulxPath} href="https://bull-x.io/" />
+        </li>
+        <li className={styles.item}>
+          <PlatformLink path={bonkPath} href="#" />
+        </li>
       </ul>
 
       <div>

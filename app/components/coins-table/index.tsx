@@ -6,10 +6,12 @@ import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTab
 import { memo, useCallback, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
-import { BBIcon, MaestroIcon, PhotonIcon, BullxIcon, BonkIcon } from "@/app/ui-components/icons"
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 import { sortFilterTokens } from "@/app/api/lib";
+import { PlatformLink } from "@/app/components/platform-link"
+import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath } from "@/lib/config"
+import Image from 'next/image'
 
 const CoinsTable = () => {
   const { topTokensList } = useStore();
@@ -54,11 +56,13 @@ const CoinsTable = () => {
           const row = info.row.original;
           return (
             <p className={styles['col-name']} title={row.token.name}>
-              <img
+              <Image
                 loading="lazy"
-                src={row.token.info.imageThumbUrl}
+                src={row.token.info.imageThumbUrl || defaultPath}
+                width={20}
+                height={20}
                 alt={row.token.name}
-                style={{ width: '20px', height: '20px', marginRight: '8px' }}
+                style={{ marginRight: '8px' }}
               />
 
               {info.getValue()}
@@ -121,7 +125,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -140,7 +147,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -159,7 +169,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -178,7 +191,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -192,11 +208,11 @@ const CoinsTable = () => {
       columnHelper.accessor(() => '', {
         id: 'links',
         cell: () => <div className={styles['links-content']}>
-          <BBIcon />
-          <MaestroIcon />
-          <PhotonIcon />
-          <BullxIcon />
-          <BonkIcon />
+          <PlatformLink path={blazingPath} href="https://app.blazingbot.com/" size={24} />
+          <PlatformLink path={maestroPath} href="https://www.maestrobots.com/" size={24} />
+          <PlatformLink path={photonPath} href="https://photon-sol.tinyastro.io/" size={24} />
+          <PlatformLink path={bulxPath} href="https://bull-x.io/" size={24} />
+          <PlatformLink path={bonkPath} href="#" size={24} />
         </div>,
         header: () => (
           <span>
@@ -275,7 +291,9 @@ const TableRow = memo(({ row }: { row: Row<TokenFilterResultType> }) => {
       {row.getVisibleCells().map((cell) => {
         return (
           <td
-            className={cn(styles['table-cell'])}
+            className={cn(styles['table-cell'], {
+              [styles.links]: cell.column.id === 'links',
+            })}
             key={cell.id}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}

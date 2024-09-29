@@ -7,7 +7,7 @@ import { getFilterTokens } from "@/app/api/lib";
 import { Loader } from "@/app/ui-components/loader";
 import { ModalComponent } from "@/app/ui-components/modal";
 import { ChartModalContent } from "@/app/components/chart-modal-content";
-import { NetworksModalContent } from "../networks-modal-content";
+import { NetworksModalContent } from "@/app/components/networks-modal-content";
 
 export default function BubblesPage() {
   const {

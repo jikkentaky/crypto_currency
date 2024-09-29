@@ -1,28 +1,36 @@
 import { FC } from 'react';
 import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material';
 import styles from './styles.module.scss';
-import { PriceChangePercentage, Resolution } from '@/types/bubbles.type';
+import { SORTING_BY, Resolution } from '@/types/bubbles.type';
 import cn from 'classnames';
+import { useStore } from '@/store';
+import { SORT_BY } from '@/types/sort-by.enum';
 
 type CustomToggleButton = ToggleButtonProps & {
-  value: string;
+  value: SORTING_BY | Resolution;
   content: string;
 };
 
-type Props = ToggleButtonProps & {
+type Props = {
   buttons: CustomToggleButton[];
-  resolution: PriceChangePercentage | Resolution;
-  setResolution: (value: PriceChangePercentage | Resolution) => void;
+  resolution: SORTING_BY | Resolution;
+  setResolution: (value: SORTING_BY | Resolution) => void;
+  className?: string;
 };
 
-const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className, setResolution }) => {
+const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setResolution }) => {
+  const { sortBy, isOpenModal } = useStore();
+
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
     alignment: string,
   ) => {
     const newAlignment = alignment || resolution;
-    setResolution(newAlignment as PriceChangePercentage | Resolution)
-  }
+
+    if (sortBy === 'PRICE_CHANGE' as SORT_BY || isOpenModal) {
+      setResolution(newAlignment as SORTING_BY | Resolution);
+    }
+  };
 
   return (
     <ToggleButtonGroup
@@ -46,14 +54,14 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className, setResolu
         <ToggleButton
           key={value}
           value={value}
+          disabled={sortBy !== 'PRICE_CHANGE' as SORT_BY && !isOpenModal}
           className={cn(styles.button, { [styles.selected]: value === resolution })}
         >
           {content}
         </ToggleButton>
-      ))
-      }
-    </ToggleButtonGroup >
+      ))}
+    </ToggleButtonGroup>
   );
 };
 
-export { ButtonGroupRadio }
+export { ButtonGroupRadio };

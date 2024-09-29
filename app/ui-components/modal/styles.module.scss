@@ -7,6 +7,7 @@
   flex-direction: column;
   max-width: 910px;
   padding: 45px;
+  gap: 32px;
 
   transform: translate(-50%, -50%);
 
@@ -19,14 +20,16 @@
   }
 
   @include responsive {
-    min-height: 100vh;
-    padding: 25px;
+    max-height: 100dvh;
+    height: 100dvh;
+    padding: 24px 10px;
+    gap: 16px;
   }
 }
 
-
 .title-wrapper {
   display: flex;
+  padding: 0 24px;
 }
 
 .icon-wrapper {

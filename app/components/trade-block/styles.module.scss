@@ -5,7 +5,7 @@
 .trade-block {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 32px;
 }
 
 .title {
@@ -19,6 +19,12 @@
   gap: 8px;
   list-style-type: none;
   margin: 0 auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  height: 40px;
 }
 
 .about {

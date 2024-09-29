@@ -6,6 +6,7 @@
   display: none;
 
   @include responsive {
+    position: relative;
     display: flex;
     justify-content: center;
     gap: 8px;
@@ -31,24 +32,27 @@
 }
 
 .networks-chose-modal {
-  max-height: 85vh;
-  inset: 15% auto auto 50%;
-  transform: translate(-50%, 0);
-
+  max-height: 778px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
+  bottom: 0;
 }
 
 .networks-modal {
-  max-height: 100vh;
+  max-height: 100dvh;
   inset: 0 auto auto 0;
   transform: translate(0, 0);
+  padding-bottom: 48px;
 }
 
 $timeframe-modal-height: 281px;
 
 .timeframe {
-  max-height: 33.5%;
   position: fixed;
-  inset: 0 auto auto 50%;
-  transform: translate(-50%, 0);
-  top: calc(100vh - $timeframe-modal-height);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-height: $timeframe-modal-height;
 }

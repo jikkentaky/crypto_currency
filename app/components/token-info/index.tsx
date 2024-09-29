@@ -5,12 +5,14 @@ import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
 import { convertToBillions } from "@/lib/convert-to-billions"
 import { convertToMillions } from "@/lib/convert-to-millions"
-import { PriceChangePercentage, Resolution } from "@/types/bubbles.type"
+import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
+import Image from "next/image"
+import { defaultPath } from "@/lib/config"
 
 const TokenInfo = () => {
-  const { chosenToken, resolution, modalResolution } = useStore()
-  const [resolutions, setResolutions] = useState(PriceChangePercentage.HOUR)
+  const { chosenToken, modalResolution } = useStore()
+  const [resolutions, setResolutions] = useState(SORTING_BY.HOUR)
 
   useEffect(() => {
     getPriceChange(modalResolution)
@@ -21,57 +23,51 @@ const TokenInfo = () => {
   const getPriceChange = (res: Resolution) => {
     switch (res) {
       case Resolution.HOUR:
-        setResolutions(PriceChangePercentage.HOUR)
+        setResolutions(SORTING_BY.HOUR)
 
       case Resolution.FOUR_HOURS:
-        setResolutions(PriceChangePercentage.FOUR_HOURS)
+        setResolutions(SORTING_BY.FOUR_HOURS)
 
       case Resolution.TWELVE_HOURS:
-        setResolutions(PriceChangePercentage.TWELVE_HOURS)
+        setResolutions(SORTING_BY.TWELVE_HOURS)
 
       case Resolution.DAY:
-        setResolutions(PriceChangePercentage.DAY)
+        setResolutions(SORTING_BY.DAY)
 
       default:
-        setResolutions(PriceChangePercentage.HOUR)
+        setResolutions(SORTING_BY.HOUR)
     }
   }
 
   return (
     chosenToken && <div className={styles['token-info']}>
       <div className={styles['token-image-wrapper']}>
-        <img
+        <Image
           loading='lazy'
-          src={chosenToken.token.info.imageSmallUrl}
+          src={chosenToken.token.info.imageSmallUrl || defaultPath}
+          width={40}
+          height={40}
           alt={chosenToken.token.name}
           className={styles['token-image']}
         />
 
-        <div className={styles['token-item']} >
-          <Typography
-            variant="body2">
-            {/* {width > 430
-              ? `${chosenToken.token.name.length > 10
-                ? chosenToken.token.name.slice(0, 10) + '...'
-                : chosenToken.token.name} (${chosenToken.token.symbol})`
-              : `(${chosenToken.token.symbol})`
-            } */}
+        <div className={styles['token-price']} >
+          <Typography>
             {`${chosenToken.token.name} (${chosenToken.token.symbol})`}
           </Typography>
 
           <Typography
             variantWeight='medium'
-            variant="body2"
-            color={chosenToken[resolutions] > 0 ? 'green' : 'red'}
+            color={parseInt(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
           >
-            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${chosenToken[resolution].toFixed(2)}%)`}
+            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${parseInt(chosenToken[resolutions].toString()).toFixed(2)}%)`}
           </Typography>
         </div>
       </div>
 
       <div className={styles['token-info-items']}>
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             Market Cap
           </Typography>
 
@@ -81,7 +77,7 @@ const TokenInfo = () => {
         </div>
 
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             Total Supply
           </Typography>
 
@@ -91,12 +87,12 @@ const TokenInfo = () => {
         </div>
 
         <div className={styles['token-item']}>
-          <Typography variant='body2' variantWeight='medium' className={styles.font}>
+          <Typography variantWeight='medium' className={styles.font}>
             24H Vol
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToMillions(chosenToken.marketCap)}`}
+            {`$${convertToMillions(+chosenToken.volume24)}`}
           </Typography>
         </div>
       </div>

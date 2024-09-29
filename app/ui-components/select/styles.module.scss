@@ -1,0 +1,23 @@
+@import '@/assets/variables-colors';
+@import '@/assets/variables';
+@import '@/assets/mixins';
+
+.select {
+  min-width: 180px;
+  height: 30px;
+  font-size: $fs-20 !important;
+  border-radius: 0;
+  border: 1px solid $color-grey-13;
+  box-shadow: 1px 1px 1px $color-grey-13;
+}
+
+.menu-item {
+  font-family: $ff-jersey !important;
+  font-size: $fs-20 !important;
+  width: 100%;
+}
+
+.icon {
+  border: 1px solid $color-grey-13;
+  box-shadow: -1px 1px 1px $color-white;
+}

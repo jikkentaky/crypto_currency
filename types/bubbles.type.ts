@@ -1,10 +1,13 @@
 import { Sprite, Text } from 'pixi.js'
 
-export enum PriceChangePercentage {
+export enum SORTING_BY {
   HOUR = 'change1',
   FOUR_HOURS = 'change4',
   TWELVE_HOURS = 'change12',
   DAY = 'change24',
+  MCAP = 'marketCap',
+  LIQUIDITY = 'liquidity',
+  VOLUME_24 = 'volume24',
 }
 
 export enum Resolution {
@@ -39,10 +42,13 @@ export type Circle = {
   isSearched: boolean
   isPreviousSearched: boolean
   graphicSprite: Sprite | null
-  [PriceChangePercentage.HOUR]: number
-  [PriceChangePercentage.FOUR_HOURS]: number
-  [PriceChangePercentage.TWELVE_HOURS]: number
-  [PriceChangePercentage.DAY]: number
+  [SORTING_BY.MCAP]: number
+  [SORTING_BY.LIQUIDITY]: number
+  [SORTING_BY.VOLUME_24]: number
+  [SORTING_BY.HOUR]: number
+  [SORTING_BY.FOUR_HOURS]: number
+  [SORTING_BY.TWELVE_HOURS]: number
+  [SORTING_BY.DAY]: number
   image: string | null | undefined
   text2: Text | null
   previousText2: string | null

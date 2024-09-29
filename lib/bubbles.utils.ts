@@ -1,12 +1,13 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
-import { Circle, PriceChangePercentage } from "@/types/bubbles.type";
+import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
-import { appConfig } from "./config";
+import { appConfig, defaultPath } from "./config";
+import { convertToMillions } from "./convert-to-millions";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
-  bubbleSort: PriceChangePercentage;
+  bubbleSort: SORTING_BY;
   scalingFactor: number;
 };
 
@@ -15,7 +16,7 @@ const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleS
 const changeSizeStep = 2;
 
 export class BubblesUtils {
-  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: PriceChangePercentage = PriceChangePercentage.HOUR): number => {
+  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: SORTING_BY = SORTING_BY.HOUR): number => {
     if (!data) return 1;
     const max = data.map((item) => Math.abs(+item[bubbleSort]!));
     let totalSquare = 0;
@@ -37,7 +38,7 @@ export class BubblesUtils {
     bubbleSortRef: React.RefObject<string>
   ) => {
     return () => {
-      const bubbleSort = bubbleSortRef.current as PriceChangePercentage;
+      const bubbleSort = bubbleSortRef.current as SORTING_BY;
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
         const circleGraphic = circleGraphics[i];
@@ -58,25 +59,28 @@ export class BubblesUtils {
             circle.isHovered
           );
 
-          const fontSize = circle.radius * 0.3;
+          const fontSize = circle.radius * 0.7;
           const isFullSize = circle.radius * 0.5 < 20;
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5);
-            imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5);
+            const scaleFactor = isFullSize ? 1.2 : 0.5;
+            const minSize = 10;
+
+            imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
+            imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
           }
 
           const textStyle = new PIXI.TextStyle({
-            fontFamily: "Press Start 2P, sans-serif",
+            fontFamily: "Jersey 10, sans-serif",
             fontSize: isTextVisible ? fontSize + "px" : "1px",
             fill: "#ffffff",
           });
 
           const text2Style = new PIXI.TextStyle({
-            fontFamily: "Press Start 2P, sans-serif",
-            fontSize: isTextVisible ? fontSize * 0.8 + "px" : "1px",
+            fontFamily: "Jersey 10, sans-serif",
+            fontSize: isTextVisible ? fontSize * 0.6 + "px" : "1px",
             fill: "#ffffff",
           });
 
@@ -85,6 +89,13 @@ export class BubblesUtils {
 
           text2.style = text2Style;
           text2.position.y = circle.radius / 1.8;
+
+          let newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
+
+          if (bubbleSortRef.current !== "change1" && bubbleSortRef.current !== "change4" &&
+            bubbleSortRef.current !== "change12" && bubbleSortRef.current !== "change24") {
+            newText2Value = convertToMillions(circle[bubbleSort]);
+          }
 
           if (circle.text2) {
             circle.text2.text = newText2Value;
@@ -209,14 +220,14 @@ export class BubblesUtils {
     }
   };
 
-  static generateCircles = (coins: TokenFilterResult[], scalingFactor: number, bubbleSort: PriceChangePercentage = PriceChangePercentage.HOUR) => {
+  static generateCircles = (coins: TokenFilterResult[], scalingFactor: number, bubbleSort: SORTING_BY = SORTING_BY.HOUR) => {
     const shapes: Circle[] = coins.map((item) => {
-      const radius = Math.abs(item[bubbleSort]! * scalingFactor);
+      const radius = Math.abs(parseInt(item[bubbleSort].toString()) * scalingFactor);
 
       const data = {
         id: item.token.address,
         symbol: item.token.symbol.slice(0, 5),
-        image: item.token.info.imageThumbUrl || null,
+        image: item.image || defaultPath,
         coinName: item.token.info.name,
         isSearched: false,
         isPreviousSearched: false,
@@ -226,7 +237,7 @@ export class BubblesUtils {
         y: Math.random() * (height - radius * 2),
         vx: Math.random() * speed * 2 - speed,
         vy: Math.random() * speed * 2 - speed,
-        color: item[bubbleSort]! > 0 ? "green" : "red",
+        color: +item[bubbleSort]! > 0 ? "green" : "red",
         previousColor: null,
         previousHovered: false,
         targetRadius: radius > maxCircleSize ? maxCircleSize : radius > minCircleSize ? radius : minCircleSize,
@@ -234,10 +245,13 @@ export class BubblesUtils {
         dragging: false,
         text2: null,
         previousText2: null,
-        [PriceChangePercentage.HOUR]: item[PriceChangePercentage.HOUR],
-        [PriceChangePercentage.FOUR_HOURS]: item[PriceChangePercentage.FOUR_HOURS],
-        [PriceChangePercentage.TWELVE_HOURS]: item[PriceChangePercentage.TWELVE_HOURS],
-        [PriceChangePercentage.DAY]: item[PriceChangePercentage.DAY],
+        [SORTING_BY.VOLUME_24]: item[SORTING_BY.VOLUME_24],
+        [SORTING_BY.LIQUIDITY]: parseInt(item[SORTING_BY.LIQUIDITY]),
+        [SORTING_BY.MCAP]: item[SORTING_BY.MCAP],
+        [SORTING_BY.HOUR]: item[SORTING_BY.HOUR],
+        [SORTING_BY.FOUR_HOURS]: item[SORTING_BY.FOUR_HOURS],
+        [SORTING_BY.TWELVE_HOURS]: item[SORTING_BY.TWELVE_HOURS],
+        [SORTING_BY.DAY]: item[SORTING_BY.DAY],
       };
 
       const shape = { ...data, text2: PixiUtils.createText2(data, bubbleSort) };
