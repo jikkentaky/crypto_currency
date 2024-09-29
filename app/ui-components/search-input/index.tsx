@@ -25,7 +25,7 @@ const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '2
         })}
       >
         <Image
-          src="/static/assets/networks-icons/search.png"
+          src="/static/assets/images/search.png"
           alt="search-icon" width={16} height={16}
         />
         Search

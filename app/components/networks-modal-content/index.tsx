@@ -74,7 +74,7 @@ const NetworksModalContent = () => {
           label={
             <>
               <Image
-                src="/static/assets/networks-icons/search.png"
+                src="/static/assets/images/search.png"
                 alt="search-icon" width={16} height={16}
               />
               Search
@@ -94,7 +94,7 @@ const NetworksModalContent = () => {
       <div className={styles['networks-list']}>
         {filteredNetworks?.map(({ id, name, isVisible }) => {
           const imageName = name.toLowerCase().replace(/\s+/g, '-');
-          const path = `/static/assets/networks-icons/${imageName}.png`;
+          const path = `/static/assets/images/${imageName}.png`;
 
           return (
             <button

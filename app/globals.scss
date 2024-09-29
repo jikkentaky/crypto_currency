@@ -55,21 +55,17 @@ html,
 }
 
 .MuiOutlinedInput-input {
-  color: $color-white;
+  color: $color-white !important;
   font-family: $ff-jersey !important;
   font-size: $fs-20;
   opacity: 1;
 }
 
-// .MuiBackdrop-root {
-//   background-color: transparent;
-// }
-
 .MuiPaper-root {
-  background-color: $color-black-2;
+  background-color: $color-black-2 !important;
   border-radius: 0;
   border: 1px solid $color-grey-13;
-  color: $color-white;
+  color: $color-white !important;
 }
 
 .MuiMenuItem-root {

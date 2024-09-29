@@ -44,11 +44,11 @@ const mobileResolution = {
   change24: "24H",
 }
 
-const blazingPath = `/static/assets/networks-icons/blazing.png`;
-const maestroPath = `/static/assets/networks-icons/maestro.png`;
-const photonPath = `/static/assets/networks-icons/photon.png`;
-const bonkPath = `/static/assets/networks-icons/bonk.png`;
-const bulxPath = `/static/assets/networks-icons/bulx.png`;
+const blazingPath = `/static/assets/images/blazing.png`;
+const maestroPath = `/static/assets/images/maestro.png`;
+const photonPath = `/static/assets/images/photon.png`;
+const bonkPath = `/static/assets/images/bonk.png`;
+const bulxPath = `/static/assets/images/bulx.png`;
 
 export {
   appConfig,

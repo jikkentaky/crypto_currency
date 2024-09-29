@@ -41,7 +41,7 @@ const NetworksList: FC<Props> = ({ networks }) => {
         <div className={styles['networks']}>
           {networks.map(({ id, name, isVisible }) => {
             const imageName = name.toLowerCase().replace(/\s+/g, '-');
-            const path = `/static/assets/networks-icons/${imageName}.png`;
+            const path = `/static/assets/images/${imageName}.png`;
 
             return (
               <button
