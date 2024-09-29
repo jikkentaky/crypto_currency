@@ -9,7 +9,7 @@ import cn from 'classnames'
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 import { sortFilterTokens } from "@/app/api/lib";
-import { PlatformLink } from "../platform-link"
+import { PlatformLink } from "@/app/components/platform-link"
 import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from "@/lib/config"
 import Image from 'next/image'
 
@@ -125,7 +125,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -144,7 +147,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -163,7 +169,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );
@@ -182,7 +191,10 @@ const CoinsTable = () => {
 
           return (
             <p className={styles['price-change']}>
-              <PriceArrowIcon className={cn({ [styles['up-r']]: value < 0 })} />
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
               {formattedValue}
             </p>
           );

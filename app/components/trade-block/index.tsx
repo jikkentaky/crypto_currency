@@ -2,7 +2,7 @@ import { Typography } from '@/app/ui-components/typography'
 import styles from './styles.module.scss'
 import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
 import { useWindowDimensions } from '@/hooks/use-window-dimensions'
-import { PlatformLink } from '../platform-link';
+import { PlatformLink } from '@/app/components/platform-link';
 import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from '@/lib/config';
 
 const TradeBlock = () => {

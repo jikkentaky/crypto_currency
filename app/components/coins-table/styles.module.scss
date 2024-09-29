@@ -113,6 +113,12 @@
   transform: rotate(180deg);
 
   & path {
+    fill: $color-green-2;
+  }
+}
+
+.down-r {
+  & path {
     fill: $color-red-5;
   }
 }

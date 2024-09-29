@@ -39,7 +39,7 @@ html,
 
   &-thumb {
     @include gradient-border(1px);
-    border: 1px solid $color-grey-2;
+    border: 1px solid $color-grey-13;
     background-color: $color-dark-pink;
 
     @include hover('background-color', color.adjust($color-dark-blue, $lightness: 10%));
