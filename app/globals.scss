@@ -57,27 +57,27 @@ html,
 .MuiOutlinedInput-input {
   color: $color-white !important;
   font-family: $ff-jersey !important;
-  font-size: $fs-20;
-  opacity: 1;
+  font-size: $fs-20 !important;
+  opacity: 1 !important;
 }
 
 .MuiPaper-root {
   background-color: $color-black-2 !important;
-  border-radius: 0;
-  border: 1px solid $color-grey-13;
+  border-radius: 0 !important;
+  border: 1px solid $color-grey-13 !important;
   color: $color-white !important;
 }
 
 .MuiMenuItem-root {
-  font-family: $ff-jersey;
+  font-family: $ff-jersey !important;
 
-  @include hover ('background', $color-dark-blue);
+  @include hover ('background', $color-dark-blue) !important;
 }
 
 .MuiMenuItem-root[aria-selected='true'] {
-  background: $color-gradient;
+  background: $color-gradient !important;
 }
 
 .MuiList-padding {
-  padding: 0;
+  padding: 0 !important;
 }
