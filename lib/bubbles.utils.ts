@@ -60,16 +60,17 @@ export class BubblesUtils {
           );
 
           const fontSize = circle.radius * 0.7;
-          const isFullSize = circle.radius * 0.5 < 20;
+          // const isFullSize = circle.radius * 0.5 < 20;
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            const scaleFactor = isFullSize ? 1.2 : 0.5;
+            // const scaleFactor = isFullSize ? 0.6 : 0.5;
+            const scaleFactor = 0.6;
             const minSize = 10;
 
             imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
-            imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
+            imageSprite.position = { x: 0, y: 0 ? 0 : -circle.radius / 2 };
           }
 
           const textStyle = new PIXI.TextStyle({

@@ -111,7 +111,7 @@ export default function Bubbles({ coins }: Props) {
     const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef);
     setTimeout(() => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
-    }, 200);
+    }, 0);
 
     return () => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.remove(ticker);
