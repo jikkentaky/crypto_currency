@@ -40,7 +40,7 @@ export class PixiUtils {
 
     imageSprite.anchor.set(0.5);
 
-    const scaleFactor = isFullSize ? 1.2 : 0.5;
+    const scaleFactor = isFullSize ? 1 : 0.5;
     imageSprite.width = circle.radius * scaleFactor;
     imageSprite.height = circle.radius * scaleFactor;
 
