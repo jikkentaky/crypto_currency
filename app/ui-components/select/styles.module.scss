@@ -5,14 +5,15 @@
 .select {
   min-width: 180px;
   height: 30px;
-  font-size: $fs-20;
+  font-size: $fs-20 !important;
   border-radius: 0;
   border: 1px solid $color-grey-13;
   box-shadow: 1px 1px 1px $color-grey-13;
 }
 
 .menu-item {
-  font-size: $fs-20;
+  font-family: $ff-jersey !important;
+  font-size: $fs-20 !important;
   width: 100%;
 }
 
