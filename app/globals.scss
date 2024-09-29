@@ -71,7 +71,7 @@ html,
 .MuiMenuItem-root {
   font-family: $ff-jersey !important;
 
-  @include hover ('background', $color-dark-blue) !important;
+  @include hover ('background', $color-dark-blue);
 }
 
 .MuiMenuItem-root[aria-selected='true'] {
