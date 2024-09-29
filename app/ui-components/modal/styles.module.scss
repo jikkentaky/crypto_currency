@@ -29,7 +29,10 @@
 
 .title-wrapper {
   display: flex;
-  padding: 0 24px;
+
+  @include responsive {
+    padding: 0 24px;
+  }
 }
 
 .icon-wrapper {
