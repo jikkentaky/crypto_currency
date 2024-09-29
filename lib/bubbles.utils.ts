@@ -64,7 +64,7 @@ export class BubblesUtils {
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            const scaleFactor = isFullSize ? 1.2 : 0.5;
+            const scaleFactor = isFullSize ? 1.1 : 0.5;
             const minSize = 10;
 
             imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
