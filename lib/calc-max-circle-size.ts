@@ -12,7 +12,7 @@ const calculateMaxCircleSize = () => {
   } else if (width > 550) {
     return 120;
   } else {
-    return 90;
+    return 80;
   }
 }
 
