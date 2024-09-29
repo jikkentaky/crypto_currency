@@ -8,6 +8,7 @@ import { convertToMillions } from "@/lib/convert-to-millions"
 import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { defaultPath } from "@/lib/config"
 
 const TokenInfo = () => {
   const { chosenToken, modalResolution } = useStore()
@@ -43,7 +44,7 @@ const TokenInfo = () => {
       <div className={styles['token-image-wrapper']}>
         <Image
           loading='lazy'
-          src={chosenToken.token.info.imageSmallUrl || ''}
+          src={chosenToken.token.info.imageSmallUrl || defaultPath}
           width={40}
           height={40}
           alt={chosenToken.token.name}

@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
 import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
-import { appConfig } from "./config";
+import { appConfig, defaultPath } from "./config";
 import { convertToMillions } from "./convert-to-millions";
 
 export type GenerateCirclesParams = {
@@ -64,8 +64,11 @@ export class BubblesUtils {
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5);
-            imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5);
+            const scaleFactor = isFullSize ? 1.2 : 0.5;
+            const minSize = 10;
+
+            imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
+            imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
           }
 
@@ -224,7 +227,7 @@ export class BubblesUtils {
       const data = {
         id: item.token.address,
         symbol: item.token.symbol.slice(0, 5),
-        image: item.token.info.imageThumbUrl || null,
+        image: item.image || defaultPath,
         coinName: item.token.info.name,
         isSearched: false,
         isPreviousSearched: false,

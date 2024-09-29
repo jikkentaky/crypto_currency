@@ -54,6 +54,7 @@ export type TokenFilterResult = {
   volume4: string;
   volume12: string;
   volume24: number;
+  image: string;
 };
 
 export type EnhancedToken = {

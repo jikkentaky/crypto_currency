@@ -10,7 +10,7 @@ import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
 import { sortFilterTokens } from "@/app/api/lib";
 import { PlatformLink } from "@/app/components/platform-link"
-import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from "@/lib/config"
+import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath } from "@/lib/config"
 import Image from 'next/image'
 
 const CoinsTable = () => {
@@ -58,7 +58,7 @@ const CoinsTable = () => {
             <p className={styles['col-name']} title={row.token.name}>
               <Image
                 loading="lazy"
-                src={row.token.info.imageThumbUrl || ''}
+                src={row.token.info.imageThumbUrl || defaultPath}
                 width={20}
                 height={20}
                 alt={row.token.name}

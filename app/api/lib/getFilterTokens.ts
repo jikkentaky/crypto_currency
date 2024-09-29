@@ -8,6 +8,14 @@ async function fetchFilterTokens(
   networkId: number,
 ) {
   try {
+    const additionalFilters = (networkId === 1 || networkId === 1399811149)
+      ? `txnCount24: { gt: 200 }
+        volume24: { gt: 45000 }
+        buyCount24: { gt: 80 }
+        sellCount24: { gt: 80 }
+        change24: { gt: 0.20 }`
+      : '';
+
     const { data }: {
       data: {
         data: {
@@ -19,22 +27,18 @@ async function fetchFilterTokens(
       {
         query: `{
           filterTokens(
-            filters: {
-              network: [${networkId}]
-              trendingIgnored: false
-              liquidity: { gt: 1000 }
-              change24: { gt: 0.25 }
-              txnCount24: { gt: 200 }
-              volume24: { gt: 50000 }
-              buyCount24: { gt: 100 }
-              sellCount24: { gt: 100 }
+          filters: {
+            network: [${networkId}]
+            trendingIgnored: false
+            liquidity: { gt: 1000 }
+            ${additionalFilters}
           }
             rankings: {
               attribute: trendingScore
               direction: DESC
             }
             limit: 70
-          ) {
+            ) {
               results {
                 change1
                 change4
@@ -50,12 +54,12 @@ async function fetchFilterTokens(
                   name
                   symbol
                   totalSupply
-                    info {
-                      imageThumbUrl
-                      imageSmallUrl
-                    }
+                  info {
+                    imageThumbUrl
+                    imageSmallUrl
                 }
               }
+            }
           }
         }`
       }, {
@@ -77,6 +81,7 @@ async function fetchFilterTokens(
       marketCap: Number(token.marketCap),
       priceUSD: Number(token.priceUSD),
       volume24: Number(token.volume24),
+      image: token.token.info.imageThumbUrl
     }))
 
     return result;

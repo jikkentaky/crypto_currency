@@ -2,6 +2,7 @@
 
 import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
+import { defaultPath } from "./config";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
 
@@ -33,15 +34,19 @@ export class PixiUtils {
   };
 
   static createImageSprite = (circle: Circle) => {
-    const imgUrl = circle.image || '/images/unknown.png';
-
+    const imgUrl = circle.image || defaultPath;
     const imageSprite = PIXI.Sprite.from(imgUrl);
     const isFullSize = circle.radius * 0.3 < 10;
 
     imageSprite.anchor.set(0.5);
-    imageSprite.width = circle.radius * (isFullSize ? 1.2 : 0.5);
-    imageSprite.height = circle.radius * (isFullSize ? 1.2 : 0.5);
-    imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
+
+    const scaleFactor = isFullSize ? 1.2 : 0.5;
+    imageSprite.width = circle.radius * scaleFactor;
+    imageSprite.height = circle.radius * scaleFactor;
+
+    const posY = isFullSize ? 0 : -circle.radius / 2;
+    imageSprite.position.set(0, posY);
+
     return imageSprite;
   };
 

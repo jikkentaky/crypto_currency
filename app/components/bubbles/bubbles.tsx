@@ -78,15 +78,15 @@ export default function Bubbles({ coins }: Props) {
 
       const container = PixiUtils.createContainer(circle, setChosenToken, setIsOpenModal);
 
-      const imageSprite = PixiUtils.createImageSprite(circle);
-      imageSprites.push(imageSprite);
-      container.addChild(imageSprite);
-
       const circleGraphic = new PIXI.Sprite(PixiUtils.createGradientTexture(circle.targetRadius * 4, circle.color, circle.isHovered));
       circleGraphic.anchor.set(0.5);
       circle.graphicSprite = circleGraphic;
       circleGraphics.push(circleGraphic);
       container.addChild(circleGraphic);
+
+      const imageSprite = PixiUtils.createImageSprite(circle);
+      imageSprites.push(imageSprite);
+      container.addChild(imageSprite);
 
       // Create the text
       const text = PixiUtils.createText(circle);

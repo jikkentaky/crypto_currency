@@ -49,6 +49,7 @@ const maestroPath = `/static/assets/images/maestro.png`;
 const photonPath = `/static/assets/images/photon.png`;
 const bonkPath = `/static/assets/images/bonk.png`;
 const bulxPath = `/static/assets/images/bulx.png`;
+const defaultPath = `/static/assets/images/default.jpg`;
 
 export {
   appConfig,
@@ -59,4 +60,5 @@ export {
   photonPath,
   bonkPath,
   bulxPath,
+  defaultPath,
 }
