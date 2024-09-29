@@ -31,7 +31,7 @@ export default function BubblesPage() {
         if (!coins) return;
 
         const limitedCoins = width < 1100
-          ? coins.slice(0, 50)
+          ? coins.slice(0, 40)
           : coins;
 
         setTopTokensList(limitedCoins);
