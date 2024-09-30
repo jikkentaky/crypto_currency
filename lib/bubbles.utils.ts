@@ -3,6 +3,7 @@ import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChange, SORTING_BY } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { appConfig, defaultPath } from "./config";
+import { formatPercentage } from "./format-percentage";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
@@ -48,7 +49,7 @@ export class BubblesUtils {
 
         const container = circleGraphic.parent as PIXI.Container;
 
-        const newText2Value = circle[displayChange]?.toFixed(2) + "%";
+        const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
         const updateCircleChilds = () => {
           const gradientColor = circle.isSearched ? "white" : circle.color;
@@ -89,7 +90,7 @@ export class BubblesUtils {
           text2.style = text2Style;
           text2.position.y = circle.radius / 1.8;
 
-          const newText2Value = circle[displayChange].toFixed(2) + "%";
+          const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
           if (circle.text2) {
             circle.text2.text = newText2Value;

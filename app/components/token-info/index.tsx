@@ -3,8 +3,7 @@
 import { useStore } from "@/store"
 import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
-import { convertToBillions } from "@/lib/convert-to-billions"
-import { convertToMillions } from "@/lib/convert-to-millions"
+import { convertNumber } from "@/lib/convert-number"
 import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 import Image from "next/image"
@@ -73,17 +72,17 @@ const TokenInfo = () => {
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToBillions(chosenToken.marketCap)}`}
+            {`$${convertNumber(chosenToken.marketCap)}`}
           </Typography>
         </div>
 
         <div className={styles['token-item']}>
           <Typography variantWeight='medium' className={styles.font}>
-            Total Supply
+            FDV
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToBillions(+chosenToken.token.totalSupply)}`}
+            {`$${convertNumber(+chosenToken.fdv)}`}
           </Typography>
         </div>
 
@@ -93,7 +92,7 @@ const TokenInfo = () => {
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToMillions(+chosenToken.volume24)}`}
+            {`$${convertNumber(+chosenToken.volume24)}`}
           </Typography>
         </div>
       </div>

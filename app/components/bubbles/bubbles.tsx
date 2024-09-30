@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 import { appConfig } from "@/lib/config";
+import { formatPercentage } from "@/lib/format-percentage";
 
 type Props = {
   coins: TokenFilterResult[];
@@ -138,7 +139,7 @@ export default function Bubbles({ coins }: Props) {
         circle.targetRadius = radius > max ? max : radius > min ? radius : min;
         circle.color = circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
 
-        const newText2Value = circle[bubbleSort as SORTING_BY].toFixed(2) + "%";
+        const newText2Value = formatPercentage(circle[bubbleSort as SORTING_BY]) + ' %';
 
         if (circle.text2) {
           if (!circle.previousText2) {

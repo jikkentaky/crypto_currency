@@ -3,6 +3,7 @@
 import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
 import { defaultPath } from "./config";
+import { formatPercentage } from "./format-percentage";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
 
@@ -76,7 +77,7 @@ export class PixiUtils {
       fill: "#ffffff",
     });
 
-    const data = circle[bubbleSort] ? circle[bubbleSort]!.toFixed(2) + "%" : "";
+    const data = circle[bubbleSort] ? formatPercentage(circle[bubbleSort]) + ' %' : "";
 
     const text2 = new PIXI.Text(data, text2Style);
     text2.anchor.set(0.5);

@@ -12,7 +12,7 @@ export type TokenFilterResult = {
   change24: number;
   createdAt?: number;
   exchanges?: Exchange[];
-  fdv?: string;
+  fdv: string;
   high1?: string;
   high4?: string;
   high12?: string;

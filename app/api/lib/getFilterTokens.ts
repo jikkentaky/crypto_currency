@@ -40,6 +40,7 @@ async function fetchFilterTokens(
             limit: 70
             ) {
               results {
+                fdv
                 change1
                 change4
                 change12
