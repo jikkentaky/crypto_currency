@@ -34,11 +34,9 @@ export class BubblesUtils {
     textSprites: PIXI.Text[],
     text2Sprites: PIXI.Text[],
     circleGraphics: PIXI.Sprite[] = [],
-    bubbleSortRef: React.RefObject<string>,
     displayChangeRef: React.RefObject<string>
   ) => {
     return () => {
-      const bubbleSort = bubbleSortRef.current as SORTING_BY;
       const displayChange = displayChangeRef.current as PriceChange;
 
       for (let i = 0; i < circles.length; i++) {

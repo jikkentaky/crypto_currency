@@ -16,10 +16,8 @@ type Props = {
 const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins }: Props) {
-  const bubbleSortRef = useRef<SORTING_BY | null>(null);
   const displayChangeRef = useRef<PriceChange | null>(null);
   const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
-    bubbleSortRef.current = state.resolution as SORTING_BY | null || SORTING_BY.HOUR;
     displayChangeRef.current = state.currentResolution;
     return state;
   });
@@ -110,7 +108,7 @@ export default function Bubbles({ coins }: Props) {
       circle.isPreviousSearched = circle.isSearched;
     }
 
-    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef, displayChangeRef);
+    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, displayChangeRef);
     setTimeout(() => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
     }, 400);

@@ -20,12 +20,16 @@ type Props = {
 
 const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setResolution }) => {
 
-  const { currentResolution, sortBy, setCurrentResolution } = useStore()
+  const { currentResolution, isOpenModal, sortBy, setCurrentResolution } = useStore()
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
     alignment: string,
   ) => {
     const newAlignment = alignment || resolution;
+
+    if (isOpenModal) {
+      setResolution(newAlignment as SORTING_BY | Resolution)
+    }
 
     if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
       setResolution(newAlignment as SORTING_BY | Resolution);
