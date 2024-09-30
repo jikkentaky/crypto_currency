@@ -46,7 +46,7 @@ export const ChartComponent: FC<Props> = (props) => {
           background: { type: ColorType.Solid, color: backgroundColor },
           textColor,
           fontFamily: 'Roboto, sans-serif',
-          fontSize: 22,
+          fontSize: 20,
         },
         width: chartContainerRef.current.clientWidth,
         height,
@@ -59,11 +59,13 @@ export const ChartComponent: FC<Props> = (props) => {
           },
         },
         timeScale: {
-          visible: false,
+          visible: true,
+          timeVisible: true,
+          secondsVisible: false,
         },
         rightPriceScale: {
           visible: true,
-          borderVisible: false,
+          borderVisible: true,
         },
         localization: {
           priceFormatter: (price: number) => {
