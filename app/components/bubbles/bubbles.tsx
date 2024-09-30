@@ -3,7 +3,7 @@
 import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
 import * as PIXI from 'pixi.js';
-import { Circle, SORTING_BY, } from "@/types/bubbles.type";
+import { Circle, PriceChange, SORTING_BY, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
@@ -17,8 +17,10 @@ const { width, height, maxCircleSize, minCircleSize } = appConfig;
 
 export default function Bubbles({ coins }: Props) {
   const bubbleSortRef = useRef<SORTING_BY | null>(null);
+  const displayChangeRef = useRef<PriceChange | null>(null);
   const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
     bubbleSortRef.current = state.resolution as SORTING_BY | null || SORTING_BY.HOUR;
+    displayChangeRef.current = state.currentResolution;
     return state;
   });
 
@@ -108,10 +110,11 @@ export default function Bubbles({ coins }: Props) {
       circle.isPreviousSearched = circle.isSearched;
     }
 
-    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef);
+    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, bubbleSortRef, displayChangeRef);
     setTimeout(() => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
-    }, 0);
+    }, 400);
+
 
     return () => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.remove(ticker);
@@ -135,7 +138,7 @@ export default function Bubbles({ coins }: Props) {
 
         const radius = Math.abs(Math.floor(circle[bubbleSort as SORTING_BY] * scalingFactor));
         circle.targetRadius = radius > max ? max : radius > min ? radius : min;
-        circle.color = circle[bubbleSort as SORTING_BY] > 0 ? "green" : "red";
+        circle.color = circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
 
         const newText2Value = circle[bubbleSort as SORTING_BY].toFixed(2) + "%";
 
@@ -154,7 +157,7 @@ export default function Bubbles({ coins }: Props) {
         circle.isSearched = isMatched;
       });
     }
-  }, [bubbleSort, coins, circles, scalingFactor, searchCoin]);
+  }, [bubbleSort, coins, circles, scalingFactor, searchCoin, displayChangeRef.current]);
 
   return (
     <div style={{ height: height }} ref={appRef}></div>

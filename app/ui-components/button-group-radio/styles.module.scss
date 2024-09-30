@@ -29,5 +29,6 @@
 }
 
 .selected {
+  background-color: $color-dark-blue;
   @include gradient-border();
 }

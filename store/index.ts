@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { Network } from '@/types/network.type'
-import { SORTING_BY, Resolution } from '@/types/bubbles.type'
+import { SORTING_BY, Resolution, PriceChange } from '@/types/bubbles.type'
 import { TokenFilterResultType } from '@/types/tokenFilterResultType.type'
 import { SORT_BY } from '@/types/sort-by.enum'
 
@@ -20,6 +20,8 @@ interface UseStore {
   selectedModalResolution: Resolution
   isOpenMobileTimeFrame: boolean
   sortBy: SORT_BY
+  currentResolution: PriceChange
+  setCurrentResolution: (currentResolution: PriceChange) => void
   setSortBy: (sortBy: SORT_BY) => void
   setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame: boolean) => void
   setSelectedModalResolution: (selectedModalResolution: Resolution) => void
@@ -38,6 +40,7 @@ interface UseStore {
 }
 
 export const useStore = create<UseStore>()((set, get) => ({
+  currentResolution: PriceChange.HOUR,
   sortBy: 'PRICE_CHANGE' as SORT_BY,
   isOpenMobileTimeFrame: false,
   isOpenMobileMenu: false,
@@ -60,11 +63,13 @@ export const useStore = create<UseStore>()((set, get) => ({
       set({ chosenToken })
     }
   },
+  setCurrentResolution: (currentResolution) => set({ currentResolution }),
   setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame) => set({ isOpenMobileTimeFrame }),
   setSortBy: (sortBy) => {
-    const { setResolution } = get()
+    const { currentResolution, setResolution, setCurrentResolution } = get()
+
     if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
-      setResolution(SORTING_BY.HOUR)
+      setResolution(currentResolution as unknown as SORTING_BY | Resolution)
     }
 
     if (sortBy === 'VOLUME' as SORT_BY) {
@@ -79,6 +84,7 @@ export const useStore = create<UseStore>()((set, get) => ({
       setResolution(SORTING_BY.MCAP)
     }
 
+    setCurrentResolution(currentResolution)
     set({ sortBy })
   },
   setSelectedModalResolution: (selectedModalResolution) => set({ selectedModalResolution }),

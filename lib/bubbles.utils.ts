@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
-import { Circle, SORTING_BY } from "@/types/bubbles.type";
+import { Circle, PriceChange, SORTING_BY } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { appConfig, defaultPath } from "./config";
-import { convertToMillions } from "./convert-to-millions";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
@@ -35,10 +34,13 @@ export class BubblesUtils {
     textSprites: PIXI.Text[],
     text2Sprites: PIXI.Text[],
     circleGraphics: PIXI.Sprite[] = [],
-    bubbleSortRef: React.RefObject<string>
+    bubbleSortRef: React.RefObject<string>,
+    displayChangeRef: React.RefObject<string>
   ) => {
     return () => {
       const bubbleSort = bubbleSortRef.current as SORTING_BY;
+      const displayChange = displayChangeRef.current as PriceChange;
+
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
         const circleGraphic = circleGraphics[i];
@@ -48,7 +50,7 @@ export class BubblesUtils {
 
         const container = circleGraphic.parent as PIXI.Container;
 
-        const newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
+        const newText2Value = circle[displayChange]?.toFixed(2) + "%";
 
         const updateCircleChilds = () => {
           const gradientColor = circle.isSearched ? "white" : circle.color;
@@ -60,11 +62,9 @@ export class BubblesUtils {
           );
 
           const fontSize = circle.radius * 0.7;
-          // const isFullSize = circle.radius * 0.5 < 20;
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            // const scaleFactor = isFullSize ? 0.6 : 0.5;
             const scaleFactor = 0.6;
             const minSize = 10;
 
@@ -91,12 +91,7 @@ export class BubblesUtils {
           text2.style = text2Style;
           text2.position.y = circle.radius / 1.8;
 
-          let newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
-
-          if (bubbleSortRef.current !== "change1" && bubbleSortRef.current !== "change4" &&
-            bubbleSortRef.current !== "change12" && bubbleSortRef.current !== "change24") {
-            newText2Value = convertToMillions(circle[bubbleSort]);
-          }
+          const newText2Value = circle[displayChange].toFixed(2) + "%";
 
           if (circle.text2) {
             circle.text2.text = newText2Value;
