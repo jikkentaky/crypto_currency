@@ -218,7 +218,7 @@ export class BubblesUtils {
 
   static generateCircles = (coins: TokenFilterResult[], scalingFactor: number, bubbleSort: SORTING_BY = SORTING_BY.HOUR) => {
     const shapes: Circle[] = coins.map((item) => {
-      const radius = Math.abs(parseInt(item[bubbleSort].toString()) * scalingFactor);
+      const radius = Math.abs(parseFloat(item[bubbleSort].toString()) * scalingFactor);
 
       const data = {
         id: item.token.address,
@@ -242,7 +242,7 @@ export class BubblesUtils {
         text2: null,
         previousText2: null,
         [SORTING_BY.VOLUME_24]: item[SORTING_BY.VOLUME_24],
-        [SORTING_BY.LIQUIDITY]: parseInt(item[SORTING_BY.LIQUIDITY]),
+        [SORTING_BY.LIQUIDITY]: parseFloat(item[SORTING_BY.LIQUIDITY]),
         [SORTING_BY.MCAP]: item[SORTING_BY.MCAP],
         [SORTING_BY.HOUR]: item[SORTING_BY.HOUR],
         [SORTING_BY.FOUR_HOURS]: item[SORTING_BY.FOUR_HOURS],

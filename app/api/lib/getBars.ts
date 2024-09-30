@@ -50,7 +50,7 @@ async function fetchBars(
     for (let j = 0; j < currentData.o.length; j++) {
       bars.push({
         time: currentData.t[j],
-        value: currentData.v[j],
+        value: currentData.c[j],
       });
     }
 

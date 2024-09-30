@@ -9,6 +9,7 @@ import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { defaultPath } from "@/lib/config"
+import { formatTokenPrice } from "@/lib/format-token-price"
 
 const TokenInfo = () => {
   const { chosenToken, modalResolution } = useStore()
@@ -58,9 +59,9 @@ const TokenInfo = () => {
 
           <Typography
             variantWeight='medium'
-            color={parseInt(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
+            color={parseFloat(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
           >
-            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${parseInt(chosenToken[resolutions].toString()).toFixed(2)}%)`}
+            {`$${formatTokenPrice(chosenToken.priceUSD)} (${parseFloat(chosenToken[resolutions].toString()).toFixed(2)}%)`}
           </Typography>
         </div>
       </div>
