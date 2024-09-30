@@ -229,7 +229,7 @@ export class BubblesUtils {
         id: item.token.address,
         symbol: item.token.symbol.slice(0, 5),
         image: item.image || defaultPath,
-        coinName: item.token.info.name,
+        coinName: item.token.name,
         isSearched: false,
         isPreviousSearched: false,
         isHovered: false,
