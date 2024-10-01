@@ -1,16 +1,12 @@
 const formatPercentage = (num: number) => {
-  if (num >= 1_000_000) {
-    return (num / 1_000_000).toLocaleString('en-US') + 'M';
-  } else if (num >= 1_000) {
-    return (num / 1_000).toLocaleString('en-US') + 'K';
-  } else if (num >= 1) {
-    return Math.round(num).toLocaleString('en-US');
+  if (num >= 10000) {
+    return (num / 10000).toFixed(2) + 'M';
+  } else if (num >= 10) {
+    return (num / 10).toFixed(2) + 'K';
+  } else if (num >= 0.1) {
+    return (num * 100).toFixed(2);
   } else {
-    const decimalPart = num.toString().split('.')[1] || '';
-
-    const paddedDecimal = decimalPart.padEnd(4, '0');
-
-    return paddedDecimal[1] + ',' + paddedDecimal[2] + paddedDecimal[3];
+    return (num * 100).toFixed(2);
   }
 }
 
