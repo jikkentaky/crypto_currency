@@ -8,7 +8,6 @@ import { Loader } from "@/app/ui-components/loader";
 import { ModalComponent } from "@/app/ui-components/modal";
 import { ChartModalContent } from "@/app/components/chart-modal-content";
 import { NetworksModalContent } from "@/app/components/networks-modal-content";
-import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 
 export default function BubblesPage() {
   const {
@@ -19,7 +18,6 @@ export default function BubblesPage() {
     setIsLoading,
     setTopTokensList
   } = useStore();
-  const { width } = useWindowDimensions();
 
   useEffect(() => {
     const getCoins = async () => {
@@ -30,11 +28,7 @@ export default function BubblesPage() {
 
         if (!coins) return;
 
-        const limitedCoins = width < 700
-          ? coins.slice(0, 50)
-          : coins;
-
-        setTopTokensList(limitedCoins);
+        setTopTokensList(coins);
       } catch (error) {
         console.log(error);
       } finally {
@@ -43,7 +37,7 @@ export default function BubblesPage() {
     };
 
     getCoins();
-  }, [chosenNetwork.id, width]);
+  }, [chosenNetwork.id]);
 
   return (
     <>

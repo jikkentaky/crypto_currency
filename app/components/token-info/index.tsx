@@ -9,10 +9,12 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { defaultPath } from "@/lib/config"
 import { formatTokenPrice } from "@/lib/format-token-price"
+import { formatPercentage } from "@/lib/format-percentage"
+import { TokenFilterResult } from "@/types/tokenFilterResultType.type"
 
 const TokenInfo = () => {
-  const { chosenToken, modalResolution } = useStore()
-  const [resolutions, setResolutions] = useState(SORTING_BY.HOUR)
+  const { chosenToken, modalResolution, resolution } = useStore()
+  const [, setResolutions] = useState(SORTING_BY.HOUR)
 
   useEffect(() => {
     getPriceChange(modalResolution)
@@ -39,6 +41,12 @@ const TokenInfo = () => {
     }
   }
 
+  let value
+
+  if (resolution in chosenToken) {
+    value = chosenToken[resolution as keyof TokenFilterResult];
+  }
+
   return (
     chosenToken && <div className={styles['token-info']}>
       <div className={styles['token-image-wrapper']}>
@@ -58,9 +66,9 @@ const TokenInfo = () => {
 
           <Typography
             variantWeight='medium'
-            color={parseFloat(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
+            color={parseFloat(value!.toString()) > 0 ? 'green' : 'red'}
           >
-            {`$${formatTokenPrice(chosenToken.priceUSD)} (${parseFloat(chosenToken[resolutions].toString()).toFixed(2)}%)`}
+            {`$${formatTokenPrice(chosenToken.priceUSD)} (${formatPercentage(+value!)}%)`}
           </Typography>
         </div>
       </div>

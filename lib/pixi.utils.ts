@@ -12,24 +12,20 @@ export class PixiUtils {
     const container = new PIXI.Container();
     container.position.set(circle.x, circle.y);
     container.hitArea = new PIXI.Circle(0, 0, circle.radius);
+    container.interactive = true;
 
-    container.on('pointerover', () => {
-      circle.isHovered = true;
-    });
-
-    container.on('pointerout', () => {
-      circle.isHovered = false;
-    });
-
-    container.on('click', () => {
-      setChosenToken(circle.id);
-      setIsOpenModal(true);
-    });
-
-    container.on('touchstart', () => {
-      setChosenToken(circle.id);
-      setIsOpenModal(true);
-    });
+    container
+      .on('pointerover', () => {
+        circle.isHovered = true;
+      }).on('pointerout', () => {
+        circle.isHovered = false;
+      }).on('click', () => {
+        setChosenToken(circle.id);
+        setIsOpenModal(true);
+      }).on('touchstart', () => {
+        setChosenToken(circle.id);
+        setIsOpenModal(true);
+      });
 
     return container;
   };

@@ -31,7 +31,7 @@ async function fetchFilterTokens(
               attribute: trendingScore
               direction: DESC
             }
-            limit: 70
+            limit: 75
             ) {
               results {
                 fdv

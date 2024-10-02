@@ -1,33 +1,10 @@
 import { SORTING_BY } from "@/types/bubbles.type";
-import { calculateMinCircleSize } from "./calc-min-circle-size";
-import { calculateMaxCircleSize } from "./calc-max-circle-size";
-
-const aside = 310;
-const scrollWidth = 9;
-const mobileHeaderHeight = 60;
-const mobileFooterHeight = 105;
-
-const width = typeof window !== "undefined"
-  ? window.innerWidth < 1100
-    ? window.innerWidth
-    : Math.min(window.innerWidth - aside - scrollWidth, 1920 - aside)
-  : 375;
-
-const height = typeof window !== "undefined"
-  ? window.innerWidth < 1100
-    ? window.innerHeight - mobileHeaderHeight - mobileFooterHeight
-    : 720
-  : 100
 
 const appConfig = {
-  aside,
-  width,
-  height,
+  aside: 310,
   speed: 0.005,
   elasticity: 0.005,
   wallDamping: 0.5,
-  maxCircleSize: calculateMaxCircleSize(),
-  minCircleSize: calculateMinCircleSize(),
 };
 
 const priceChangeButtons = [

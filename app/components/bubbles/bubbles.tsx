@@ -7,18 +7,18 @@ import { Circle, PriceChange, SORTING_BY, } from "@/types/bubbles.type";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
-import { appConfig } from "@/lib/config";
 import { formatPercentage } from "@/lib/format-percentage";
+import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 
 type Props = {
   coins: TokenFilterResult[];
 };
 
-const { width, height, maxCircleSize, minCircleSize } = appConfig;
-
 export default function Bubbles({ coins }: Props) {
   const displayChangeRef = useRef<PriceChange | null>(null);
-  const { resolution: bubbleSort, chosenNetwork, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
+  const { width, height } = useWindowDimensions();
+
+  const { resolution: bubbleSort, searchCoin, setIsOpenModal, setChosenToken } = useStore((state) => {
     displayChangeRef.current = state.currentResolution;
     return state;
   });
@@ -29,16 +29,27 @@ export default function Bubbles({ coins }: Props) {
   const appInstance = useRef<PIXI.Application | null>(null);
 
   const scalingFactor = useMemo(() => {
-    return BubblesUtils.getScalingFactor(coins, bubbleSort as SORTING_BY);
-  }, [bubbleSort, coins]);
+    return BubblesUtils.getScalingFactor(coins, bubbleSort as SORTING_BY, width, height);
+  }, [bubbleSort, coins, width, height]);
 
   useEffect(() => {
-    if (coins && chosenNetwork) {
-      const scalingFactor = BubblesUtils.getScalingFactor(coins, SORTING_BY.HOUR);
-      const shapes = BubblesUtils.generateCircles(coins, scalingFactor);
+    if (coins) {
+      const scalingFactor = BubblesUtils.getScalingFactor(
+        coins,
+        bubbleSort as SORTING_BY,
+        width,
+        height
+      );
+      const shapes = BubblesUtils.generateCircles(
+        coins,
+        scalingFactor,
+        bubbleSort as SORTING_BY,
+        width,
+        height
+      );
       setCircles(shapes);
     }
-  }, [coins, chosenNetwork.id]);
+  }, [coins, width, height]);
 
   useEffect(() => {
     if (!circles) return;
@@ -53,6 +64,7 @@ export default function Bubbles({ coins }: Props) {
       height,
       backgroundColor: "0x000000",
       eventMode: "dynamic",
+      antialias: true,
       eventFeatures: {
         move: true,
         globalMove: false,
@@ -72,6 +84,7 @@ export default function Bubbles({ coins }: Props) {
     appInstance.current = app as PIXI.Application;
 
     appContainer?.appendChild((app as { view: Node }).view);
+
     appContainer?.children[0].addEventListener("click", (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles));
 
     for (let i = 0; i < circles.length; i++) {
@@ -109,11 +122,9 @@ export default function Bubbles({ coins }: Props) {
       circle.isPreviousSearched = circle.isSearched;
     }
 
-    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, displayChangeRef);
-    setTimeout(() => {
-      (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
-    }, 400);
+    const ticker = BubblesUtils.update(circles, imageSprites, textSprites, text2Sprites, circleGraphics, displayChangeRef, width, height);
 
+    (app as PIXI.Application<PIXI.ICanvas>).ticker?.add(ticker);
 
     return () => {
       (app as PIXI.Application<PIXI.ICanvas>).ticker?.remove(ticker);
@@ -127,10 +138,21 @@ export default function Bubbles({ coins }: Props) {
     };
   }, [circles]);
 
+  // useEffect(() => {
+  //   if (appInstance.current) {
+  //     appInstance.current.renderer.resize(width, height);
+  //     appInstance.current.render();
+
+  //     // Optionally adjust stage scale or position
+  //     // appInstance.current.stage.scale.set(newScale);
+  //     // appInstance.current.stage.position.set(newX, newY);
+  //   }
+  // }, [width, height]);
+
   useEffect(() => {
     if (circles) {
-      const max = maxCircleSize;
-      const min = minCircleSize;
+      const max = Math.min(width, height) * 0.15;
+      const min = Math.min(width, height) * 0.065;
 
       circles.forEach((circle) => {
         if (!circle[bubbleSort as SORTING_BY]) return;

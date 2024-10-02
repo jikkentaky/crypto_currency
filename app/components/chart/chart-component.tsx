@@ -1,4 +1,3 @@
-import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 import { formatTokenPrice } from '@/lib/format-token-price';
 import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
@@ -18,8 +17,6 @@ type Props = {
 }
 
 export const ChartComponent: FC<Props> = (props) => {
-  const { width } = useWindowDimensions();
-
   const {
     data,
     colors: {
@@ -31,8 +28,8 @@ export const ChartComponent: FC<Props> = (props) => {
     } = {},
   } = props;
 
+  const height = 385;
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
-  const height = width > 1100 ? 385 : 260;
 
   useEffect(
     () => {
@@ -40,6 +37,7 @@ export const ChartComponent: FC<Props> = (props) => {
       const handleResize = () => {
         chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
+
 
       const chart = createChart(chartContainerRef.current, {
         layout: {

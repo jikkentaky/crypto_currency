@@ -5,6 +5,8 @@
 .aside {
   height: 100%;
   width: 100%;
+  max-width: 310px;
+  min-width: 310px;
   overflow: hidden;
   top: 0;
   z-index: 1;
