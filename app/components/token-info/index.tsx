@@ -41,10 +41,13 @@ const TokenInfo = () => {
     }
   }
 
-  let value
+  let value = chosenToken[SORTING_BY.HOUR];
 
   if (resolution in chosenToken) {
-    value = chosenToken[resolution as keyof TokenFilterResult];
+    const currentValue = chosenToken[resolution as keyof TokenFilterResult];
+    if (currentValue === 'change1' || currentValue === 'change4' || currentValue === 'change12' || currentValue === 'change24') {
+      value = Number(chosenToken[resolution as keyof TokenFilterResult]);
+    }
   }
 
   return (
