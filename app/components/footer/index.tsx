@@ -11,6 +11,8 @@ import { MobileModalNetworks } from '@/app/components/mobile-modal-networks';
 import { SelectTimeframe } from '@/app/components/select-timeframe';
 import { MobileNetworksIcon } from '@/app/ui-components/icons/mobile-networks-icon';
 import { PriceArrowIcon } from '@/app/ui-components/icons/price-arrow-icon';
+import { CustomSelect } from '@/app/ui-components/select';
+import { Typography } from '@/app/ui-components/typography';
 
 const Footer = () => {
   const { isOpenMobileMenu, resolution, isNetworks, isOpenMobileTimeFrame, setIsOpenMobileMenu, setIsOpenMobileTimeFrame } = useStore()
@@ -25,16 +27,26 @@ const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <MobileButton className={styles.grow} onClick={handleOpenModal}>
-        <MobileNetworksIcon />
-        All networks
-        <PriceArrowIcon className={styles.rotate} />
-      </MobileButton>
+      <div className={styles['sort-wrapper']}>
+        <Typography className={styles['sort-label']}>
+          Sort by
+        </Typography>
 
-      <MobileButton onClick={handleToggleTimeFrame}>
-        {mobileResolution[resolution as keyof typeof mobileResolution]}
-        <PriceArrowIcon className={styles.rotate} />
-      </MobileButton>
+        <CustomSelect />
+      </div>
+
+      <div className={styles['networks-wrapper']}>
+        <MobileButton className={styles.grow} onClick={handleOpenModal}>
+          <MobileNetworksIcon />
+          All networks
+          <PriceArrowIcon className={styles.rotate} />
+        </MobileButton>
+
+        <MobileButton onClick={handleToggleTimeFrame}>
+          {mobileResolution[resolution as keyof typeof mobileResolution]}
+          <PriceArrowIcon className={styles.rotate} />
+        </MobileButton>
+      </div>
 
       <MobileModal
         className={cn({

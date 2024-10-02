@@ -8,14 +8,6 @@ async function fetchFilterTokens(
   networkId: number,
 ) {
   try {
-    const additionalFilters = (networkId === 1 || networkId === 1399811149)
-      ? `txnCount24: { gt: 200 }
-        volume24: { gt: 45000 }
-        buyCount24: { gt: 80 }
-        sellCount24: { gt: 80 }
-        change24: { gt: 0.20 }`
-      : '';
-
     const { data }: {
       data: {
         data: {
@@ -31,7 +23,9 @@ async function fetchFilterTokens(
             network: [${networkId}]
             trendingIgnored: false
             liquidity: { gt: 1000 }
-            ${additionalFilters}
+            volume24: { lte: 100000000000 }
+            marketCap: {lte: 1000000000000}
+            potentialScam: false
           }
             rankings: {
               attribute: trendingScore

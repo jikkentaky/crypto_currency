@@ -5,7 +5,7 @@ import { calculateMaxCircleSize } from "./calc-max-circle-size";
 const aside = 310;
 const scrollWidth = 9;
 const mobileHeaderHeight = 60;
-const mobileFooterHeight = 78;
+const mobileFooterHeight = 105;
 
 const width = typeof window !== "undefined"
   ? window.innerWidth < 1100

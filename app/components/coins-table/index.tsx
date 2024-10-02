@@ -17,7 +17,7 @@ import { convertNumber } from "@/lib/convert-number"
 import { formatPercentage } from "@/lib/format-percentage"
 
 const CoinsTable = () => {
-  const { topTokensList } = useStore();
+  const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
   const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
 
   useMemo(() => {
@@ -27,6 +27,11 @@ const CoinsTable = () => {
   const columnHelper = createColumnHelper<TokenFilterResultType>();
 
   const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'rank', desc: false }]);
+
+  const onClick = (tokenId: string) => {
+    setChosenToken(tokenId);
+    setIsOpenModal(true);
+  }
 
   const toggleSorting = useCallback((columnId: string) => {
     setSorting((oldSorting) => {
@@ -58,18 +63,26 @@ const CoinsTable = () => {
         cell: (info) => {
           const row = info.row.original;
           return (
-            <p className={styles['col-name']} title={row.token.name}>
-              <Image
-                loading="lazy"
-                src={row.token.info.imageThumbUrl || defaultPath}
-                width={20}
-                height={20}
-                alt={row.token.name}
-                style={{ marginRight: '8px' }}
-              />
+            <button
+              className={cn(styles.button,
+                { [styles.selected]: true })
+              }
+              key={row.token.id}
+              onClick={() => onClick(row.token.address)}
+            >
+              <p className={styles['col-name']} title={row.token.name}>
+                <Image
+                  loading="lazy"
+                  src={row.token.info.imageThumbUrl || defaultPath}
+                  width={20}
+                  height={20}
+                  alt={row.token.name}
+                  style={{ marginRight: '8px' }}
+                />
 
-              {info.getValue()}
-            </p>
+                {info.getValue()}
+              </p>
+            </button>
           );
         },
         header: () => (
