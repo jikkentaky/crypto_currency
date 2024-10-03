@@ -14,24 +14,24 @@ const useWindowDimensions = () => {
     }
 
     function handleResize() {
-      const scroll = window.innerWidth > 1110 ? 10 : 5
-      let width
+      // // const scroll = window.innerWidth > 1110 ? 10 : 5
+      // // let width
 
-      if (window.innerWidth > 1920) {
-        width = 1920 - aside
-      } else if (window.innerWidth > 1110) {
-        width = window.innerWidth - aside - scroll
-      } else {
-        width = window.innerWidth
-      }
+      // // if (window.innerWidth > 1920) {
+      // //   width = 1920 - aside
+      // // } else if (window.innerWidth > 1110) {
+      // //   width = window.innerWidth - aside - scroll
+      // // } else {
+      // //   width = window.innerWidth
+      // // }
 
-      const header = width > 1100 ? 81 : 60
-      const footer = width <= 1100 ? 105 : 0
-      const height = window.innerHeight - header - footer
+      // const header = window.innerWidth > 1100 ? 81 : 60
+      // const footer = window.innerWidth <= 1100 ? 105 : 0
+      // const height = window.innerHeight - header - footer
 
       setWindowDimensions({
-        width,
-        height,
+        width: window.innerWidth,
+        height: window.innerHeight,
       });
     }
 

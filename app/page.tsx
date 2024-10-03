@@ -14,7 +14,7 @@ export default function Home() {
         </div>
 
         <div className={styles['content-wrapper']}>
-          <Aside />
+          {/* <Aside /> */}
 
           <div className={styles.content}>
             <Header />

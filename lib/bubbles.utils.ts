@@ -36,10 +36,14 @@ export class BubblesUtils {
     text2Sprites: PIXI.Text[],
     circleGraphics: PIXI.Sprite[] = [],
     displayChangeRef: React.RefObject<string>,
-    width: number,
-    height: number
+    appInstanceRef: React.RefObject<PIXI.Application>
   ) => {
     return () => {
+      const app = appInstanceRef.current;
+      if (!app) return;
+
+      const width = app.screen.width;
+      const height = app.screen.height;
       const displayChange = displayChangeRef.current as PriceChange;
 
       for (let i = 0; i < circles.length; i++) {
@@ -53,6 +57,7 @@ export class BubblesUtils {
 
         const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
+        // Update circle children
         const updateCircleChilds = () => {
           const gradientColor = circle.isSearched ? "white" : circle.color;
 
@@ -66,13 +71,14 @@ export class BubblesUtils {
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            const scaleFactor = 0.6;
+            const scaleFactor = 0.7;
             const minSize = 10;
 
+            imageSprite.zIndex = 10;
             imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.position = { x: 0, y: 0 ? 0 : -circle.radius / 2 };
-            imageSprite.zIndex = 1;
+            imageSprite.zIndex = 10;
           }
 
           const textStyle = new PIXI.TextStyle({
@@ -88,14 +94,12 @@ export class BubblesUtils {
           });
 
           text.style = textStyle;
-          text.zIndex = 1;
+          text.zIndex = 10;
           text.position.y = 0.15 * circle.radius;
 
           text2.style = text2Style;
-          text2.zIndex = 1;
+          text2.zIndex = 10;
           text2.position.y = circle.radius / 1.8;
-
-          const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
           if (circle.text2) {
             circle.text2.text = newText2Value;
@@ -105,6 +109,7 @@ export class BubblesUtils {
         circle.x += circle.vx;
         circle.y += circle.vy;
 
+        // Wall collision detection using current width and height
         if (circle.x - circle.radius < 0) {
           circle.x = circle.radius;
           circle.vx *= -1;
@@ -114,6 +119,7 @@ export class BubblesUtils {
           circle.vx *= -1;
           circle.vx *= 1 - wallDamping;
         }
+
         if (circle.y - circle.radius < 0) {
           circle.y = circle.radius;
           circle.vy *= -1;
@@ -124,6 +130,7 @@ export class BubblesUtils {
           circle.vy *= 1 - wallDamping;
         }
 
+        // Collision with other circles
         for (let j = i + 1; j < circles.length; j++) {
           const otherCircle = circles[j];
           const dx = otherCircle.x - circle.x;
@@ -169,9 +176,7 @@ export class BubblesUtils {
             if (Math.abs(sizeDifference) <= changeSizeStep) {
               circle.radius = circle.targetRadius;
             } else {
-              circle.radius > circle.targetRadius
-                ? (circle.radius -= changeSizeStep)
-                : (circle.radius += changeSizeStep);
+              circle.radius += sizeDifference > 0 ? changeSizeStep : -changeSizeStep;
             }
 
             radiusChanged = true;
@@ -188,6 +193,166 @@ export class BubblesUtils {
       }
     };
   };
+
+  // static update = (
+  //   circles: Circle[],
+  //   imageSprites: PIXI.Sprite[],
+  //   textSprites: PIXI.Text[],
+  //   text2Sprites: PIXI.Text[],
+  //   circleGraphics: PIXI.Sprite[] = [],
+  //   displayChangeRef: React.RefObject<string>,
+  //   width: number,
+  //   height: number
+  // ) => {
+  //   return () => {
+  //     const displayChange = displayChangeRef.current as PriceChange;
+
+  //     for (let i = 0; i < circles.length; i++) {
+  //       const circle = circles[i];
+  //       const circleGraphic = circleGraphics[i];
+  //       const imageSprite = imageSprites[i];
+  //       const text = textSprites[i];
+  //       const text2 = text2Sprites[i];
+
+  //       const container = circleGraphic.parent as PIXI.Container;
+
+  //       const newText2Value = formatPercentage(circle[displayChange]) + ' %';
+
+  //       const updateCircleChilds = () => {
+  //         const gradientColor = circle.isSearched ? "white" : circle.color;
+
+  //         circleGraphic.texture = PixiUtils.createGradientTexture(
+  //           circle.targetRadius * 4,
+  //           gradientColor,
+  //           circle.isHovered
+  //         );
+
+  //         const fontSize = circle.radius * 0.7;
+  //         const isTextVisible = fontSize >= 8;
+
+  //         if (imageSprite) {
+  //           const scaleFactor = 0.5;
+  //           const minSize = 10;
+
+  //           imageSprite.zIndex = 10;
+  //           imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
+  //           imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
+  //           imageSprite.position = { x: 0, y: 0 ? 0 : -circle.radius / 2 };
+  //         }
+
+  //         const textStyle = new PIXI.TextStyle({
+  //           fontFamily: "Jersey 10, sans-serif",
+  //           fontSize: isTextVisible ? fontSize + "px" : "1px",
+  //           fill: "#ffffff",
+  //         });
+
+  //         const text2Style = new PIXI.TextStyle({
+  //           fontFamily: "Jersey 10, sans-serif",
+  //           fontSize: isTextVisible ? fontSize * 0.6 + "px" : "1px",
+  //           fill: "#ffffff",
+  //         });
+
+  //         text.style = textStyle;
+  //         text.zIndex = 10;
+  //         text.position.y = 0.15 * circle.radius;
+
+  //         text2.style = text2Style;
+  //         text2.zIndex = 10;
+  //         text2.position.y = circle.radius / 1.8;
+
+  //         const newText2Value = formatPercentage(circle[displayChange]) + ' %';
+
+  //         if (circle.text2) {
+  //           circle.text2.text = newText2Value;
+  //         }
+  //       };
+
+  //       circle.x += circle.vx;
+  //       circle.y += circle.vy;
+
+  //       if (circle.x - circle.radius < 0) {
+  //         circle.x = circle.radius;
+  //         circle.vx *= -1;
+  //         circle.vx *= 1 - wallDamping;
+  //       } else if (circle.x + circle.radius > width) {
+  //         circle.x = width - circle.radius;
+  //         circle.vx *= -1;
+  //         circle.vx *= 1 - wallDamping;
+  //       }
+  //       if (circle.y - circle.radius < 0) {
+  //         circle.y = circle.radius;
+  //         circle.vy *= -1;
+  //         circle.vy *= 1 - wallDamping;
+  //       } else if (circle.y + circle.radius > height) {
+  //         circle.y = height - circle.radius;
+  //         circle.vy *= -1;
+  //         circle.vy *= 1 - wallDamping;
+  //       }
+
+  //       for (let j = i + 1; j < circles.length; j++) {
+  //         const otherCircle = circles[j];
+  //         const dx = otherCircle.x - circle.x;
+  //         const dy = otherCircle.y - circle.y;
+  //         const distance = Math.sqrt(dx * dx + dy * dy);
+
+  //         if (distance < circle.radius + otherCircle.radius) {
+  //           const angle = Math.atan2(dy, dx);
+
+  //           const totalRadius = circle.radius + otherCircle.radius;
+  //           const overlap = totalRadius - distance;
+  //           const force = overlap * elasticity;
+
+  //           const dampingFactor = wallDamping;
+  //           circle.vx -= force * Math.cos(angle) * dampingFactor + circle.vx * 0.01;
+  //           circle.vy -= force * Math.sin(angle) * dampingFactor + circle.vy * 0.01;
+  //           otherCircle.vx += force * Math.cos(angle) * dampingFactor;
+  //           otherCircle.vy += force * Math.sin(angle) * dampingFactor;
+  //         }
+  //       }
+
+  //       container.position.set(circle.x, circle.y);
+
+  //       let radiusChanged = false;
+
+  //       if (
+  //         circle.radius !== circle.targetRadius ||
+  //         circle.color !== circle.previousColor ||
+  //         circle.isHovered !== circle.previousHovered ||
+  //         circle.previousText2 !== newText2Value ||
+  //         circle.isSearched !== circle.isPreviousSearched
+  //       ) {
+  //         container.cacheAsBitmap = false;
+
+  //         circle.previousColor = circle.color;
+  //         circle.previousHovered = circle.isHovered;
+  //         circle.previousText2 = newText2Value;
+  //         circle.isPreviousSearched = circle.isSearched;
+
+  //         if (circle.radius !== circle.targetRadius) {
+  //           const sizeDifference = circle.targetRadius - circle.radius;
+
+  //           if (Math.abs(sizeDifference) <= changeSizeStep) {
+  //             circle.radius = circle.targetRadius;
+  //           } else {
+  //             circle.radius > circle.targetRadius
+  //               ? (circle.radius -= changeSizeStep)
+  //               : (circle.radius += changeSizeStep);
+  //           }
+
+  //           radiusChanged = true;
+  //         }
+
+  //         if (radiusChanged) {
+  //           container.hitArea = new PIXI.Circle(0, 0, circle.radius);
+  //         }
+
+  //         updateCircleChilds();
+
+  //         container.cacheAsBitmap = true;
+  //       }
+  //     }
+  //   };
+  // };
 
   static handleEmptySpaceClick = (event: MouseEvent, circles: Circle[]) => {
     const waveForce = 100; // Adjust the wave force as needed
