@@ -138,17 +138,6 @@ export default function Bubbles({ coins }: Props) {
     };
   }, [circles]);
 
-  // useEffect(() => {
-  //   if (appInstance.current) {
-  //     appInstance.current.renderer.resize(width, height);
-  //     appInstance.current.render();
-
-  //     // Optionally adjust stage scale or position
-  //     // appInstance.current.stage.scale.set(newScale);
-  //     // appInstance.current.stage.position.set(newX, newY);
-  //   }
-  // }, [width, height]);
-
   useEffect(() => {
     if (circles) {
       const max = Math.min(width, height) * 0.15;

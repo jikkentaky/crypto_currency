@@ -17,7 +17,7 @@ const useWindowDimensions = () => {
       const scroll = window.innerWidth > 1110 ? 10 : 5
       let width
 
-      if (window.innerWidth >= 1920) {
+      if (window.innerWidth > 1920) {
         width = 1920 - aside
       } else if (window.innerWidth > 1110) {
         width = window.innerWidth - aside - scroll

@@ -2,9 +2,15 @@ import { priceChangeButtons } from '@/lib/config'
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
 import cn from 'classnames'
+import { SORTING_BY } from '@/types/bubbles.type'
 
 const SelectTimeframe = () => {
-  const { resolution, setResolution } = useStore()
+  const { resolution, setResolution, setIsOpenMobileTimeFrame } = useStore()
+
+  const handleChangeResolution = (value: SORTING_BY) => {
+    setResolution(value)
+    setIsOpenMobileTimeFrame(false)
+  }
 
   return (
     <div>
@@ -16,7 +22,7 @@ const SelectTimeframe = () => {
             <button
               key={value}
               className={cn(styles.button, { [styles.selected]: resolution === value })}
-              onClick={() => setResolution(value)}>
+              onClick={() => handleChangeResolution(value)}>
               {content}
             </button>
           )
