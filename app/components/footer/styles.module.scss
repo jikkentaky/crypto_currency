@@ -38,7 +38,8 @@
 }
 
 .rotate {
-  transform: rotate(180deg);
+  border: 1px solid $color-grey-13;
+  box-shadow: -1px 1px 1px $color-white;
 }
 
 .grow {
