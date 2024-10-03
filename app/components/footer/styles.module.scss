@@ -37,6 +37,12 @@
   gap: 8px;
 }
 
+.network-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .rotate {
   border: 1px solid $color-grey-13;
   box-shadow: -1px 1px 1px $color-white;

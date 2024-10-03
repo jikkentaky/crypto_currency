@@ -37,8 +37,11 @@ const Footer = () => {
 
       <div className={styles['networks-wrapper']}>
         <MobileButton className={styles.grow} onClick={handleOpenModal}>
-          <MobileNetworksIcon />
-          All networks
+          <div className={styles['network-block']}>
+            <MobileNetworksIcon />
+            All networks
+          </div>
+
           <PriceArrowIcon className={styles.rotate} />
         </MobileButton>
 
