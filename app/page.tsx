@@ -1,4 +1,3 @@
-import { Aside } from "./components/aside";
 import BubblesPage from "./components/bubbles";
 import { CoinsTable } from "./components/coins-table";
 import { Header } from "./components/header";
@@ -14,7 +13,6 @@ export default function Home() {
         </div>
 
         <div className={styles['content-wrapper']}>
-          {/* <Aside /> */}
 
           <div className={styles.content}>
             <Header />
