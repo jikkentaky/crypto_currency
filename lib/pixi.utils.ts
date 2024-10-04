@@ -34,10 +34,8 @@ export class PixiUtils {
   };
 
   static createImageSprite = (circle: Circle) => {
-    const imgUrl = circle.image;
-    const apiUrl = `/api/get-image?url=${imgUrl}`;
-
-    const imageSprite = PIXI.Sprite.from(apiUrl);
+    const imgUrl = circle.image || defaultPath;
+    const imageSprite = PIXI.Sprite.from(imgUrl);
     const isFullSize = circle.radius * 0.3 < 10;
 
     imageSprite.anchor.set(0.5);
