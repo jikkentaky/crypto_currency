@@ -14,7 +14,7 @@ import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath }
 import Image from 'next/image'
 
 const CoinsTable = () => {
-  const { topTokensList } = useStore();
+  const { topTokensList, setIsOpenModal, setChosenToken } = useStore();
   const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
 
   useMemo(() => {
@@ -39,6 +39,12 @@ const CoinsTable = () => {
     });
   }, [tableData]);
 
+
+  const onClick = (tokenId: string) => {
+    setChosenToken(tokenId);
+    setIsOpenModal(true);
+  }
+
   const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
     () => [
       columnHelper.accessor((row) => row.rank, {
@@ -55,18 +61,26 @@ const CoinsTable = () => {
         cell: (info) => {
           const row = info.row.original;
           return (
-            <p className={styles['col-name']} title={row.token.name}>
-              <Image
-                loading="lazy"
-                src={row.token.info.imageThumbUrl || defaultPath}
-                width={20}
-                height={20}
-                alt={row.token.name}
-                style={{ marginRight: '8px' }}
-              />
+            <button
+              className={cn(styles.button,
+                { [styles.selected]: true })
+              }
+              key={row.token.id}
+              onClick={() => onClick(row.token.address)}
+            >
+              <p className={styles['col-name']} title={row.token.name}>
+                <Image
+                  loading="lazy"
+                  src={row.token.info.imageThumbUrl || defaultPath}
+                  width={20}
+                  height={20}
+                  alt={row.token.name}
+                  style={{marginRight: '8px'}}
+                />
 
-              {info.getValue()}
-            </p>
+                {info.getValue()}
+              </p>
+            </button>
           );
         },
         header: () => (
@@ -80,8 +94,8 @@ const CoinsTable = () => {
         cell: (info) => (
           <span>
             ${info.getValue().toLocaleString('en-US', {
-              minimumFractionDigits: 4,
-              maximumFractionDigits: 4,
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 4,
             })}
           </span>
         ),

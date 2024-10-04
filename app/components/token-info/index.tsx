@@ -14,12 +14,6 @@ const TokenInfo = () => {
   const { chosenToken, modalResolution } = useStore()
   const [resolutions, setResolutions] = useState(SORTING_BY.HOUR)
 
-  useEffect(() => {
-    getPriceChange(modalResolution)
-  }, [modalResolution])
-
-  if (!chosenToken) return
-
   const getPriceChange = (res: Resolution) => {
     switch (res) {
       case Resolution.HOUR:
@@ -38,6 +32,12 @@ const TokenInfo = () => {
         setResolutions(SORTING_BY.HOUR)
     }
   }
+
+  useEffect(() => {
+    getPriceChange(modalResolution)
+  }, [modalResolution])
+
+  if (!chosenToken) return;
 
   return (
     chosenToken && <div className={styles['token-info']}>
