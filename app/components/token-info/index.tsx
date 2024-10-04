@@ -3,16 +3,18 @@
 import { useStore } from "@/store"
 import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
-import { convertToBillions } from "@/lib/convert-to-billions"
-import { convertToMillions } from "@/lib/convert-to-millions"
+import { convertNumber } from "@/lib/convert-number"
 import { SORTING_BY, Resolution } from "@/types/bubbles.type"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { defaultPath } from "@/lib/config"
+import { formatTokenPrice } from "@/lib/format-token-price"
+import { formatPercentage } from "@/lib/format-percentage"
+import { TokenFilterResult } from "@/types/tokenFilterResultType.type"
 
 const TokenInfo = () => {
-  const { chosenToken, modalResolution } = useStore()
-  const [resolutions, setResolutions] = useState(SORTING_BY.HOUR)
+  const { chosenToken, modalResolution, resolution } = useStore()
+  const [, setResolutions] = useState(SORTING_BY.HOUR)
 
   useEffect(() => {
     getPriceChange(modalResolution)
@@ -39,6 +41,15 @@ const TokenInfo = () => {
     }
   }
 
+  let value = chosenToken[SORTING_BY.HOUR];
+
+  if (resolution in chosenToken) {
+    const currentValue = chosenToken[resolution as keyof TokenFilterResult];
+    if (currentValue === 'change1' || currentValue === 'change4' || currentValue === 'change12' || currentValue === 'change24') {
+      value = Number(chosenToken[resolution as keyof TokenFilterResult]);
+    }
+  }
+
   return (
     chosenToken && <div className={styles['token-info']}>
       <div className={styles['token-image-wrapper']}>
@@ -58,9 +69,9 @@ const TokenInfo = () => {
 
           <Typography
             variantWeight='medium'
-            color={parseInt(chosenToken[resolutions].toString()) > 0 ? 'green' : 'red'}
+            color={parseFloat(value!.toString()) > 0 ? 'green' : 'red'}
           >
-            {`$${Number(chosenToken.priceUSD)?.toFixed(8)} (${parseInt(chosenToken[resolutions].toString()).toFixed(2)}%)`}
+            {`$${formatTokenPrice(chosenToken.priceUSD)} (${formatPercentage(+value!)}%)`}
           </Typography>
         </div>
       </div>
@@ -72,17 +83,17 @@ const TokenInfo = () => {
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToBillions(chosenToken.marketCap)}`}
+            {`$${convertNumber(chosenToken.marketCap)}`}
           </Typography>
         </div>
 
         <div className={styles['token-item']}>
           <Typography variantWeight='medium' className={styles.font}>
-            Total Supply
+            FDV
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToBillions(+chosenToken.token.totalSupply)}`}
+            {`$${convertNumber(+chosenToken.fdv)}`}
           </Typography>
         </div>
 
@@ -92,7 +103,7 @@ const TokenInfo = () => {
           </Typography>
 
           <Typography className={styles.font}>
-            {`$${convertToMillions(+chosenToken.volume24)}`}
+            {`$${convertNumber(+chosenToken.volume24)}`}
           </Typography>
         </div>
       </div>

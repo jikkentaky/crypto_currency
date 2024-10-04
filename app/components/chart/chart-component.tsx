@@ -1,4 +1,4 @@
-import { useWindowDimensions } from '@/hooks/use-window-dimensions';
+import { formatTokenPrice } from '@/lib/format-token-price';
 import { Bar } from '@/types/bar.type';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { FC, useEffect, useRef } from 'react';
@@ -17,8 +17,6 @@ type Props = {
 }
 
 export const ChartComponent: FC<Props> = (props) => {
-  const { width } = useWindowDimensions();
-
   const {
     data,
     colors: {
@@ -30,8 +28,8 @@ export const ChartComponent: FC<Props> = (props) => {
     } = {},
   } = props;
 
+  const height = 385;
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
-  const height = width > 1100 ? 385 : 260;
 
   useEffect(
     () => {
@@ -40,10 +38,13 @@ export const ChartComponent: FC<Props> = (props) => {
         chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
 
+
       const chart = createChart(chartContainerRef.current, {
         layout: {
           background: { type: ColorType.Solid, color: backgroundColor },
           textColor,
+          fontFamily: 'Roboto, sans-serif',
+          fontSize: 20,
         },
         width: chartContainerRef.current.clientWidth,
         height,
@@ -56,10 +57,18 @@ export const ChartComponent: FC<Props> = (props) => {
           },
         },
         timeScale: {
-          visible: false,
+          visible: true,
+          timeVisible: true,
+          secondsVisible: false,
         },
         rightPriceScale: {
-          visible: false,
+          visible: true,
+          borderVisible: true,
+        },
+        localization: {
+          priceFormatter: (price: number) => {
+            return formatTokenPrice(price);
+          },
         },
       });
       chart.timeScale().fitContent();

@@ -1,5 +1,12 @@
 import { Sprite, Text } from 'pixi.js'
 
+export enum PriceChange {
+  HOUR = 'change1',
+  FOUR_HOURS = 'change4',
+  TWELVE_HOURS = 'change12',
+  DAY = 'change24',
+}
+
 export enum SORTING_BY {
   HOUR = 'change1',
   FOUR_HOURS = 'change4',

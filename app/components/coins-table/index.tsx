@@ -12,9 +12,12 @@ import { sortFilterTokens } from "@/app/api/lib";
 import { PlatformLink } from "@/app/components/platform-link"
 import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath } from "@/lib/config"
 import Image from 'next/image'
+import { formatTokenPrice } from "@/lib/format-token-price"
+import { convertNumber } from "@/lib/convert-number"
+import { formatPercentage } from "@/lib/format-percentage"
 
 const CoinsTable = () => {
-  const { topTokensList } = useStore();
+  const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
   const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
 
   useMemo(() => {
@@ -24,6 +27,11 @@ const CoinsTable = () => {
   const columnHelper = createColumnHelper<TokenFilterResultType>();
 
   const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'rank', desc: false }]);
+
+  const onClick = (tokenId: string) => {
+    setChosenToken(tokenId);
+    setIsOpenModal(true);
+  }
 
   const toggleSorting = useCallback((columnId: string) => {
     setSorting((oldSorting) => {
@@ -55,18 +63,26 @@ const CoinsTable = () => {
         cell: (info) => {
           const row = info.row.original;
           return (
-            <p className={styles['col-name']} title={row.token.name}>
-              <Image
-                loading="lazy"
-                src={row.token.info.imageThumbUrl || defaultPath}
-                width={20}
-                height={20}
-                alt={row.token.name}
-                style={{ marginRight: '8px' }}
-              />
+            <button
+              className={cn(styles.button,
+                { [styles.selected]: true })
+              }
+              key={row.token.id}
+              onClick={() => onClick(row.token.address)}
+            >
+              <p className={styles['col-name']} title={row.token.name}>
+                <Image
+                  loading="lazy"
+                  src={row.token.info.imageThumbUrl || defaultPath}
+                  width={20}
+                  height={20}
+                  alt={row.token.name}
+                  style={{ marginRight: '8px' }}
+                />
 
-              {info.getValue()}
-            </p>
+                {info.getValue()}
+              </p>
+            </button>
           );
         },
         header: () => (
@@ -79,10 +95,7 @@ const CoinsTable = () => {
         id: 'priceUSD',
         cell: (info) => (
           <span>
-            ${info.getValue().toLocaleString('en-US', {
-              minimumFractionDigits: 4,
-              maximumFractionDigits: 4,
-            })}
+            ${formatTokenPrice(info.getValue())}
           </span>
         ),
         header: () => (
@@ -95,7 +108,7 @@ const CoinsTable = () => {
         id: 'marketCap',
         cell: (info) => (
           <span>
-            ${info.getValue().toLocaleString('en-US')}
+            ${convertNumber(info.getValue())}
           </span>
         ),
         header: () => (
@@ -108,7 +121,7 @@ const CoinsTable = () => {
         id: 'volume24',
         cell: (info) => (
           <span>
-            ${info.getValue().toLocaleString('en-US')}
+            ${convertNumber(info.getValue())}
           </span>
         ),
         header: () => (
@@ -121,7 +134,7 @@ const CoinsTable = () => {
         id: 'change1',
         cell: (info) => {
           const value = info.getValue();
-          const formattedValue = Math.abs(value).toFixed(2) + '%';
+          const formattedValue = formatPercentage(value) + ' %';
 
           return (
             <p className={styles['price-change']}>
@@ -143,7 +156,7 @@ const CoinsTable = () => {
         id: 'change4',
         cell: (info) => {
           const value = info.getValue();
-          const formattedValue = Math.abs(value).toFixed(2) + '%';
+          const formattedValue = formatPercentage(value) + ' %';
 
           return (
             <p className={styles['price-change']}>
@@ -165,7 +178,7 @@ const CoinsTable = () => {
         id: 'change12',
         cell: (info) => {
           const value = info.getValue();
-          const formattedValue = Math.abs(value).toFixed(2) + '%';
+          const formattedValue = formatPercentage(value) + ' %';
 
           return (
             <p className={styles['price-change']}>
@@ -187,7 +200,7 @@ const CoinsTable = () => {
         id: 'change24',
         cell: (info) => {
           const value = info.getValue();
-          const formattedValue = Math.abs(value).toFixed(2) + '%';
+          const formattedValue = formatPercentage(value) + ' %';
 
           return (
             <p className={styles['price-change']}>

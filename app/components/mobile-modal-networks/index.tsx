@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import cn from 'classnames';
 
 const MobileModalNetworks = () => {
-  const { searchNetwork, chosenNetwork, networkList, setSearchNetwork, setChosenNetwork, setIsNetworks } = useStore()
+  const { searchNetwork, chosenNetwork, networkList, setSearchNetwork, setChosenNetwork, setIsNetworks, setIsOpenMobileMenu } = useStore()
 
   const filteredNetworks = useMemo(
     () =>
@@ -17,6 +17,11 @@ const MobileModalNetworks = () => {
       ),
     [searchNetwork, networkList],
   )
+
+  const handleChangeNetwork = (id: number, name: string, isVisible: boolean) => {
+    setChosenNetwork({ id, name, isVisible })
+    setIsOpenMobileMenu(false)
+  }
 
   return (
     <>
@@ -42,7 +47,7 @@ const MobileModalNetworks = () => {
               className={cn(styles.button,
                 { [styles.selected]: chosenNetwork?.id === id })
               }
-              onClick={() => setChosenNetwork({ id, name, isVisible })}
+              onClick={() => handleChangeNetwork(id, name, isVisible)}
             >
               <Image
                 loading='lazy'

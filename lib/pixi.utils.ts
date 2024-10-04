@@ -3,6 +3,7 @@
 import { Circle, SORTING_BY } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
 import { defaultPath } from "./config";
+import { formatPercentage } from "./format-percentage";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
 
@@ -11,24 +12,20 @@ export class PixiUtils {
     const container = new PIXI.Container();
     container.position.set(circle.x, circle.y);
     container.hitArea = new PIXI.Circle(0, 0, circle.radius);
+    container.interactive = true;
 
-    container.on('pointerover', () => {
-      circle.isHovered = true;
-    });
-
-    container.on('pointerout', () => {
-      circle.isHovered = false;
-    });
-
-    container.on('click', () => {
-      setChosenToken(circle.id);
-      setIsOpenModal(true);
-    });
-
-    container.on('touchstart', () => {
-      setChosenToken(circle.id);
-      setIsOpenModal(true);
-    });
+    container
+      .on('pointerover', () => {
+        circle.isHovered = true;
+      }).on('pointerout', () => {
+        circle.isHovered = false;
+      }).on('click', () => {
+        setChosenToken(circle.id);
+        setIsOpenModal(true);
+      }).on('touchstart', () => {
+        setChosenToken(circle.id);
+        setIsOpenModal(true);
+      });
 
     return container;
   };
@@ -40,8 +37,7 @@ export class PixiUtils {
 
     imageSprite.anchor.set(0.5);
 
-    const scaleFactor = isFullSize ? 2.4 : 1.0;
-    console.log("launch  PixiUtils  scaleFactor:", scaleFactor);
+    const scaleFactor = 1;
     imageSprite.width = circle.radius * scaleFactor;
     imageSprite.height = circle.radius * scaleFactor;
 
@@ -77,7 +73,7 @@ export class PixiUtils {
       fill: "#ffffff",
     });
 
-    const data = circle[bubbleSort] ? circle[bubbleSort]!.toFixed(2) + "%" : "";
+    const data = circle[bubbleSort] ? formatPercentage(circle[bubbleSort]) + ' %' : "";
 
     const text2 = new PIXI.Text(data, text2Style);
     text2.anchor.set(0.5);

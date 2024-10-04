@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
-import { Circle, SORTING_BY } from "@/types/bubbles.type";
+import { Circle, PriceChange, SORTING_BY } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { appConfig, defaultPath } from "./config";
-import { convertToMillions } from "./convert-to-millions";
+import { formatPercentage } from "./format-percentage";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
@@ -11,12 +11,12 @@ export type GenerateCirclesParams = {
   scalingFactor: number;
 };
 
-const { wallDamping, width, height, speed, elasticity, maxCircleSize, minCircleSize } = appConfig;
+const { wallDamping, speed, elasticity } = appConfig;
 
 const changeSizeStep = 2;
 
 export class BubblesUtils {
-  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: SORTING_BY = SORTING_BY.HOUR): number => {
+  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: SORTING_BY = SORTING_BY.HOUR, width: number, height: number): number => {
     if (!data) return 1;
     const max = data.map((item) => Math.abs(+item[bubbleSort]!));
     let totalSquare = 0;
@@ -26,7 +26,7 @@ export class BubblesUtils {
       totalSquare += area;
     }
 
-    return Math.sqrt((width * height) / totalSquare) * (width > 920 ? 0.8 : 0.5);
+    return Math.sqrt((width * height) / totalSquare);
   };
 
   static update = (
@@ -35,10 +35,17 @@ export class BubblesUtils {
     textSprites: PIXI.Text[],
     text2Sprites: PIXI.Text[],
     circleGraphics: PIXI.Sprite[] = [],
-    bubbleSortRef: React.RefObject<string>
+    displayChangeRef: React.RefObject<string>,
+    appInstanceRef: React.RefObject<PIXI.Application>
   ) => {
     return () => {
-      const bubbleSort = bubbleSortRef.current as SORTING_BY;
+      const app = appInstanceRef.current;
+      if (!app) return;
+
+      const width = app.screen.width;
+      const height = app.screen.height;
+      const displayChange = displayChangeRef.current as PriceChange;
+
       for (let i = 0; i < circles.length; i++) {
         const circle = circles[i];
         const circleGraphic = circleGraphics[i];
@@ -48,7 +55,7 @@ export class BubblesUtils {
 
         const container = circleGraphic.parent as PIXI.Container;
 
-        const newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
+        const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
         const updateCircleChilds = () => {
           const gradientColor = circle.isSearched ? "white" : circle.color;
@@ -60,17 +67,16 @@ export class BubblesUtils {
           );
 
           const fontSize = circle.radius * 0.7;
-          // const isFullSize = circle.radius * 0.5 < 20;
           const isTextVisible = fontSize >= 8;
 
           if (imageSprite) {
-            // const scaleFactor = isFullSize ? 0.6 : 0.5;
             const scaleFactor = 0.6;
             const minSize = 10;
 
             imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
             imageSprite.position = { x: 0, y: 0 ? 0 : -circle.radius / 2 };
+            imageSprite.zIndex = 1;
           }
 
           const textStyle = new PIXI.TextStyle({
@@ -86,17 +92,14 @@ export class BubblesUtils {
           });
 
           text.style = textStyle;
+          text.zIndex = 1;
           text.position.y = 0.15 * circle.radius;
 
           text2.style = text2Style;
+          text2.zIndex = 1;
           text2.position.y = circle.radius / 1.8;
 
-          let newText2Value = circle[bubbleSort]?.toFixed(2) + "%";
-
-          if (bubbleSortRef.current !== "change1" && bubbleSortRef.current !== "change4" &&
-            bubbleSortRef.current !== "change12" && bubbleSortRef.current !== "change24") {
-            newText2Value = convertToMillions(circle[bubbleSort]);
-          }
+          const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
           if (circle.text2) {
             circle.text2.text = newText2Value;
@@ -175,7 +178,7 @@ export class BubblesUtils {
                 : (circle.radius += changeSizeStep);
             }
 
-            radiusChanged = true;
+            radiusChanged = circle.radius !== circle.targetRadius;
           }
 
           if (radiusChanged) {
@@ -221,9 +224,18 @@ export class BubblesUtils {
     }
   };
 
-  static generateCircles = (coins: TokenFilterResult[], scalingFactor: number, bubbleSort: SORTING_BY = SORTING_BY.HOUR) => {
+  static generateCircles = (
+    coins: TokenFilterResult[],
+    scalingFactor: number,
+    bubbleSort: SORTING_BY = SORTING_BY.HOUR,
+    width: number,
+    height: number
+  ) => {
+    const maxCircleSize = Math.min(width, height) * 0.2;
+    const minCircleSize = Math.min(width, height) * 0.06;
+
     const shapes: Circle[] = coins.map((item) => {
-      const radius = Math.abs(parseInt(item[bubbleSort].toString()) * scalingFactor);
+      const radius = Math.abs(parseFloat(item[bubbleSort].toString()) * scalingFactor);
 
       const data = {
         id: item.token.address,
@@ -247,7 +259,7 @@ export class BubblesUtils {
         text2: null,
         previousText2: null,
         [SORTING_BY.VOLUME_24]: item[SORTING_BY.VOLUME_24],
-        [SORTING_BY.LIQUIDITY]: parseInt(item[SORTING_BY.LIQUIDITY]),
+        [SORTING_BY.LIQUIDITY]: parseFloat(item[SORTING_BY.LIQUIDITY]),
         [SORTING_BY.MCAP]: item[SORTING_BY.MCAP],
         [SORTING_BY.HOUR]: item[SORTING_BY.HOUR],
         [SORTING_BY.FOUR_HOURS]: item[SORTING_BY.FOUR_HOURS],

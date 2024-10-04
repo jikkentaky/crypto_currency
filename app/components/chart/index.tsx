@@ -9,7 +9,6 @@ import { getBars } from "@/app/api/lib"
 import { Loader } from "@/app/ui-components/loader"
 import styles from './styles.module.scss'
 import { Bar } from "@/types/bar.type"
-import { useWindowDimensions } from "@/hooks/use-window-dimensions"
 
 const buttons = [
   { value: Resolution.HOUR, content: '1H' },
@@ -26,7 +25,6 @@ const Chart = () => {
 
   const [data, setData] = useState<Bar[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const { width } = useWindowDimensions()
 
   const fetchInitialData = async () => {
     if (!chosenToken || !chosenNetwork) return
@@ -49,7 +47,7 @@ const Chart = () => {
     fetchInitialData()
   }, [modalResolution])
 
-  const height = width < 1100 ? '260px' : '385px'
+  const height = '385px'
 
   return (
     <div>

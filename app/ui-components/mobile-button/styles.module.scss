@@ -4,10 +4,13 @@
 
 .button {
   gap: 6px;
+  min-height: 30px;
+  height: 100%;
+  padding: 0 16px;
+  box-shadow: 1px 1px 1px $color-grey-13;
   background-color: transparent;
-  padding: 14px 16px;
   border: 1px solid $color-grey-13;
   color: $color-white;
   font-size: $fs-20;
-  @include flex-center();
+  @include flex-between();
 }

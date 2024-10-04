@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material';
 import styles from './styles.module.scss';
-import { SORTING_BY, Resolution } from '@/types/bubbles.type';
+import { SORTING_BY, Resolution, PriceChange } from '@/types/bubbles.type';
 import cn from 'classnames';
 import { useStore } from '@/store';
 import { SORT_BY } from '@/types/sort-by.enum';
@@ -19,16 +19,24 @@ type Props = {
 };
 
 const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setResolution }) => {
-  const { sortBy, isOpenModal } = useStore();
 
+  const { currentResolution, isOpenModal, sortBy, setCurrentResolution } = useStore()
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
     alignment: string,
   ) => {
     const newAlignment = alignment || resolution;
 
-    if (sortBy === 'PRICE_CHANGE' as SORT_BY || isOpenModal) {
+    if (isOpenModal) {
+      setResolution(newAlignment as SORTING_BY | Resolution)
+    }
+
+    if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
       setResolution(newAlignment as SORTING_BY | Resolution);
+    }
+
+    if (newAlignment === PriceChange.HOUR || newAlignment === PriceChange.DAY || newAlignment === PriceChange.FOUR_HOURS || newAlignment === PriceChange.TWELVE_HOURS) {
+      setCurrentResolution(newAlignment as PriceChange)
     }
   };
 
@@ -54,8 +62,7 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setR
         <ToggleButton
           key={value}
           value={value}
-          disabled={sortBy !== 'PRICE_CHANGE' as SORT_BY && !isOpenModal}
-          className={cn(styles.button, { [styles.selected]: value === resolution })}
+          className={cn(styles.button, { [styles.selected]: value === currentResolution as any })}
         >
           {content}
         </ToggleButton>
