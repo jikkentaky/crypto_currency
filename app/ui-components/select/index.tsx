@@ -17,7 +17,7 @@ const CustomSelect = () => {
   };
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth className={styles['form-control']}>
       <Select
         value={sortBy}
         onChange={handleChange}

@@ -15,7 +15,7 @@
   gap: 8px;
   font-size: $fs-20;
 
-  @media (min-width: $media-1100-width) and (max-width: 1200px) {
+  @media (max-width: 1415px) {
     display: none;
   }
 }

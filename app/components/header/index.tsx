@@ -10,11 +10,14 @@ import { CustomSelect } from '@/app/ui-components/select'
 import { useEffect } from 'react'
 import { getNetworks } from '@/app/api/lib'
 import { Network } from '@/types/network.type'
+import { MobileButton } from '@/app/ui-components/mobile-button'
+import { PriceArrowIcon } from '@/app/ui-components/icons'
 
 const Header = () => {
   const {
     searchCoin,
     resolution,
+    chosenNetwork,
     setNetworkList,
     setResolution,
     setSearchCoin
@@ -50,18 +53,32 @@ const Header = () => {
   return (
     <header className={cn(styles.header)}
     >
-      <h1 className={styles.title}>OCB</h1>
+      <h1 className={styles.title}>ONCHAINBUBBLES</h1>
+      <h1 className={styles['title-mobile']}>OCB</h1>
 
       <div className={styles['buttons-wrapper']}>
+        <div className={styles['sort-wrapper']}>
+          <Typography className={styles.sort}>Active chains</Typography>
+
+          <MobileButton className={styles.button}>
+            {chosenNetwork.name}
+
+            <PriceArrowIcon className={styles.icon} />
+          </MobileButton>
+        </div>
+
+        <div className={styles['sort-wrapper']}>
+          <Typography className={styles.sort}>Sort by</Typography>
+
+          <CustomSelect />
+        </div>
+
         <ButtonGroupRadio
           buttons={priceChangeButtons}
           resolution={resolution}
           setResolution={setResolution}
+          className={styles['button-group']}
         />
-
-        <Typography className={styles.sort}>Sort by</Typography>
-
-        <CustomSelect />
       </div>
 
       <SearchInput

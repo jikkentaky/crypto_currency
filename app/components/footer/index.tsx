@@ -42,12 +42,12 @@ const Footer = () => {
             All networks
           </div>
 
-          <PriceArrowIcon className={styles.rotate} />
+          <PriceArrowIcon className={styles.icon} />
         </MobileButton>
 
         <MobileButton onClick={handleToggleTimeFrame}>
           {mobileResolution[currentResolution as keyof typeof mobileResolution]}
-          <PriceArrowIcon className={styles.rotate} />
+          <PriceArrowIcon className={styles.icon} />
         </MobileButton>
       </div>
 
