@@ -15,7 +15,7 @@ import { CustomSelect } from '@/app/ui-components/select';
 import { Typography } from '@/app/ui-components/typography';
 
 const Footer = () => {
-  const { isOpenMobileMenu, resolution, isNetworks, isOpenMobileTimeFrame, setIsOpenMobileMenu, setIsOpenMobileTimeFrame } = useStore()
+  const { isOpenMobileMenu, currentResolution, isNetworks, isOpenMobileTimeFrame, setIsOpenMobileMenu, setIsOpenMobileTimeFrame } = useStore()
 
   const handleOpenModal = () => {
     setIsOpenMobileMenu(true)
@@ -46,7 +46,7 @@ const Footer = () => {
         </MobileButton>
 
         <MobileButton onClick={handleToggleTimeFrame}>
-          {mobileResolution[resolution as keyof typeof mobileResolution]}
+          {mobileResolution[currentResolution as keyof typeof mobileResolution]}
           <PriceArrowIcon className={styles.rotate} />
         </MobileButton>
       </div>

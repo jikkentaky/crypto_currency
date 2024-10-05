@@ -22,6 +22,7 @@ export default function Bubbles({ coins }: Props) {
   const {
     resolution: bubbleSort,
     searchCoin,
+    currentResolution,
     setIsOpenModal,
     setChosenToken,
   } = useStore((state) => {
@@ -161,7 +162,7 @@ export default function Bubbles({ coins }: Props) {
           circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
 
         const newText2Value =
-          formatPercentage(circle[bubbleSort as SORTING_BY]) + " %";
+          formatPercentage(circle[displayChangeRef.current as PriceChange]) + " %";
 
         if (circle.text2) {
           if (!circle.previousText2) {

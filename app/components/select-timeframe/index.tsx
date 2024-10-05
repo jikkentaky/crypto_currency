@@ -2,13 +2,26 @@ import { priceChangeButtons } from '@/lib/config'
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
 import cn from 'classnames'
-import { SORTING_BY } from '@/types/bubbles.type'
+import { PriceChange } from '@/types/bubbles.type'
+import { SORT_BY } from '@/types/sort-by.enum'
 
 const SelectTimeframe = () => {
-  const { resolution, setResolution, setIsOpenMobileTimeFrame } = useStore()
+  const { currentResolution, sortBy, isOpenModal, setResolution, setIsOpenMobileTimeFrame, setCurrentResolution } = useStore()
 
-  const handleChangeResolution = (value: SORTING_BY) => {
-    setResolution(value)
+
+  const handleChangeResolution = (value: any) => {
+    if (isOpenModal) {
+      setResolution(value)
+    }
+
+    if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
+      setResolution(value);
+    }
+
+    if (value === PriceChange.HOUR || value === PriceChange.DAY || value === PriceChange.FOUR_HOURS || value === PriceChange.TWELVE_HOURS) {
+      setCurrentResolution(value)
+    }
+
     setIsOpenMobileTimeFrame(false)
   }
 
@@ -21,8 +34,8 @@ const SelectTimeframe = () => {
           return (
             <button
               key={value}
-              className={cn(styles.button, { [styles.selected]: resolution === value })}
-              onClick={() => handleChangeResolution(value)}>
+              className={cn(styles.button, { [styles.selected]: currentResolution as any === value })}
+              onClick={() => handleChangeResolution(value as any)}>
               {content}
             </button>
           )
