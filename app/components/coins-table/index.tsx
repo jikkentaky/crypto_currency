@@ -77,7 +77,7 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.token.name.length > 10 ? row.token.name.slice(0, 8) + '...' : row.token.name, {
+      columnHelper.accessor((row) => row.token.name, {
         id: 'name',
         cell: (info) => {
           const row = info.row.original;

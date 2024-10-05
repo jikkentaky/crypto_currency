@@ -72,6 +72,7 @@
 }
 
 .table-row {
+  max-height: 60px;
   background-color: $color-black-2;
   border: 1px solid $color-grey-13;
   -webkit-box-shadow: 0px 0px 0px 1px inset rgba($color-grey-13, 0.75);
@@ -144,7 +145,10 @@
 
 .col-name {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
   padding-left: 20px;
+  -webkit-line-clamp: 1;
+  margin: 0;
 }
