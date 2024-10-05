@@ -22,7 +22,6 @@ export default function Bubbles({ coins }: Props) {
   const {
     resolution: bubbleSort,
     searchCoin,
-    currentResolution,
     setIsOpenModal,
     setChosenToken,
   } = useStore((state) => {
