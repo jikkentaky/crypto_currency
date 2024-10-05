@@ -3,7 +3,7 @@
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
 import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, ColumnSort, Row } from "@tanstack/react-table"
-import { memo, useCallback, useMemo, useState } from "react"
+import { memo, useCallback, useEffect, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
@@ -19,6 +19,25 @@ import { formatPercentage } from "@/lib/format-percentage"
 const CoinsTable = () => {
   const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
   const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
+
+  const [translateY, setTranslateY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const tableElement = document.querySelector(`.${styles.table}`) as HTMLElement;
+      if (tableElement) {
+        const scrollTop = window.scrollY;
+        const tableTop = tableElement.offsetTop;
+        const newTranslateY = Math.max(0, scrollTop - tableTop);
+        setTranslateY(newTranslateY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useMemo(() => {
     setTableData(topTokensList);
@@ -249,7 +268,7 @@ const CoinsTable = () => {
     <div className={styles.border}>
       <div className={styles.container}>
         <table className={styles['table']}>
-          <thead className={styles['table-head']}>
+          <thead className={styles['table-head']} style={{ transform: `translateY(${translateY - 1}px)` }}>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

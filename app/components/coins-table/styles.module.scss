@@ -3,11 +3,12 @@
 @import '@/assets/mixins';
 
 .border {
-  max-height: calc(100vh - $header - $bubbles-scene - $small-header - 3px);
-  min-height: $coins-table;
+  // max-height: calc(100vh - $header - $bubbles-scene - $small-header - 3px);
+  // min-height: $coins-table;
   min-width: 100%;
   max-width: 600px;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   border-image-slice: 50 50;
   border-image-source: linear-gradient(rgba(161, 44, 153, 1),
       rgba(206, 60, 105, 1),
@@ -33,10 +34,14 @@
   border-collapse: separate;
 }
 
+.table-head {
+  z-index: 5;
+  transform: translateY(0px);
+  position: sticky;
+}
+
 .table-th {
   min-width: 135px;
-  position: sticky;
-  top: 0;
   z-index: 4;
   padding: 16px;
   font-size: $fs-16;

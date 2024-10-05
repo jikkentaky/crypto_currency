@@ -15,8 +15,10 @@ html {
 }
 
 html,
-#root {
+body {
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 ::-webkit-scrollbar {
