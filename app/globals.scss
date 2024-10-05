@@ -11,7 +11,7 @@
 html {
   color: $color-white;
 
-  font-family: $ff-jersey;
+  font-family: $ff-sans;
 }
 
 html,
@@ -56,8 +56,8 @@ html,
 
 .MuiOutlinedInput-input {
   color: $color-white !important;
-  font-family: $ff-jersey !important;
-  font-size: $fs-20 !important;
+  font-family: $ff-sans !important;
+  font-size: $fs-16 !important;
   opacity: 1 !important;
 }
 
@@ -76,7 +76,7 @@ html,
 }
 
 .MuiMenuItem-root {
-  font-family: $ff-jersey !important;
+  font-family: $ff-sans !important;
 
   @include hover ('background', $color-dark-blue);
 }

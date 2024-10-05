@@ -15,7 +15,7 @@
   &>div:nth-child(2) {
     width: 100%;
     max-width: 390px;
-    font-family: $ff-jersey;
+    font-family: $ff-sans;
   }
 
   @include responsive {
@@ -34,9 +34,8 @@
 }
 
 .title {
-  font-size: $fs-36;
+  font-size: $fs-26;
   line-height: 0;
-  letter-spacing: 1px;
 
   @media (max-width: 1415px) {
     display: none;
@@ -62,7 +61,7 @@
 }
 
 .sort {
-  padding: 17px 32px 18px 16px;
+  padding: 16px 16px 16px 0;
   width: max-content;
   text-wrap: nowrap;
 }
@@ -86,4 +85,10 @@
 
 .search {
   align-self: flex-end;
+
+  &>label {
+    @media (max-width: 1415px) {
+      display: none;
+    }
+  }
 }

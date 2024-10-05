@@ -11,13 +11,13 @@ type Props = BaseTextFieldProps & {
   onChange: (value: string) => void;
 };
 
-const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '215px', onChange }) => {
+const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '215px', className, onChange }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
   return (
-    <div className={styles['search-wrapper']}>
+    <div className={cn(styles['search-wrapper'], className)}>
       <label
         htmlFor="outlined-basic"
         className={cn(styles['search-label'], {
@@ -43,12 +43,12 @@ const SearchInput: FC<Props> = ({ isHide = false, placeholder, value, width = '2
             width: width + ' !important',
           },
           '& .MuiInputBase-input': {
-            fontFamily: '"Jersey 10", sans-serif',
+            fontFamily: '"Work Sans", sans-serif',
             color: '#fff',
             fontSize: '16px !important',
           },
           '& .MuiInputBase-input::placeholder': {
-            fontFamily: '"Jersey 10", sans-serif',
+            fontFamily: '"Work Sans", sans-serif',
             color: '#fff',
             opacity: 1,
             fontSize: '16px !important',

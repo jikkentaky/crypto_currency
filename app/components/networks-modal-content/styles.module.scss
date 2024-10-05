@@ -2,7 +2,7 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-$top-part-header: 328px;
+$top-part-header: 300px;
 
 .container {
   display: flex;
@@ -16,6 +16,7 @@ $top-part-header: 328px;
 
 .mobile-container {
   @include responsive {
+    min-height: 100dvh;
     margin: 64px 24px 24px 24px;
   }
 }
@@ -51,11 +52,12 @@ $top-part-header: 328px;
 
 .show-all-button {
   border: none;
-  font-size: $fs-20;
+  font-size: $fs-16;
   background-color: transparent;
   color: $color-green-2;
   text-decoration-line: underline;
   cursor: pointer;
+  font-weight: $fw-600;
 }
 
 .networks-list {
@@ -65,7 +67,7 @@ $top-part-header: 328px;
   gap: 8px;
   flex-wrap: wrap;
   overflow: auto;
-  max-height: 340px;
+  max-height: 360px;
 
   @include responsive {
     max-height: calc(100dvh - $top-part-header);

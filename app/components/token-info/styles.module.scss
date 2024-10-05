@@ -39,7 +39,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-size: $fs-20;
+  font-size: $fs-16;
 
   @include responsive {
     width: max-content;
@@ -61,6 +61,6 @@
 .font {
 
   @include responsive {
-    font-size: $fs-20;
+    font-size: $fs-16;
   }
 }

@@ -52,7 +52,7 @@ export class PixiUtils {
     const isTextVisible = fontSize > 10;
 
     const textStyle = new PIXI.TextStyle({
-      fontFamily: "Jersey 10, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });
@@ -68,7 +68,7 @@ export class PixiUtils {
     const isTextVisible = fontSize > 10;
 
     const text2Style = new PIXI.TextStyle({
-      fontFamily: "Jersey 10, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       fontSize: isTextVisible ? fontSize + "px" : 0,
       fill: "#ffffff",
     });

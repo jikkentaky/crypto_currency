@@ -80,14 +80,14 @@ export class BubblesUtils {
           }
 
           const textStyle = new PIXI.TextStyle({
-            fontFamily: "Jersey 10, sans-serif",
-            fontSize: isTextVisible ? fontSize + "px" : "1px",
+            fontFamily: "Work Sans, sans-serif",
+            fontSize: isTextVisible ? fontSize * 0.6 + "px" : "1px",
             fill: "#ffffff",
           });
 
           const text2Style = new PIXI.TextStyle({
-            fontFamily: "Jersey 10, sans-serif",
-            fontSize: isTextVisible ? fontSize * 0.6 + "px" : "1px",
+            fontFamily: "Work Sans, sans-serif",
+            fontSize: isTextVisible ? fontSize * 0.37 + "px" : "1px",
             fill: "#ffffff",
           });
 
