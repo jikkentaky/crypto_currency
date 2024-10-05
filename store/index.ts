@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import { Network } from '@/types/network.type'
 import { SORTING_BY, Resolution, PriceChange } from '@/types/bubbles.type'
 import { TokenFilterResultType } from '@/types/tokenFilterResultType.type'
-import { SORT_BY } from '@/types/sort-by.enum'
 
 interface UseStore {
   topTokensList: TokenFilterResultType[] | null
@@ -19,10 +18,10 @@ interface UseStore {
   networkList: Network[] | null
   selectedModalResolution: Resolution
   isOpenMobileTimeFrame: boolean
-  sortBy: SORT_BY
+  sortBy: SORTING_BY
   currentResolution: PriceChange
   setCurrentResolution: (currentResolution: PriceChange) => void
-  setSortBy: (sortBy: SORT_BY) => void
+  setSortBy: (sortBy: SORTING_BY) => void
   setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame: boolean) => void
   setSelectedModalResolution: (selectedModalResolution: Resolution) => void
   setNetworkList: (networkList: Network[]) => void
@@ -41,7 +40,7 @@ interface UseStore {
 
 export const useStore = create<UseStore>()((set, get) => ({
   currentResolution: PriceChange.HOUR,
-  sortBy: 'PRICE_CHANGE' as SORT_BY,
+  sortBy: SORTING_BY.DAY,
   isOpenMobileTimeFrame: false,
   isOpenMobileMenu: false,
   topTokensList: null,
@@ -67,23 +66,12 @@ export const useStore = create<UseStore>()((set, get) => ({
   setIsOpenMobileTimeFrame: (isOpenMobileTimeFrame) => set({ isOpenMobileTimeFrame }),
   setSortBy: (sortBy) => {
     const { currentResolution, setResolution, setCurrentResolution } = get()
-
-    if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
-      setResolution(currentResolution as unknown as SORTING_BY | Resolution)
+    if (sortBy === SORTING_BY.DAY) {
+      setResolution(currentResolution as unknown as Resolution)
+    } else {
+      setResolution(sortBy)
     }
-
-    if (sortBy === 'VOLUME' as SORT_BY) {
-      setResolution(SORTING_BY.VOLUME_24)
-    }
-
-    if (sortBy === 'LIQUIDITY' as SORT_BY) {
-      setResolution(SORTING_BY.LIQUIDITY)
-    }
-
-    if (sortBy === 'MCAP' as SORT_BY) {
-      setResolution(SORTING_BY.MCAP)
-    }
-
+   
     setCurrentResolution(currentResolution)
     set({ sortBy })
   },

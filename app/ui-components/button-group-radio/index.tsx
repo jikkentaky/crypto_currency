@@ -4,7 +4,6 @@ import styles from './styles.module.scss';
 import { SORTING_BY, Resolution, PriceChange } from '@/types/bubbles.type';
 import cn from 'classnames';
 import { useStore } from '@/store';
-import { SORT_BY } from '@/types/sort-by.enum';
 
 type CustomToggleButton = ToggleButtonProps & {
   value: SORTING_BY | Resolution;
@@ -31,7 +30,7 @@ const ButtonGroupRadio: FC<Props> = ({ buttons, resolution, className = '', setR
       setResolution(newAlignment as SORTING_BY | Resolution)
     }
 
-    if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
+    if (sortBy === SORTING_BY.DAY) {
       setResolution(newAlignment as SORTING_BY | Resolution);
     }
 

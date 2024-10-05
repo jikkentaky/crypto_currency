@@ -1,19 +1,27 @@
 import { useStore } from "@/store";
-import { SORT_BY } from "@/types/sort-by.enum";
 import { FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material"
 import styles from "./styles.module.scss"
 import { PriceArrowIcon } from "@/app/ui-components/icons";
+import { SORTING_BY } from "@/types/bubbles.type";
 
-const sortByMenu = Object.keys(SORT_BY).map(key => ({
+const customSelectFields = {
+  [SORTING_BY.VOLUME_24] : 'Volume ($)',
+  [SORTING_BY.LIQUIDITY] : 'Liquidity ($)',
+  [SORTING_BY.MCAP] : 'Market Cap ($)',
+  [SORTING_BY.DAY] : 'Price Change (%)',
+}
+
+const sortByMenu = Object.keys(customSelectFields).map(key => ({
   value: key,
-  name: SORT_BY[key as keyof typeof SORT_BY],
+  name: customSelectFields[key as keyof typeof customSelectFields],
 }));
 
 const CustomSelect = () => {
   const { sortBy, setSortBy } = useStore()
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSortBy(event.target.value as SORT_BY);
+    const fieldName = event.target.value as SORTING_BY
+    setSortBy(fieldName);
   };
 
   return (

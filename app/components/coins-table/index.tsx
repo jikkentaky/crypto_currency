@@ -2,23 +2,24 @@
 
 import { useStore } from "@/store"
 import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, ColumnSort, Row } from "@tanstack/react-table"
-import { memo, useCallback, useEffect, useMemo, useState } from "react"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable,  Row, ColumnSort } from "@tanstack/react-table"
+import { memo, useEffect, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
 import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
-import { sortFilterTokens } from "@/app/api/lib";
 import { PlatformLink } from "@/app/components/platform-link"
 import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath } from "@/lib/config"
 import Image from 'next/image'
 import { formatTokenPrice } from "@/lib/format-token-price"
 import { convertNumber } from "@/lib/convert-number"
 import { formatPercentage } from "@/lib/format-percentage"
+import { useSortedTokens } from "@/hooks/use-sorted.tokens"
+import { SORTING_BY } from "@/types/bubbles.type"
 
 const CoinsTable = () => {
   const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
-  const [tableData, setTableData] = useState<TokenFilterResultType[] | null>(null);
+  const { tokens, setTokens, sortTokensByColumn, sorting } = useSortedTokens()
 
   const [translateY, setTranslateY] = useState(0);
 
@@ -40,31 +41,15 @@ const CoinsTable = () => {
   }, []);
 
   useMemo(() => {
-    setTableData(topTokensList);
+    topTokensList && setTokens(topTokensList);
   }, [topTokensList]);
 
   const columnHelper = createColumnHelper<TokenFilterResultType>();
-
-  const [sorting, setSorting] = useState<ColumnSort[]>([{ id: 'rank', desc: false }]);
 
   const onClick = (tokenId: string) => {
     setChosenToken(tokenId);
     setIsOpenModal(true);
   }
-
-  const toggleSorting = useCallback((columnId: string) => {
-    setSorting((oldSorting) => {
-      const currentSort = oldSorting.find((sort) => sort.id === columnId);
-
-      const desc = currentSort ? !currentSort.desc : false;
-      const newSorting = [{ id: columnId, desc }];
-
-      sortFilterTokens(tableData, columnId as keyof TokenFilterResultType, newSorting[0].desc ? 'desc' : 'asc')
-        .then(setTableData);
-
-      return newSorting;
-    });
-  }, [tableData]);
 
   const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
     () => [
@@ -256,10 +241,10 @@ const CoinsTable = () => {
 
   const table = useReactTable({
     columns,
-    data: tableData || [],
+    data: tokens || [],
     getCoreRowModel: getCoreRowModel(),
     state: {
-      sorting,
+      sorting: sorting as ColumnSort[],
     },
   });
 
@@ -279,8 +264,7 @@ const CoinsTable = () => {
                     key={header.id}
                     onClick={() => {
                       if (header.id === 'links') return;
-
-                      toggleSorting(header.column.id)
+                      sortTokensByColumn(header.column.id as SORTING_BY)
                     }}
                     style={{ width: `${header.getSize()}px`, }}
                   >
@@ -302,7 +286,7 @@ const CoinsTable = () => {
             ))}
           </thead>
 
-          {tableData && tableData.length > 0 && (
+          {tokens?.length && (
             <tbody className={styles['table-body']}>
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} row={row} />
