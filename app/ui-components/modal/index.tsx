@@ -24,7 +24,7 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
   const [isEditNetworks, setIsEditNetworks] = useState(false)
   const { isOpenModal, isNetworks, setIsOpenModal, setIsNetworks } = useStore()
   const { width } = useWindowDimensions()
-  const isMobile = width < 1100;
+  const isMobile = width < 1160;
   const handleClose = () => {
     setIsOpenModal(false)
     setIsEditNetworks(false)

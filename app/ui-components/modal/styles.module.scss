@@ -7,7 +7,6 @@
   flex-direction: column;
   max-width: 910px;
   padding: 45px;
-
   transform: translate(-50%, -50%);
 
   inset: 50% auto auto 50%;
@@ -30,6 +29,8 @@
   width: min-content;
   padding: 0;
   min-width: initial;
+  position: absolute;
+  left: 0
 }
 
 .title-wrapper {
@@ -44,7 +45,7 @@
 
 .icon-wrapper {
   position: absolute;
-  right: 40px;
+  right: 0;
   z-index: 3;
   border: none;
   padding: 5px 0 5px 5px;

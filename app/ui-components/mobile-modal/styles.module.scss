@@ -10,8 +10,6 @@
   background-color: $color-black-2;
 
   @include responsive {
-    max-height: 100dvh;
-    height: 100dvh;
     padding: 24px;
     gap: 16px;
   }
@@ -31,7 +29,6 @@
   z-index: 2;
   border: none;
   top: 24px;
-  padding: 10px;
   background-color: transparent;
   cursor: pointer;
 }
@@ -44,4 +41,5 @@
 .icon-back {
   left: 24px;
   padding-left: 0;
+  width: min-content;
 }
