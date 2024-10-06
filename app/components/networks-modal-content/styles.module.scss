@@ -21,20 +21,35 @@ $top-part-header: 300px;
   }
 }
 
+.edit-networks {
+  color: $color-green-2;
+  border-bottom: 1px solid $color-green-2;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  text-indent: 0.1em;
+}
+
+.all-networks,
+.edit-networks {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 12px;
+}
+
 .title {
   font-size: $fs-24;
   margin-bottom: 4px;
 }
 
-.search-block>div {
+.search-block > div {
   margin-bottom: 16px;
   flex-direction: column;
   align-items: flex-start;
 
-  &>div {
+  & > div {
     width: 100% !important;
 
-    &>div {
+    & > div {
       height: 40px;
     }
   }

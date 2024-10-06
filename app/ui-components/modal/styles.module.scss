@@ -27,16 +27,25 @@
   }
 }
 
-.title-wrapper {
-  display: flex;
+.back-button {
+  width: min-content;
+  padding: 0;
+  min-width: initial;
+}
 
+.title-wrapper {
   @include responsive {
     padding: 0 24px;
   }
 }
 
-.icon-wrapper {
+.relative {
   position: relative;
+}
+
+.icon-wrapper {
+  position: absolute;
+  right: 0;
   z-index: 1;
   border: none;
   padding: 5px 0 5px 5px;

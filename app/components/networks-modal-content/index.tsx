@@ -2,80 +2,60 @@ import { useStore } from '@/store';
 import styles from './styles.module.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '@/app/ui-components/search-input';
-import { VisibilityOff, VisibilityOn } from '@/app/ui-components/icons';
-import { Typography } from '@/app/ui-components/typography';
 import { Network } from '@/types/network.type';
 import Image from 'next/image';
 import cn from 'classnames';
 import { useWindowDimensions } from '@/hooks/use-window-dimensions';
+import { useModal } from '@/app/ui-components/modal';
+import FavoritesNetworksBody from './components/favorite-networks-body';
+import SelectNetworkBody from './components/select-network-body';
 
 const NetworksModalContent = () => {
-  const { isNetworks, networkList, setNetworkList } = useStore();
-  const [searchNetwork, setSearchNetwork] = useState('');
-  const [isShowAll, setIsShowAll] = useState(true);
-  const { width } = useWindowDimensions();
+  const { isEditNetworks } = useModal()
+  const { isNetworks, networkList, setNetworkList } = useStore()
+  const [searchNetwork, setSearchNetwork] = useState('')
+  const [isShowAll, setIsShowAll] = useState(true)
+  const { width } = useWindowDimensions()
 
   const filteredNetworks = useMemo(
     () =>
       networkList?.filter(({ name }) =>
         name.toLowerCase().startsWith(searchNetwork.toLowerCase().trim()),
-      ),
+      ) || [],
     [searchNetwork, networkList],
-  );
+  )
 
   useEffect(() => {
-    if (!isNetworks) return;
+    if (!isNetworks) return
 
-    const savedNetworkList = localStorage.getItem('networkList');
-    const savedIsShowAll = localStorage.getItem('isShowAll');
+    const savedNetworkList = localStorage.getItem('networkList')
+    const savedIsShowAll = localStorage.getItem('isShowAll')
 
     if (savedIsShowAll !== null) {
-      setIsShowAll(JSON.parse(savedIsShowAll));
+      setIsShowAll(JSON.parse(savedIsShowAll))
     }
 
     if (savedNetworkList && networkList) {
-      const parsedNetworkList = JSON.parse(savedNetworkList);
-      const updatedNetworkList = networkList.map(network => {
-        const savedNetwork = parsedNetworkList.find((saved: Network) => saved.id === network.id);
-        return savedNetwork ? { ...network, isVisible: savedNetwork.isVisible } : network;
-      });
-      setNetworkList(updatedNetworkList);
+      const parsedNetworkList = JSON.parse(savedNetworkList)
+      const updatedNetworkList = networkList.map((network) => {
+        const savedNetwork = parsedNetworkList.find((saved: Network) => saved.id === network.id)
+        return savedNetwork ? { ...network, isVisible: savedNetwork.isVisible } : network
+      })
+      setNetworkList(updatedNetworkList)
     }
-  }, [isNetworks]);
+  }, [isNetworks])
 
-  const toggleVisibility = (id: number) => {
-    const updatedNetworkList = networkList?.map(network =>
-      network.id === id ? { ...network, isVisible: !network.isVisible } : network
-    );
-
-    if (!updatedNetworkList) return;
-
-    setNetworkList(updatedNetworkList);
-    localStorage.setItem('networkList', JSON.stringify(updatedNetworkList));
-  };
-
-  const toggleAllNetworks = () => {
-    const updatedNetworkList = networkList?.map(network => ({ ...network, isVisible: !isShowAll }));
-
-    if (!updatedNetworkList) return;
-
-    setNetworkList(updatedNetworkList);
-    localStorage.setItem('networkList', JSON.stringify(updatedNetworkList));
-    localStorage.setItem('isShowAll', JSON.stringify(!isShowAll));
-    setIsShowAll(!isShowAll);
-  };
-
-  const isMobileContent = isNetworks && width < 1100;
+  const isMobileContent = isNetworks && width < 1100
 
   return (
     <div className={cn(styles.container, { [styles['mobile-container']]: isMobileContent })}>
-      {isMobileContent && <div>
-        <h2 className={styles.title}>Favorite networks</h2>
+      {/* {isMobileContent && (
+        <div>
+          <h2 className={styles.title}>Favorite networks</h2>
 
-        <Typography>
-          Toggle network visibility throughout the app.
-        </Typography>
-      </div>}
+          <Typography>Toggle network visibility throughout the app.</Typography>
+        </div>
+      )} */}
 
       <div className={styles['search-block']}>
         <SearchInput
@@ -84,7 +64,9 @@ const NetworksModalContent = () => {
             <>
               <Image
                 src="/static/assets/images/search.png"
-                alt="search-icon" width={16} height={16}
+                alt="search-icon"
+                width={16}
+                height={16}
               />
               Search
             </>
@@ -95,52 +77,17 @@ const NetworksModalContent = () => {
         />
       </div>
 
-      <div className={styles['title-wrapper']}>
-        <Typography>Network list</Typography>
-        <button
-          className={styles['show-all-button']}
-          onClick={toggleAllNetworks}
-        >
-          {isShowAll ? 'HIDE ALL' : 'SHOW ALL'}
-        </button>
-      </div>
-
-      <div className={styles['networks-list']}>
-        {filteredNetworks?.map(({ id, name, isVisible }) => {
-          const imageName = name.toLowerCase().replace(/\s+/g, '-');
-          const path = `/static/assets/images/${imageName}.png`;
-
-          return (
-            <button
-              key={id}
-              className={cn(styles['network-button'],
-                {
-                  [styles['inactive']]: !isVisible,
-                  [styles['active']]: isVisible
-                })}
-              onClick={() => toggleVisibility(id)}
-              title={name}
-            >
-              <div className={styles['network-block']}>
-                <Image
-                  loading='lazy'
-                  src={path}
-                  alt={`${name} icon`}
-                  width={24}
-                  height={24}
-                  className={styles.img}
-                />
-                <Typography>
-                  {name.length > 10 ? name.slice(0, 10) + '...' : name}
-                </Typography>
-              </div>
-              {isVisible ? <VisibilityOff /> : <VisibilityOn />}
-            </button>
-          );
-        })}
-      </div>
+      {!isEditNetworks ? (
+        <SelectNetworkBody networkList={filteredNetworks} />
+      ) : (
+        <FavoritesNetworksBody
+          networkList={filteredNetworks}
+          isShowAll={isShowAll}
+          setIsShowAll={setIsShowAll}
+        />
+      )}
     </div>
-  );
+  )
 }
 
-export { NetworksModalContent };
+export { NetworksModalContent }
