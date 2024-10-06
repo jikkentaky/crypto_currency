@@ -60,11 +60,12 @@ export default function Bubbles({ coins }: Props) {
       resizeTo: appRef.current,
       backgroundColor: "0x000000",
       antialias: true,
+      autoDensity: true,
+      resolution: 2,
       backgroundAlpha: 0,
     }) as unknown;
 
     appInstance.current = app as PIXI.Application;;
-
     appRef.current.appendChild((app as { view: Node }).view);
 
     return () => {

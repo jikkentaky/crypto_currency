@@ -2,11 +2,11 @@ import { TokenFilterResultType } from "@/types/tokenFilterResultType.type";
 
 type SortableFields = keyof TokenFilterResultType | 'links' | 'name';
 
-export async function sortFilterTokens(
+export function sortFilterTokens(
   filterTokens: TokenFilterResultType[] | null,
   field: SortableFields,
   order: 'asc' | 'desc'
-): Promise<TokenFilterResultType[] | null> {
+): TokenFilterResultType[] | null {
   if (!filterTokens) return null;
 
   const newTokenList = [...filterTokens];
