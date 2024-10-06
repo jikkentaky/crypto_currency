@@ -21,7 +21,7 @@ const modalTitles = {
 
 const ModalContext = createContext<TModalProps>({
   isEditNetworks: false,
-  setIsEditNetworks: () => {},
+  setIsEditNetworks: () => { },
 })
 
 const ModalComponent: React.FC<Props> = ({ children }) => {
@@ -46,6 +46,10 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
         aria-describedby="modal-modal-description"
       >
         <div className={styles.content}>
+          <button className={styles['icon-wrapper']} onClick={handleClose}>
+            <CloseIcon />
+          </button>
+
           {isNetworks && (
             <div>
               <div className={styles.relative}>
@@ -64,16 +68,13 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
                     />
                   </Button>
                 )}
-                <button className={styles['icon-wrapper']} onClick={handleClose}>
-                  <CloseIcon />
-                </button>
               </div>
               <h2>{headerName}</h2>
 
               <Typography>Toggle network visibility throughout the app.</Typography>
             </div>
           )}
-         {children}
+          {children}
         </div>
       </Modal>
     </ModalContext.Provider>

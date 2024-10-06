@@ -45,11 +45,15 @@
 
 .icon-wrapper {
   position: absolute;
-  right: 0;
-  z-index: 1;
+  right: 40px;
+  z-index: 3;
   border: none;
   padding: 5px 0 5px 5px;
   background-color: transparent;
   margin-left: auto;
   cursor: pointer;
+
+  @include responsive {
+    right: 20px;
+  }
 }
