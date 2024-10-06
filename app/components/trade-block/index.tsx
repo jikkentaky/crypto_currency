@@ -19,39 +19,40 @@ import { useStore } from "@/store";
 import { useMemo } from "react";
 import cn from 'classnames'
 
-
+const activeLinkColor = '#73A1FB'
+const disabledLinkColor = '#625e5e'
 const TradeBlock = () => {
   const { chosenToken } = useStore();
   const { width } = useWindowDimensions();
   const isMobileWidth = width < 1100;
-
+console.log(chosenToken?.token)
   // TODO: refactor 
   const socialLinks = useMemo(() => <ul className={isMobileWidth ? styles["mobile-social-list"] : styles["social-list"]}>
     <li>
       <Link
         href={validateLink(chosenToken?.token?.socialLinks?.twitter || "") || ""}
         target="_blank"
-        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.twitter })}
+        className={cn(styles.socialLink, {[styles.disabledLink]: !chosenToken?.token.socialLinks?.twitter })}
       >
-        <TwitterIcon />
+        <TwitterIcon currentColor={chosenToken?.token.socialLinks?.twitter? activeLinkColor: disabledLinkColor} />
       </Link>
     </li>
     <li>
       <Link
         href={validateLink(chosenToken?.token.socialLinks?.telegram || "")}
         target="_blank"
-        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.telegram })}
+        className={cn(styles.socialLink, {[styles.disabledLink]: !chosenToken?.token.socialLinks?.telegram })}
       >
-       <TelegramIcon />
+       <TelegramIcon currentColor={chosenToken?.token.socialLinks?.telegram? activeLinkColor: disabledLinkColor} />
       </Link>
     </li>
     <li>
       <Link
         href={validateLink(chosenToken?.token.socialLinks?.website || "") }
         target="_blank"
-        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.website })}
+        className={cn(styles.socialLink, {[styles.disabledLink]: !chosenToken?.token.socialLinks?.website })}
       >
-         <WebsiteIcon />
+         <WebsiteIcon currentColor={chosenToken?.token.socialLinks?.website? activeLinkColor: disabledLinkColor} />
       </Link>
     </li>
   </ul>, [chosenToken, isMobileWidth])
