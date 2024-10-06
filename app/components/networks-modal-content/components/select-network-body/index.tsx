@@ -6,6 +6,7 @@ import { useStore } from '@/store'
 import { Network } from '@/types/network.type'
 import { useModal } from '@/app/ui-components/modal'
 import { Box } from '@mui/material'
+import cn from 'classnames'
 
 type Props = {
   networkList: Network[]
@@ -21,7 +22,7 @@ const SelectNetworkBody: FC<Props> = ({ networkList }) => {
     setIsEditNetworks(false)
   }
   return (
-    <div className={styles['networks-list']}>
+    <div className={cn(styles['select-networks'], styles['networks-list'])}>
       <button
         className={styles['network-button']}
         onClick={() => setIsEditNetworks(true)}

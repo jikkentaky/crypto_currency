@@ -6,11 +6,17 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  z-index: 1;
 }
 
 .title {
   text-transform: uppercase;
   text-align: center;
+}
+
+.disabledLink {
+  pointer-events: none;
+  color: $color-grey-2;
 }
 
 .list {
@@ -43,9 +49,16 @@
   }
 }
 
+.socialLink {
+  cursor: pointer;
+  z-index: 1;
+}
+
 .social-list,
 .mobile-social-list {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 18px;
   list-style-type: none;
   padding: 0;

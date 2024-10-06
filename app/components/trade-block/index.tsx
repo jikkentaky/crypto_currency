@@ -1,28 +1,81 @@
-import { Typography } from '@/app/ui-components/typography'
-import styles from './styles.module.scss'
-import { TwitterIcon } from '@/app/ui-components/icons/twitter-icon'
-import { useWindowDimensions } from '@/hooks/use-window-dimensions'
-import { PlatformLink } from '@/app/components/platform-link';
-import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath } from '@/lib/config';
+import { Typography } from "@/app/ui-components/typography";
+import styles from "./styles.module.scss";
+import { TwitterIcon } from "@/app/ui-components/icons/twitter-icon";
+import { TelegramIcon } from "@/app/ui-components/icons/telegram-icon";
+import { WebsiteIcon } from "@/app/ui-components/icons/website-icon";
+import { useWindowDimensions } from "@/hooks/use-window-dimensions";
+import { PlatformLink } from "@/app/components/platform-link";
+import {
+  blazingPath,
+  maestroPath,
+  photonPath,
+  bulxPath,
+  bonkPath,
+} from "@/lib/config";
+
+import Link from "next/link";
+import { validateLink } from "@/lib/validate-link";
+import { useStore } from "@/store";
+import { useMemo } from "react";
+import cn from 'classnames'
+
 
 const TradeBlock = () => {
-  const { width } = useWindowDimensions()
-  const isMobileWidth = width < 1100
+  const { chosenToken } = useStore();
+  const { width } = useWindowDimensions();
+  const isMobileWidth = width < 1100;
+
+  // TODO: refactor 
+  const socialLinks = useMemo(() => <ul className={isMobileWidth ? styles["mobile-social-list"] : styles["social-list"]}>
+    <li>
+      <Link
+        href={validateLink(chosenToken?.token?.socialLinks?.twitter || "") || ""}
+        target="_blank"
+        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.twitter })}
+      >
+        <TwitterIcon />
+      </Link>
+    </li>
+    <li>
+      <Link
+        href={validateLink(chosenToken?.token.socialLinks?.telegram || "")}
+        target="_blank"
+        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.telegram })}
+      >
+       <TelegramIcon />
+      </Link>
+    </li>
+    <li>
+      <Link
+        href={validateLink(chosenToken?.token.socialLinks?.website || "") }
+        target="_blank"
+        className={cn(styles.socialLink, {[styles.disabled]: !chosenToken?.token.socialLinks?.website })}
+      >
+         <WebsiteIcon />
+      </Link>
+    </li>
+  </ul>, [chosenToken, isMobileWidth])
 
   return (
-    <div className={styles['trade-block']}>
-      <Typography className={styles['title']}>Trade now</Typography>
+    <div className={styles["trade-block"]}>
+      <Typography className={styles["title"]}>Trade now</Typography>
 
-      <ul className={styles['list']}>
+      <ul className={styles["list"]}>
         <li className={styles.item}>
           <PlatformLink path={blazingPath} href="https://app.blazingbot.com/" />
         </li>
         <li className={styles.item}>
-          <PlatformLink path={maestroPath} href="https://www.maestrobots.com/" />
+          <PlatformLink
+            path={maestroPath}
+            href="https://www.maestrobots.com/"
+          />
         </li>
 
         <li className={styles.item}>
-          <PlatformLink path={photonPath} href="https://photon-sol.tinyastro.io/" />
+          <PlatformLink
+            path={photonPath}
+            href="https://photon-sol.tinyastro.io/"
+          />
         </li>
 
         <li className={styles.item}>
@@ -34,29 +87,19 @@ const TradeBlock = () => {
       </ul>
 
       <div>
-        <div className={styles['about']}>
-          <Typography className={styles['about-subtitle']}>About</Typography>
+        <div className={styles["about"]}>
+          <Typography className={styles["about-subtitle"]}>About</Typography>
 
-          {!isMobileWidth && <ul className={styles['social-list']}>
-            <li><TwitterIcon /></li>
-            <li><TwitterIcon /></li>
-            <li><TwitterIcon /></li>
-            <li><TwitterIcon /></li>
-          </ul>}
+          {!isMobileWidth && socialLinks}
         </div>
 
-        <Typography className={styles['about-description']}>
+        <Typography className={styles["about-description"]}>
           ONDO is the governance token for Flux FInance and the Ondo DAO.
         </Typography>
 
-        {isMobileWidth && <ul className={styles['mobile-social-list']}>
-          <li><TwitterIcon /></li>
-          <li><TwitterIcon /></li>
-          <li><TwitterIcon /></li>
-          <li><TwitterIcon /></li>
-        </ul>}
+        {isMobileWidth && socialLinks}
       </div>
     </div>
-  )
-}
-export { TradeBlock }
+  );
+};
+export { TradeBlock };

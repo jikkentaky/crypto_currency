@@ -25,8 +25,8 @@ $top-part-header: 300px;
   color: $color-green-2;
   border-bottom: 1px solid $color-green-2;
   text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  text-indent: 0.1em;
+  margin-top: 0.1rem;
+  padding-bottom: 0.1rem;
 }
 
 .all-networks,
@@ -100,6 +100,12 @@ $top-part-header: 300px;
 
   @include responsive {
     width: 96%;
+  }
+}
+
+.select-networks {
+  .network-button {
+    width: 260px;
   }
 }
 

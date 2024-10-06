@@ -34,6 +34,7 @@ export type TokenFilterResult = {
   sellCount12?: number;
   sellCount24?: number;
   token: EnhancedToken;
+  socialLinks: TTokenSocials;
   txnCount1?: number;
   txnCount4?: number;
   txnCount12?: number;
@@ -94,6 +95,13 @@ export type Exchange = {
   name?: string;
   networkId: number;
   tradeUrl?: string;
+};
+
+export type TTokenSocials = {
+  website: string;
+  linkedin: string;
+  telegram: string;
+  twitter: string;
 };
 
 export type Pair = {
