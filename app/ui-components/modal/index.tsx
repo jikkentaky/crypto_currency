@@ -3,10 +3,9 @@
 import Modal from '@mui/material/Modal';
 import styles from './styles.module.scss'
 import { useStore } from '@/store';
-import { CloseIcon } from '@/app/ui-components/icons';
+import { ArrowBackIcon, CloseIcon } from '@/app/ui-components/icons';
 import { createContext, useContext, useState } from 'react';
 import { TModalProps } from './types';
-import Image from 'next/image';
 import { Button } from '@mui/material';
 import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 
@@ -48,14 +47,7 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
                 className={styles['back-button']}
                 onClick={() => setIsEditNetworks(false)}
               >
-                <Image
-                  loading="lazy"
-                  src={`/static/assets/images/arrow-back.png`}
-                  alt={`back icon`}
-                  width={24}
-                  height={24}
-                  className={styles.img}
-                />
+               <ArrowBackIcon />
               </Button>
             )}
             <button className={styles['icon-wrapper']} onClick={handleClose}>
