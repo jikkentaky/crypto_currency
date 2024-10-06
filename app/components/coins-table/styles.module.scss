@@ -3,8 +3,6 @@
 @import '@/assets/mixins';
 
 .border {
-  // max-height: calc(100vh - $header - $bubbles-scene - $small-header - 3px);
-  // min-height: $coins-table;
   min-width: 100%;
   max-width: 600px;
   overflow-x: auto;
@@ -41,7 +39,9 @@
 }
 
 .table-th {
-  min-width: 135px;
+  min-width: 125px;
+  width: 100%;
+  max-width: max-content;
   z-index: 4;
   padding: 16px;
   font-size: $fs-16;
