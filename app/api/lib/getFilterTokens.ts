@@ -49,6 +49,12 @@ async function fetchFilterTokens(
                   name
                   symbol
                   totalSupply
+                  socialLinks {
+                    twitter
+                    website
+                    telegram
+                    linkedin
+                  }
                   info {
                     imageThumbUrl
                     imageSmallUrl

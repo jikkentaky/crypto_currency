@@ -18,6 +18,8 @@ const Header = () => {
     searchCoin,
     resolution,
     chosenNetwork,
+    setIsOpenModal,
+    setIsNetworks,
     setNetworkList,
     setResolution,
     setSearchCoin
@@ -50,6 +52,11 @@ const Header = () => {
     fetchNetworks();
   }, []);
 
+  const openNetworksModal = () => {
+    setIsOpenModal(true);
+    setIsNetworks(true);
+  };
+
   return (
     <header className={cn(styles.header)}
     >
@@ -60,7 +67,7 @@ const Header = () => {
         <div className={styles['sort-wrapper']}>
           <Typography className={styles.sort}>Active chains</Typography>
 
-          <MobileButton className={styles.button}>
+          <MobileButton className={styles.button} onClick={openNetworksModal}>
             {chosenNetwork.name}
 
             <PriceArrowIcon className={styles.icon} />
