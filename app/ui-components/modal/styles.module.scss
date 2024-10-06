@@ -7,7 +7,6 @@
   flex-direction: column;
   max-width: 910px;
   padding: 45px;
-  gap: 32px;
 
   transform: translate(-50%, -50%);
 
@@ -22,7 +21,7 @@
   @include responsive {
     max-height: 100dvh;
     height: 100dvh;
-    padding: 24px 10px;
+    padding: 24px;
     gap: 16px;
   }
 }

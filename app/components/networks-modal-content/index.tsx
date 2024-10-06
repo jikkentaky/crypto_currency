@@ -9,6 +9,12 @@ import { useWindowDimensions } from '@/hooks/use-window-dimensions';
 import { useModal } from '@/app/ui-components/modal';
 import FavoritesNetworksBody from './components/favorite-networks-body';
 import SelectNetworkBody from './components/select-network-body';
+import { Typography } from '@/app/ui-components/typography';
+
+const modalTitles = {
+  selectNetworks: 'Select networks',
+  favoriteNetworks: 'Favorite networks',
+}
 
 const NetworksModalContent = () => {
   const { isEditNetworks } = useModal()
@@ -45,19 +51,18 @@ const NetworksModalContent = () => {
     }
   }, [isNetworks])
 
-  const isMobileContent = isNetworks && width < 1100
+  const isMobileContent = isNetworks && width < 1160
+  const headerName = isEditNetworks || isMobileContent ? modalTitles.favoriteNetworks : modalTitles.selectNetworks
 
   return (
     <div className={cn(styles.container, { [styles['mobile-container']]: isMobileContent })}>
-      {/* {isMobileContent && (
-        <div>
-          <h2 className={styles.title}>Favorite networks</h2>
+     <div>
+        <h2>{headerName}</h2>
 
-          <Typography>Toggle network visibility throughout the app.</Typography>
-        </div>
-      )} */}
-
-      <div className={styles['search-block']}>
+        <Typography>Toggle network visibility throughout the app.</Typography>
+      </div>
+     <div className={styles.body}>
+     <div className={styles['search-block']}>
         <SearchInput
           isHide
           label={
@@ -77,7 +82,7 @@ const NetworksModalContent = () => {
         />
       </div>
 
-      {!isEditNetworks ? (
+      {!isEditNetworks && !isMobileContent ? (
         <SelectNetworkBody networkList={filteredNetworks} />
       ) : (
         <FavoritesNetworksBody
@@ -86,6 +91,7 @@ const NetworksModalContent = () => {
           setIsShowAll={setIsShowAll}
         />
       )}
+     </div>
     </div>
   )
 }

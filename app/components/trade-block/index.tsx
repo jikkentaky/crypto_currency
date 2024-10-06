@@ -25,7 +25,7 @@ const TradeBlock = () => {
   const { chosenToken } = useStore();
   const { width } = useWindowDimensions();
   const isMobileWidth = width < 1100;
-console.log(chosenToken?.token)
+
   // TODO: refactor 
   const socialLinks = useMemo(() => <ul className={isMobileWidth ? styles["mobile-social-list"] : styles["social-list"]}>
     <li>

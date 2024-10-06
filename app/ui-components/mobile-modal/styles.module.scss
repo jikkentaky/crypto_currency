@@ -9,6 +9,13 @@
   min-width: 100dvw;
   background-color: $color-black-2;
 
+  @include responsive {
+    max-height: 100dvh;
+    height: 100dvh;
+    padding: 24px;
+    gap: 16px;
+  }
+
   &:focus {
     outline: none;
   }
