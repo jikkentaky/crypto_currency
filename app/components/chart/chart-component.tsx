@@ -78,7 +78,7 @@ export const ChartComponent: FC<Props> = (props) => {
         topColor: areaTopColor,
         bottomColor: areaBottomColor,
       });
-      newSeries.setData(data);
+      newSeries?.setData(data);
 
       window.addEventListener('resize', handleResize);
 

@@ -132,9 +132,12 @@ export default function Bubbles({ coins }: Props) {
       appInstance
     );
 
-    app.ticker?.add(ticker);
+    const timeOut = setTimeout(() => {
+      app.ticker?.add(ticker);
+    }, 1000)
 
     return () => {
+      clearInterval(timeOut);
       app.ticker?.remove(ticker);
 
       container?.children[0]?.removeEventListener("click", (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles));

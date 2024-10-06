@@ -11,6 +11,7 @@ import { defaultPath } from "@/lib/config"
 import { formatTokenPrice } from "@/lib/format-token-price"
 import { formatPercentage } from "@/lib/format-percentage"
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type"
+import { CopyButton } from "@/app/ui-components/copy-button"
 
 const TokenInfo = () => {
   const { chosenToken, modalResolution, resolution } = useStore()
@@ -66,6 +67,8 @@ const TokenInfo = () => {
           <Typography>
             {`${chosenToken.token.name} (${chosenToken.token.symbol})`}
           </Typography>
+
+          <CopyButton textToCopy={chosenToken.token.address} />
 
           <Typography
             variantWeight='medium'
