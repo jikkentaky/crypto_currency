@@ -2,8 +2,7 @@ import { priceChangeButtons } from '@/lib/config'
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
 import cn from 'classnames'
-import { PriceChange } from '@/types/bubbles.type'
-import { SORT_BY } from '@/types/sort-by.enum'
+import { PriceChange, SORTING_BY } from '@/types/bubbles.type'
 
 const SelectTimeframe = () => {
   const { currentResolution, sortBy, isOpenModal, setResolution, setIsOpenMobileTimeFrame, setCurrentResolution } = useStore()
@@ -14,7 +13,7 @@ const SelectTimeframe = () => {
       setResolution(value)
     }
 
-    if (sortBy === 'PRICE_CHANGE' as SORT_BY) {
+    if (sortBy === SORTING_BY.DAY) {
       setResolution(value);
     }
 
