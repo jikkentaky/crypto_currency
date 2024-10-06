@@ -10,8 +10,8 @@
   background-color: $color-black-2;
 
   @include responsive {
-    padding: 24px;
-    gap: 16px;
+    // padding: 24px;
+    // gap: 16px;
   }
 
   &:focus {

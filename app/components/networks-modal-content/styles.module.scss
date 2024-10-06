@@ -2,13 +2,14 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-$top-part-header: 300px;
+$top-part-header: 360px;
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 32px;
   margin-top: 24px;
+
   @include responsive {
     gap: 16px;
   }
@@ -41,15 +42,15 @@ $top-part-header: 300px;
   margin-bottom: 4px;
 }
 
-.search-block > div {
+.search-block>div {
   margin-bottom: 16px;
   flex-direction: column;
   align-items: flex-start;
 
-  & > div {
+  &>div {
     width: 100% !important;
 
-    & > div {
+    &>div {
       height: 40px;
     }
   }
@@ -106,6 +107,7 @@ $top-part-header: 300px;
 .select-networks {
   .network-button {
     width: 260px;
+
     @include responsive {
       width: 96%;
     }

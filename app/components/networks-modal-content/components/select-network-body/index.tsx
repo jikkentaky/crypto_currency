@@ -33,6 +33,7 @@ const SelectNetworkBody: FC<Props> = ({ networkList }) => {
             <Image
               src={`/static/assets/images/globus.png`}
               alt={`globus icon`}
+              loading="lazy"
               width={24}
               height={24}
             />
@@ -43,6 +44,7 @@ const SelectNetworkBody: FC<Props> = ({ networkList }) => {
           <Typography className={styles['edit-networks']}>Edit</Typography>
         </Box>
       </button>
+
       {networkList?.map((network) => {
         const { id, name } = network
         const imageName = name.toLowerCase().replace(/\s+/g, '-')

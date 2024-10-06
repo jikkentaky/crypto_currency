@@ -84,3 +84,11 @@ $timeframe-modal-height: 281px;
   width: 100%;
   max-height: $timeframe-modal-height;
 }
+
+.networks-modal-content {
+
+  @include responsive {
+    padding: 24px;
+    gap: 16px;
+  }
+}

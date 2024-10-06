@@ -61,7 +61,7 @@ const Footer = () => {
       >
         {!isNetworks && <MobileModalNetworks />}
 
-        {isNetworks && <NetworksModalContent />}
+        {isNetworks && <div className={styles['networks-modal-content']}><NetworksModalContent /></div>}
       </MobileModal>
 
       <MobileModal
