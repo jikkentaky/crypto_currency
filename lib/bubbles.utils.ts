@@ -1,13 +1,13 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
-import { Circle, PriceChange, SORTING_BY } from "@/types/bubbles.type";
+import { Circle, PriceChange } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { appConfig, defaultPath } from "./config";
 import { formatPercentage } from "./format-percentage";
 
 export type GenerateCirclesParams = {
   coins: TokenFilterResult[];
-  bubbleSort: SORTING_BY;
+  bubbleSort: PriceChange;
   scalingFactor: number;
 };
 
@@ -16,7 +16,7 @@ const { wallDamping, speed, elasticity } = appConfig;
 const changeSizeStep = 2;
 
 export class BubblesUtils {
-  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: SORTING_BY = SORTING_BY.HOUR, width: number, height: number): number => {
+  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: PriceChange = PriceChange.HOUR, width: number, height: number): number => {
     if (!data) return 1;
     const max = data.map((item) => Math.abs(+item[bubbleSort]!));
     let totalSquare = 0;
@@ -227,10 +227,11 @@ export class BubblesUtils {
   static generateCircles = (
     coins: TokenFilterResult[],
     scalingFactor: number,
-    bubbleSort: SORTING_BY = SORTING_BY.HOUR,
+    bubbleSort = PriceChange.HOUR,
     width: number,
     height: number
   ) => {
+    console.log("🚀 ~ BubblesUtils ~ bubbleSort:", bubbleSort)
     const maxCircleSize = Math.min(width, height) * 0.2;
     const minCircleSize = Math.min(width, height) * 0.06;
 
@@ -258,13 +259,10 @@ export class BubblesUtils {
         dragging: false,
         text2: null,
         previousText2: null,
-        [SORTING_BY.VOLUME_24]: item[SORTING_BY.VOLUME_24],
-        [SORTING_BY.LIQUIDITY]: parseFloat(item[SORTING_BY.LIQUIDITY]),
-        [SORTING_BY.MCAP]: item[SORTING_BY.MCAP],
-        [SORTING_BY.HOUR]: item[SORTING_BY.HOUR],
-        [SORTING_BY.FOUR_HOURS]: item[SORTING_BY.FOUR_HOURS],
-        [SORTING_BY.TWELVE_HOURS]: item[SORTING_BY.TWELVE_HOURS],
-        [SORTING_BY.DAY]: item[SORTING_BY.DAY],
+        [PriceChange.HOUR]: item[PriceChange.HOUR],
+        [PriceChange.FOUR_HOURS]: item[PriceChange.FOUR_HOURS],
+        [PriceChange.TWELVE_HOURS]: item[PriceChange.TWELVE_HOURS],
+        [PriceChange.DAY]: item[PriceChange.DAY],
       };
 
       const shape = { ...data, text2: PixiUtils.createText2(data, bubbleSort) };

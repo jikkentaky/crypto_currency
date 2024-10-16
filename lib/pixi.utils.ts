@@ -1,6 +1,6 @@
 "use client";
 
-import { Circle, SORTING_BY } from "@/types/bubbles.type";
+import { Circle, PriceChange } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
 import { defaultPath } from "./config";
 import { formatPercentage } from "./format-percentage";
@@ -63,7 +63,7 @@ export class PixiUtils {
     return text;
   };
 
-  static createText2 = (circle: Circle, bubbleSort: SORTING_BY) => {
+  static createText2 = (circle: Circle, bubbleSort: PriceChange) => {
     const fontSize = circle.radius * 0.5;
     const isTextVisible = fontSize > 10;
 

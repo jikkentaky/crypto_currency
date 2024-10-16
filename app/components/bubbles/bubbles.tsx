@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import * as PIXI from "pixi.js";
 import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
-import { Circle, PriceChange, SORTING_BY } from "@/types/bubbles.type";
+import { Circle, PriceChange } from "@/types/bubbles.type";
 import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 import { formatPercentage } from "@/lib/format-percentage";
@@ -33,10 +33,9 @@ export default function Bubbles({ coins }: Props) {
 
   const appRef = useRef<HTMLDivElement>(null);
   const appInstance = useRef<PIXI.Application | null>(null);
-  const gradientSpriteRef = useRef<PIXI.Sprite | null>(null);
 
   const scalingFactor = useMemo(() => {
-    return BubblesUtils.getScalingFactor(coins, bubbleSort as SORTING_BY, width, height);
+    return BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
   }, [coins, width, height]);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function Bubbles({ coins }: Props) {
     const shapes = BubblesUtils.generateCircles(
       coins,
       scalingFactor,
-      bubbleSort as SORTING_BY,
+      bubbleSort,
       width,
       height
     );
@@ -110,7 +109,7 @@ export default function Bubbles({ coins }: Props) {
       container.addChild(text);
       textSprites.push(text);
 
-      const text2 = PixiUtils.createText2(circle, SORTING_BY.HOUR);
+      const text2 = PixiUtils.createText2(circle, PriceChange.HOUR);
       container.addChild(text2);
       text2Sprites.push(text2);
 
@@ -149,15 +148,15 @@ export default function Bubbles({ coins }: Props) {
 
   useEffect(() => {
     if (circles) {
-      const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort as SORTING_BY, width, height);
+      const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
       const max = Math.min(width, height) * 0.15;
       const min = Math.min(width, height) * 0.065;
 
       circles.forEach((circle) => {
-        if (!circle[bubbleSort as SORTING_BY]) return;
+        if (!circle[bubbleSort]) return;
 
         const radius = Math.abs(
-          Math.floor(circle[bubbleSort as SORTING_BY] * scalingFactor)
+          Math.floor(circle[bubbleSort] * scalingFactor)
         );
 
         circle.targetRadius = radius > max ? max : radius > min ? radius : min;

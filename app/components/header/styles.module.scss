@@ -3,13 +3,12 @@
 @import "@/assets/mixins";
 
 .header {
-  height: 43px;
   padding: 0 16px;
   width: 100%;
   background-color: $color-black;
   gap: 16px;
-
-  @include flex-between;
+  display: flex;
+  flex-direction: column;
 
   &>div:nth-child(2) {
     width: 100%;
@@ -55,8 +54,14 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  max-width: 600px;
 
   @include component-to-hide(1px, $media-1100-width);
+}
+
+.container {
+  @include flex-between();
+  align-items: center;
 }
 
 .button {
@@ -67,6 +72,7 @@
 }
 
 .search {
+  height: 100%;
   align-self: flex-end;
 
   &>label {

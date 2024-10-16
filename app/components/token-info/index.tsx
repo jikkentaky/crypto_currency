@@ -4,52 +4,15 @@ import { useStore } from "@/store"
 import styles from './styles.module.scss'
 import { Typography } from "@/app/ui-components/typography"
 import { convertNumber } from "@/lib/convert-number"
-import { SORTING_BY, Resolution } from "@/types/bubbles.type"
-import { useEffect, useState } from "react"
 import Image from "next/image"
 import { defaultPath } from "@/lib/config"
 import { formatTokenPrice } from "@/lib/format-token-price"
 import { formatPercentage } from "@/lib/format-percentage"
-import { TokenFilterResult } from "@/types/tokenFilterResultType.type"
 import { CopyButton } from "@/app/ui-components/copy-button"
 
 const TokenInfo = () => {
-  const { chosenToken, modalResolution, resolution } = useStore()
-  const [, setResolutions] = useState(SORTING_BY.HOUR)
-
-  useEffect(() => {
-    getPriceChange(modalResolution)
-  }, [modalResolution])
-
-  if (!chosenToken) return
-
-  const getPriceChange = (res: Resolution) => {
-    switch (res) {
-      case Resolution.HOUR:
-        setResolutions(SORTING_BY.HOUR)
-
-      case Resolution.FOUR_HOURS:
-        setResolutions(SORTING_BY.FOUR_HOURS)
-
-      case Resolution.TWELVE_HOURS:
-        setResolutions(SORTING_BY.TWELVE_HOURS)
-
-      case Resolution.DAY:
-        setResolutions(SORTING_BY.DAY)
-
-      default:
-        setResolutions(SORTING_BY.HOUR)
-    }
-  }
-
-  let value = chosenToken[SORTING_BY.HOUR];
-
-  if (resolution in chosenToken) {
-    const currentValue = chosenToken[resolution as keyof TokenFilterResult];
-    if (currentValue === 'change1' || currentValue === 'change4' || currentValue === 'change12' || currentValue === 'change24') {
-      value = Number(chosenToken[resolution as keyof TokenFilterResult]);
-    }
-  }
+  const { chosenToken, resolution } = useStore()
+  let value = chosenToken?.[resolution];
 
   return (
     chosenToken && <div className={styles['token-info']}>

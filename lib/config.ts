@@ -1,4 +1,4 @@
-import { SORTING_BY } from "@/types/bubbles.type";
+import { PriceChange } from "@/types/bubbles.type";
 
 const appConfig = {
   aside: 310,
@@ -8,10 +8,10 @@ const appConfig = {
 };
 
 const priceChangeButtons = [
-  { value: SORTING_BY.HOUR, content: '1H' },
-  { value: SORTING_BY.FOUR_HOURS, content: '4H' },
-  { value: SORTING_BY.TWELVE_HOURS, content: '12H' },
-  { value: SORTING_BY.DAY, content: '24H' },
+  { value: PriceChange.HOUR, content: '1H' },
+  { value: PriceChange.FOUR_HOURS, content: '4H' },
+  { value: PriceChange.TWELVE_HOURS, content: '12H' },
+  { value: PriceChange.DAY, content: '24H' },
 ]
 
 const mobileResolution = {
