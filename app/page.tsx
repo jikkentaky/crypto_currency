@@ -8,10 +8,6 @@ export default function Home() {
   return (
     <main className={styles.main} >
       <div className={styles.container}>
-        <div className={styles.header}>
-          onchainbubbles.exe
-        </div>
-
         <div className={styles['content-wrapper']}>
 
           <div className={styles.content}>

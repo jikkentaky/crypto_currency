@@ -40,7 +40,6 @@ body {
   }
 
   &-thumb {
-    @include gradient-border(1px);
     border: 1px solid $color-grey-13;
     background-color: $color-dark-pink;
 

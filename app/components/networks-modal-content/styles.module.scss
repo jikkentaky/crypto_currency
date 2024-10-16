@@ -115,7 +115,6 @@ $top-part-header: 360px;
 }
 
 .active {
-  @include gradient-border(2px);
   border: none;
   opacity: 1;
 }

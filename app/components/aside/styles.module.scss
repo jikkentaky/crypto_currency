@@ -41,7 +41,6 @@
   padding: 14px 16px;
 
   background-color: $color-black;
-  @include gradient-border(1px);
 }
 
 .title {
@@ -49,9 +48,4 @@
   font-size: $fs-36;
   letter-spacing: 3px;
   text-align: center;
-}
-
-.bottom-part {
-  // padding-bottom: 20px;
-  @include gradient-border();
 }

@@ -3,11 +3,5 @@
 @import '@/assets/mixins';
 
 .container {
-  background: linear-gradient(135deg,
-      rgba(161, 44, 153, 0.15) 16%,
-      rgba(206, 60, 115, 0.15) 32%,
-      rgba(214, 87, 39, 0.15) 48%,
-      rgba(252, 249, 64, 0.15) 64%,
-      rgba(33, 34, 241, 0.15) 80%,
-      rgba(127, 36, 175, 0.15) 100%);
+  background-color: $color-grey-4;
 }

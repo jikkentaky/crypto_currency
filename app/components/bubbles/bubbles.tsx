@@ -184,17 +184,6 @@ export default function Bubbles({ coins }: Props) {
     }
   }, [bubbleSort, coins, circles, width, height, displayChangeRef.current, searchCoin]);
 
-  useEffect(() => {
-    if (appInstance.current && gradientSpriteRef.current) {
-      const app = appInstance.current;
-
-      const texture = PIXI.Texture.from(
-        PixiUtils.createGradientBackground(app.screen.width, app.screen.height)
-      );
-      gradientSpriteRef.current.texture = texture;
-    }
-  }, [width, height]);
-
   return (
     <div
       style={{

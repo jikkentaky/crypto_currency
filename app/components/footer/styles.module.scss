@@ -52,13 +52,6 @@
   flex-grow: 1;
 }
 
-
-.networks-chose-modal,
-.networks-modal,
-.timeframe {
-  @include gradient-border();
-}
-
 .networks-chose-modal {
   max-height: 778px;
   left: 50%;

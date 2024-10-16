@@ -60,26 +60,10 @@ const Header = () => {
   return (
     <header className={cn(styles.header)}
     >
-      <h1 className={styles.title}>ONCHAINBUBBLES</h1>
-      <h1 className={styles['title-mobile']}>OCB</h1>
+      <h1 className={styles.title}>TopCryptocurrencies</h1>
+      <h1 className={styles['title-mobile']}>TB</h1>
 
       <div className={styles['buttons-wrapper']}>
-        <div className={styles['sort-wrapper']}>
-          <Typography className={styles.sort}>Active chains</Typography>
-
-          <MobileButton className={styles.button} onClick={openNetworksModal}>
-            {chosenNetwork.name}
-
-            <PriceArrowIcon className={styles.icon} />
-          </MobileButton>
-        </div>
-
-        <div className={styles['sort-wrapper']}>
-          <Typography className={styles.sort}>Sort by</Typography>
-
-          <CustomSelect />
-        </div>
-
         <ButtonGroupRadio
           buttons={priceChangeButtons}
           resolution={resolution}

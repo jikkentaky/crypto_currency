@@ -10,9 +10,8 @@
   gap: 16px;
 
   @include flex-between;
-  @include gradient-border(1px);
 
-  & > div:nth-child(2) {
+  &>div:nth-child(2) {
     width: 100%;
     max-width: 390px;
     font-family: $ff-sans;
@@ -60,28 +59,11 @@
   @include component-to-hide(1px, $media-1100-width);
 }
 
-.sort {
-  padding: 16px 16px 16px 0;
-  width: max-content;
-  text-wrap: nowrap;
-}
-
-.icon {
-  border: 1px solid $color-grey-13;
-  box-shadow: -1px 1px 1px $color-white;
-}
-
 .button {
   @include flex-between();
   min-width: 180px;
   width: 100%;
   padding: 0 8px;
-}
-
-.sort-wrapper {
-  display: flex;
-  align-items: center;
-  z-index: 1;
 }
 
 .search {

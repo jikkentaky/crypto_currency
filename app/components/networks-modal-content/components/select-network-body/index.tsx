@@ -21,6 +21,7 @@ const SelectNetworkBody: FC<Props> = ({ networkList }) => {
     setIsOpenModal(false)
     setIsEditNetworks(false)
   }
+
   return (
     <div className={cn(styles['select-networks'], styles['networks-list'])}>
       <button

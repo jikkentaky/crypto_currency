@@ -109,31 +109,27 @@ export class PixiUtils {
       );
 
       if (isHovered) {
-        gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
-        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
-        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.9)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+        gradient.addColorStop(0.45, 'rgba(255, 255, 255, 0.5)');
+        gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.95)');
       } else {
         switch (color) {
           case "green":
-            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
-            gradient.addColorStop(0.5, 'rgba(108, 250, 60, 1)');
-            gradient.addColorStop(0.7, 'rgba(108, 250, 60, 0.9)');
-            gradient.addColorStop(1, 'rgba(108, 250, 60, 1)');
+            gradient.addColorStop(0, "rgba(46, 204, 113, 0.1)");
+            gradient.addColorStop(0.45, "rgba(46, 204, 113, 0.15)");
+            gradient.addColorStop(0.6, "rgba(46, 204, 113, 0.95)");
             break;
 
           case "red":
-            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
-            gradient.addColorStop(0.5, 'rgba(244, 58, 54, 1)');
-            gradient.addColorStop(0.7, 'rgba(244, 58, 54, 0.9)');
-            gradient.addColorStop(1, 'rgba(244, 58, 54, 1)');
+            gradient.addColorStop(0, "rgba(255,99,71, 0.1)");
+            gradient.addColorStop(0.45, "rgba(255,99,71, 0.15)");
+            gradient.addColorStop(0.6, "rgba(255,99,71, 0.95)");
             break;
 
           case "white":
-            gradient.addColorStop(0.25, 'rgba(0, 0, 0, 0)');
-            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
-            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.9)');
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+            gradient.addColorStop(0.45, 'rgba(255, 255, 255, 0.5)');
+            gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.95)');
             break;
         }
       }
@@ -166,25 +162,4 @@ export class PixiUtils {
 
     circleGraphic.texture = newTexture;
   };
-
-  static createGradientBackground(width: number, height: number): HTMLCanvasElement {
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext("2d");
-
-    if (context) {
-      const gradient = context.createLinearGradient(0, 0, width * 0.1, height);
-      gradient.addColorStop(0.16, 'rgba(161, 44, 153, 0.15)');
-      gradient.addColorStop(0.32, 'rgba(206, 60, 105, 0.15)');
-      gradient.addColorStop(0.48, 'rgba(214, 87, 39, 0.15)');
-      gradient.addColorStop(0.64, 'rgba(252, 249, 64, 0.15)');
-      gradient.addColorStop(0.8, 'rgba(33, 34, 241, 0.15)');
-      gradient.addColorStop(1, 'rgba(127, 36, 175, 0.15)');
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, width, height);
-    }
-
-    return canvas;
-  }
 }
