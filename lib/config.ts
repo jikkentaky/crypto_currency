@@ -8,10 +8,11 @@ const appConfig = {
 };
 
 const priceChangeButtons = [
-  { value: PriceChange.HOUR, content: '1H' },
-  { value: PriceChange.FOUR_HOURS, content: '4H' },
-  { value: PriceChange.TWELVE_HOURS, content: '12H' },
-  { value: PriceChange.DAY, content: '24H' },
+  { value: PriceChange.HOUR, content: 'HOUR' },
+  { value: PriceChange.DAY, content: 'DAY' },
+  { value: PriceChange.WEEK, content: 'WEEK' },
+  { value: PriceChange.MONTH, content: 'MONTH' },
+  { value: PriceChange.YEAR, content: 'YEAR' },
 ]
 
 const mobileResolution = {

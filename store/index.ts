@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 import { Network } from '@/types/network.type'
 import { Resolution, PriceChange } from '@/types/bubbles.type'
-import { TokenFilterResultType } from '@/types/tokenFilterResultType.type'
+import { CoingeckoSingleCoinData } from '@/types/coingecko.type'
+import { ChangeEventHandler } from 'react'
 
 interface UseStore {
-  topTokensList: TokenFilterResultType[] | null
-  chosenNetwork: Network
+  topTokensList: CoingeckoSingleCoinData[] | null
   searchCoin: string
   searchNetwork: string
   resolution: PriceChange
@@ -13,7 +13,7 @@ interface UseStore {
   isLoading: boolean
   isOpenModal: boolean
   isOpenMobileMenu: boolean
-  chosenToken: TokenFilterResultType | null
+  chosenToken: CoingeckoSingleCoinData | null
   isNetworks: boolean
   networkList: Network[] | null
   selectedModalResolution: Resolution
@@ -30,8 +30,7 @@ interface UseStore {
   setIsOpenModal: (isOpenModal: boolean) => void
   setIsLoading: (isLoading: boolean) => void
   setResolution: (resolution: PriceChange) => void
-  setTopTokensList: (topTokensList: TokenFilterResultType[]) => void
-  setChosenNetwork: (network: Network) => void
+  setTopTokensList: (topTokensList: CoingeckoSingleCoinData[]) => void
   setSearchCoin: (searchCoin: string) => void
   setSearchNetwork: (searchNetwork: string) => void
 }
@@ -41,7 +40,6 @@ export const useStore = create<UseStore>()((set, get) => ({
   isOpenMobileTimeFrame: false,
   isOpenMobileMenu: false,
   topTokensList: null,
-  chosenNetwork: { id: 1, name: 'Ethereum', isVisible: true },
   resolution: PriceChange.HOUR,
   modalResolution: Resolution.HOUR,
   networkList: null,
@@ -55,7 +53,7 @@ export const useStore = create<UseStore>()((set, get) => ({
   setChosenToken: (tokenAddress) => {
     const { topTokensList } = get()
     if (topTokensList) {
-      const chosenToken = topTokensList.find(token => token.token.address === tokenAddress)
+      const chosenToken = topTokensList.find(token => token.contract_address === tokenAddress)
       set({ chosenToken })
     }
   },
@@ -70,7 +68,6 @@ export const useStore = create<UseStore>()((set, get) => ({
   setResolution: (resolution) => set({ resolution }),
   setModalResolution: (modalResolution) => set({ modalResolution }),
   setTopTokensList: (topTokensList) => set({ topTokensList }),
-  setChosenNetwork: (chosenNetwork) => set({ chosenNetwork }),
   setSearchNetwork: (searchNetwork) => set({ searchNetwork }),
   setSearchCoin: (searchCoin) => set({ searchCoin }),
 }))

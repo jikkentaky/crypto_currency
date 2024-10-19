@@ -2,27 +2,21 @@
 @import '@/assets/variables';
 @import '@/assets/mixins';
 
-.search-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-  height: 100%;
-}
-
-.hide {
-  @include component-to-hide(1px, $media-1100-width);
-}
-
 .search-field {
   width: 100%;
-  box-shadow: 1px 1px 1px $color-grey-13;
-}
-
-.search-field>div {
-  height: 30px;
   color: $color-white;
-  border: 1px solid $color-grey-8;
-  border-radius: 0;
-  background-color: inherit;
+  outline-color: $color-green-1;
+  background-color: $color-grey-4;
+  max-width: 250px;
+  width: 100%;
+  font-weight: $fw-600;
+  border: none;
+  border-radius: $border-radius;
+  padding: 8px;
+
+  &::placeholder {
+    color: $color-white;
+    font-weight: $fw-600;
+    padding: 8px;
+  }
 }

@@ -10,7 +10,7 @@ import { ChartModalContent } from '@/app/components/chart-modal-content'
 import { NetworksModalContent } from '@/app/components/networks-modal-content'
 
 export default function BubblesPage() {
-  const { chosenNetwork, isLoading, topTokensList, isNetworks, setIsLoading, setTopTokensList } =
+  const { isLoading, topTokensList, isNetworks, setIsLoading, setTopTokensList } =
     useStore()
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function BubblesPage() {
       setIsLoading(true)
 
       try {
-        const coins = await getFilterTokens(chosenNetwork.id)
+        const coins = await getFilterTokens()
 
         if (!coins) return
 
@@ -31,14 +31,14 @@ export default function BubblesPage() {
     }
 
     getCoins()
-  }, [chosenNetwork.id])
+  }, [])
 
   return (
     <>
       {isLoading || !topTokensList ? (
         <Loader height={'100vh'} />
       ) : (
-        !isLoading && topTokensList && <Bubbles key={chosenNetwork.id} coins={topTokensList} />
+        !isLoading && topTokensList && <Bubbles coins={topTokensList} />
       )}
 
       <ModalComponent>

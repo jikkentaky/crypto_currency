@@ -5,14 +5,14 @@ import * as PIXI from "pixi.js";
 import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
 import { Circle, PriceChange } from "@/types/bubbles.type";
-import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { useStore } from "@/store";
 import { formatPercentage } from "@/lib/format-percentage";
 import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 import styles from "./styles.module.scss";
+import { CoingeckoSingleCoinData } from "@/types/coingecko.type";
 
 type Props = {
-  coins: TokenFilterResult[];
+  coins: CoingeckoSingleCoinData[];
 };
 
 export default function Bubbles({ coins }: Props) {
@@ -132,12 +132,9 @@ export default function Bubbles({ coins }: Props) {
       appInstance
     );
 
-    const timeOut = setTimeout(() => {
-      app.ticker?.add(ticker);
-    }, 1000)
+    app.ticker?.add(ticker);
 
     return () => {
-      clearInterval(timeOut);
       app.ticker?.remove(ticker);
 
       container?.children[0]?.removeEventListener("click", (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles));
@@ -150,7 +147,7 @@ export default function Bubbles({ coins }: Props) {
     if (circles) {
       const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
       const max = Math.min(width, height) * 0.15;
-      const min = Math.min(width, height) * 0.065;
+      const min = Math.min(width, height) * 0.025;
 
       circles.forEach((circle) => {
         if (!circle[bubbleSort]) return;

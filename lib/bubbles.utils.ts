@@ -1,12 +1,12 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChange } from "@/types/bubbles.type";
-import { TokenFilterResult } from "@/types/tokenFilterResultType.type";
 import { appConfig, defaultPath } from "./config";
 import { formatPercentage } from "./format-percentage";
+import { CoingeckoSingleCoinData } from "@/types/coingecko.type";
 
 export type GenerateCirclesParams = {
-  coins: TokenFilterResult[];
+  coins: CoingeckoSingleCoinData[];
   bubbleSort: PriceChange;
   scalingFactor: number;
 };
@@ -16,9 +16,9 @@ const { wallDamping, speed, elasticity } = appConfig;
 const changeSizeStep = 2;
 
 export class BubblesUtils {
-  static getScalingFactor = (data: TokenFilterResult[], bubbleSort: PriceChange = PriceChange.HOUR, width: number, height: number): number => {
+  static getScalingFactor = (data: CoingeckoSingleCoinData[], bubbleSort: PriceChange = PriceChange.HOUR, width: number, height: number): number => {
     if (!data) return 1;
-    const max = data.map((item) => Math.abs(+item[bubbleSort]!));
+    const max = data.map((item) => Math.abs(+item[bubbleSort]));
     let totalSquare = 0;
 
     for (let i = 0; i < max.length; i++) {
@@ -225,13 +225,12 @@ export class BubblesUtils {
   };
 
   static generateCircles = (
-    coins: TokenFilterResult[],
+    coins: CoingeckoSingleCoinData[],
     scalingFactor: number,
     bubbleSort = PriceChange.HOUR,
     width: number,
     height: number
   ) => {
-    console.log("🚀 ~ BubblesUtils ~ bubbleSort:", bubbleSort)
     const maxCircleSize = Math.min(width, height) * 0.2;
     const minCircleSize = Math.min(width, height) * 0.06;
 
@@ -239,10 +238,10 @@ export class BubblesUtils {
       const radius = Math.abs(parseFloat(item[bubbleSort].toString()) * scalingFactor);
 
       const data = {
-        id: item.token.address,
-        symbol: item.token.symbol.slice(0, 5),
+        id: item.contract_address,
+        symbol: item.symbol.slice(0, 5),
         image: item.image || defaultPath,
-        coinName: item.token.info.name,
+        coinName: item.name,
         isSearched: false,
         isPreviousSearched: false,
         isHovered: false,
@@ -260,9 +259,10 @@ export class BubblesUtils {
         text2: null,
         previousText2: null,
         [PriceChange.HOUR]: item[PriceChange.HOUR],
-        [PriceChange.FOUR_HOURS]: item[PriceChange.FOUR_HOURS],
-        [PriceChange.TWELVE_HOURS]: item[PriceChange.TWELVE_HOURS],
         [PriceChange.DAY]: item[PriceChange.DAY],
+        [PriceChange.WEEK]: item[PriceChange.WEEK],
+        [PriceChange.MONTH]: item[PriceChange.MONTH],
+        [PriceChange.YEAR]: item[PriceChange.YEAR],
       };
 
       const shape = { ...data, text2: PixiUtils.createText2(data, bubbleSort) };

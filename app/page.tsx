@@ -15,7 +15,7 @@ export default function Home() {
 
             <BubblesPage />
 
-            <CoinsTable />
+            {/* <CoinsTable /> */}
 
             <Footer />
           </div>

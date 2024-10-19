@@ -56,10 +56,16 @@
   gap: 16px;
   max-width: 600px;
 
+  &>div {
+    gap: 8px;
+  }
+
   @include component-to-hide(1px, $media-1100-width);
 }
 
 .container {
+  border-top: 3px solid $color-green-1;
+  padding: 8px 0;
   @include flex-between();
   align-items: center;
 }
@@ -69,15 +75,4 @@
   min-width: 180px;
   width: 100%;
   padding: 0 8px;
-}
-
-.search {
-  height: 100%;
-  align-self: flex-end;
-
-  &>label {
-    @media (max-width: 1415px) {
-      display: none;
-    }
-  }
 }

@@ -1,8 +1,7 @@
 'use client'
 
 import { useStore } from "@/store"
-import { TokenFilterResultType } from "@/types/tokenFilterResultType.type"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable,  Row, ColumnSort } from "@tanstack/react-table"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, Row, ColumnSort } from "@tanstack/react-table"
 import { memo, useEffect, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
@@ -14,12 +13,10 @@ import Image from 'next/image'
 import { formatTokenPrice } from "@/lib/format-token-price"
 import { convertNumber } from "@/lib/convert-number"
 import { formatPercentage } from "@/lib/format-percentage"
-import { useSortedTokens } from "@/hooks/use-sorted.tokens"
-import { SORTING_BY } from "@/types/bubbles.type"
+import { CoingeckoSingleCoinData } from "@/types/coingecko.type"
 
 const CoinsTable = () => {
   const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
-  const { tokens, setTokens, sortTokensByColumn, sorting } = useSortedTokens()
 
   const [translateY, setTranslateY] = useState(0);
 
@@ -44,14 +41,14 @@ const CoinsTable = () => {
     topTokensList && setTokens(topTokensList);
   }, [topTokensList]);
 
-  const columnHelper = createColumnHelper<TokenFilterResultType>();
+  const columnHelper = createColumnHelper<CoingeckoSingleCoinData>();
 
   const onClick = (tokenId: string) => {
     setChosenToken(tokenId);
     setIsOpenModal(true);
   }
 
-  const columns = useMemo<Array<ColumnDef<TokenFilterResultType, any>>>(
+  const columns = useMemo<Array<ColumnDef<CoingeckoSingleCoinData, any>>>(
     () => [
       columnHelper.accessor((row) => row.rank, {
         id: 'rank',
@@ -62,7 +59,7 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.token.name, {
+      columnHelper.accessor((row) => row.name, {
         id: 'name',
         cell: (info) => {
           const row = info.row.original;
@@ -71,16 +68,16 @@ const CoinsTable = () => {
               className={cn(styles.button,
                 { [styles.selected]: true })
               }
-              key={row.token.id}
-              onClick={() => onClick(row.token.address)}
+              key={row.id}
+              onClick={() => onClick(row.contract_address)}
             >
-              <p className={styles['col-name']} title={row.token.name}>
+              <p className={styles['col-name']} title={row.name}>
                 <Image
                   loading="lazy"
-                  src={row.token.info.imageThumbUrl || defaultPath}
+                  src={row.image.thumb || defaultPath}
                   width={20}
                   height={20}
-                  alt={row.token.name}
+                  alt={row.name}
                   style={{ marginRight: '8px' }}
                 />
 
@@ -301,7 +298,7 @@ const CoinsTable = () => {
 
 export { CoinsTable };
 
-const TableRow = memo(({ row }: { row: Row<TokenFilterResultType> }) => {
+const TableRow = memo(({ row }: { row: Row<CoingeckoSingleCoinData> }) => {
   return (
     <tr key={row.id} className={styles['table-row']}>
       {row.getVisibleCells().map((cell) => {
