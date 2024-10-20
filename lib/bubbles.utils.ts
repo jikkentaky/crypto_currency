@@ -3,10 +3,12 @@ import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChange } from "@/types/bubbles.type";
 import { appConfig, defaultPath } from "./config";
 import { formatPercentage } from "./format-percentage";
-import { CoingeckoSingleCoinData } from "@/types/coingecko.type";
+import { CoingeckoCoinData, CoingeckoSingleCoinData } from "@/types/coingecko.type";
+import { getMinMaxCircleSize } from "./getMinMaxCircleSize";
+import { checkBoundaryCollision } from "./checkBoundaryCollision";
 
 export type GenerateCirclesParams = {
-  coins: CoingeckoSingleCoinData[];
+  coins: CoingeckoCoinData[];
   bubbleSort: PriceChange;
   scalingFactor: number;
 };
@@ -16,15 +18,18 @@ const { wallDamping, speed, elasticity } = appConfig;
 const changeSizeStep = 2;
 
 export class BubblesUtils {
-  static getScalingFactor = (data: CoingeckoSingleCoinData[], bubbleSort: PriceChange = PriceChange.HOUR, width: number, height: number): number => {
-    if (!data) return 1;
-    const max = data.map((item) => Math.abs(+item[bubbleSort]));
-    let totalSquare = 0;
+  static getScalingFactor = (
+    data: CoingeckoCoinData[],
+    bubbleSort: PriceChange = PriceChange.HOUR,
+    width: number,
+    height: number
+  ): number => {
+    if (!data || data.length === 0) return 1;
 
-    for (let i = 0; i < max.length; i++) {
-      const area = Math.PI * max[i] * max[i];
-      totalSquare += area;
-    }
+    const totalSquare = data.reduce((acc, item) => {
+      const value = Math.abs(+item[bubbleSort]);
+      return acc + Math.PI * value * value;
+    }, 0);
 
     return Math.sqrt((width * height) / totalSquare);
   };
@@ -52,12 +57,10 @@ export class BubblesUtils {
         const imageSprite = imageSprites[i];
         const text = textSprites[i];
         const text2 = text2Sprites[i];
-
         const container = circleGraphic.parent as PIXI.Container;
-
         const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
-        const updateCircleChilds = () => {
+        const updateCircleChildren = () => {
           const gradientColor = circle.isSearched ? "white" : circle.color;
 
           circleGraphic.texture = PixiUtils.createGradientTexture(
@@ -67,27 +70,26 @@ export class BubblesUtils {
           );
 
           const fontSize = circle.radius * 0.7;
-          const isTextVisible = fontSize >= 8;
+          const isFullSize = circle.radius * 0.5 < 20;
 
           if (imageSprite) {
             const scaleFactor = 0.6;
-            const minSize = 10;
 
-            imageSprite.width = Math.max(circle.radius * scaleFactor, minSize);
-            imageSprite.height = Math.max(circle.radius * scaleFactor, minSize);
-            imageSprite.position = { x: 0, y: 0 ? 0 : -circle.radius / 2 };
+            imageSprite.width = circle.radius * (isFullSize ? 1.2 : scaleFactor);
+            imageSprite.height = circle.radius * (isFullSize ? 1.2 : scaleFactor);
+            imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
             imageSprite.zIndex = 1;
           }
 
           const textStyle = new PIXI.TextStyle({
             fontFamily: "Work Sans, sans-serif",
-            fontSize: isTextVisible ? fontSize * 0.6 + "px" : "1px",
+            fontSize: !isFullSize ? fontSize * 0.5 + "px" : "0",
             fill: "#ffffff",
           });
 
           const text2Style = new PIXI.TextStyle({
             fontFamily: "Work Sans, sans-serif",
-            fontSize: isTextVisible ? fontSize * 0.37 + "px" : "1px",
+            fontSize: !isFullSize ? fontSize * 0.37 + "px" : "0",
             fill: "#ffffff",
           });
 
@@ -99,8 +101,6 @@ export class BubblesUtils {
           text2.zIndex = 1;
           text2.position.y = circle.radius / 1.8;
 
-          const newText2Value = formatPercentage(circle[displayChange]) + ' %';
-
           if (circle.text2) {
             circle.text2.text = newText2Value;
           }
@@ -109,43 +109,48 @@ export class BubblesUtils {
         circle.x += circle.vx;
         circle.y += circle.vy;
 
-        if (circle.x - circle.radius < 0) {
-          circle.x = circle.radius;
-          circle.vx *= -1;
-          circle.vx *= 1 - wallDamping;
-        } else if (circle.x + circle.radius > width) {
-          circle.x = width - circle.radius;
-          circle.vx *= -1;
-          circle.vx *= 1 - wallDamping;
-        }
-        if (circle.y - circle.radius < 0) {
-          circle.y = circle.radius;
-          circle.vy *= -1;
-          circle.vy *= 1 - wallDamping;
-        } else if (circle.y + circle.radius > height) {
-          circle.y = height - circle.radius;
-          circle.vy *= -1;
-          circle.vy *= 1 - wallDamping;
-        }
+        const xResult = checkBoundaryCollision({
+          pos: circle.x,
+          velocity: circle.vx,
+          radius: circle.radius,
+          max: width,
+          wallDamping,
+        });
+        circle.x = xResult.pos;
+        circle.vx = xResult.velocity;
+
+        const yResult = checkBoundaryCollision({
+          pos: circle.y,
+          velocity: circle.vy,
+          radius: circle.radius,
+          max: height,
+          wallDamping,
+        });
+        circle.y = yResult.pos;
+        circle.vy = yResult.velocity;
 
         for (let j = i + 1; j < circles.length; j++) {
           const otherCircle = circles[j];
           const dx = otherCircle.x - circle.x;
           const dy = otherCircle.y - circle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSquared = dx * dx + dy * dy;
+          const radiusSum = circle.radius + otherCircle.radius;
 
-          if (distance < circle.radius + otherCircle.radius) {
+          if (distanceSquared < radiusSum * radiusSum) {
+            const distance = Math.sqrt(distanceSquared);
             const angle = Math.atan2(dy, dx);
 
-            const totalRadius = circle.radius + otherCircle.radius;
-            const overlap = totalRadius - distance;
+            const overlap = radiusSum - distance;
             const force = overlap * elasticity;
 
             const dampingFactor = wallDamping;
-            circle.vx -= force * Math.cos(angle) * dampingFactor + circle.vx * 0.01;
-            circle.vy -= force * Math.sin(angle) * dampingFactor + circle.vy * 0.01;
-            otherCircle.vx += force * Math.cos(angle) * dampingFactor;
-            otherCircle.vy += force * Math.sin(angle) * dampingFactor;
+            const forceX = force * Math.cos(angle);
+            const forceY = force * Math.sin(angle);
+
+            circle.vx -= forceX * dampingFactor + circle.vx * 0.01;
+            circle.vy -= forceY * dampingFactor + circle.vy * 0.01;
+            otherCircle.vx += forceX * dampingFactor;
+            otherCircle.vy += forceY * dampingFactor;
           }
         }
 
@@ -173,9 +178,7 @@ export class BubblesUtils {
             if (Math.abs(sizeDifference) <= changeSizeStep) {
               circle.radius = circle.targetRadius;
             } else {
-              circle.radius > circle.targetRadius
-                ? (circle.radius -= changeSizeStep)
-                : (circle.radius += changeSizeStep);
+              circle.radius += Math.sign(sizeDifference) * changeSizeStep;
             }
 
             radiusChanged = circle.radius !== circle.targetRadius;
@@ -185,7 +188,7 @@ export class BubblesUtils {
             container.hitArea = new PIXI.Circle(0, 0, circle.radius);
           }
 
-          updateCircleChilds();
+          updateCircleChildren();
 
           container.cacheAsBitmap = true;
         }
@@ -225,20 +228,19 @@ export class BubblesUtils {
   };
 
   static generateCircles = (
-    coins: CoingeckoSingleCoinData[],
+    coins: CoingeckoCoinData[],
     scalingFactor: number,
     bubbleSort = PriceChange.HOUR,
     width: number,
     height: number
   ) => {
-    const maxCircleSize = Math.min(width, height) * 0.2;
-    const minCircleSize = Math.min(width, height) * 0.06;
+    const [maxCircleSize, minCircleSize] = getMinMaxCircleSize(width, height);
 
     const shapes: Circle[] = coins.map((item) => {
       const radius = Math.abs(parseFloat(item[bubbleSort].toString()) * scalingFactor);
 
       const data = {
-        id: item.contract_address,
+        id: item.id,
         symbol: item.symbol.slice(0, 5),
         image: item.image || defaultPath,
         coinName: item.name,

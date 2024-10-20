@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as PIXI from "pixi.js";
 import { BubblesUtils } from "@/lib/bubbles.utils";
 import { PixiUtils } from "@/lib/pixi.utils";
@@ -9,10 +9,11 @@ import { useStore } from "@/store";
 import { formatPercentage } from "@/lib/format-percentage";
 import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 import styles from "./styles.module.scss";
-import { CoingeckoSingleCoinData } from "@/types/coingecko.type";
+import { CoingeckoCoinData } from "@/types/coingecko.type";
+import { getMinMaxCircleSize } from "@/lib/getMinMaxCircleSize";
 
 type Props = {
-  coins: CoingeckoSingleCoinData[];
+  coins: CoingeckoCoinData[];
 };
 
 export default function Bubbles({ coins }: Props) {
@@ -34,13 +35,10 @@ export default function Bubbles({ coins }: Props) {
   const appRef = useRef<HTMLDivElement>(null);
   const appInstance = useRef<PIXI.Application | null>(null);
 
-  const scalingFactor = useMemo(() => {
-    return BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
-  }, [coins, width, height]);
-
   useEffect(() => {
     if (!coins) return;
 
+    const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
     const shapes = BubblesUtils.generateCircles(
       coins,
       scalingFactor,
@@ -48,6 +46,7 @@ export default function Bubbles({ coins }: Props) {
       width,
       height
     );
+
     setCircles(shapes);
   }, [coins]);
 
@@ -58,7 +57,6 @@ export default function Bubbles({ coins }: Props) {
       clearBeforeRender: true,
       resizeTo: appRef.current,
       backgroundColor: "0x000000",
-      antialias: true,
       autoDensity: true,
       resolution: 2,
       backgroundAlpha: 0,
@@ -86,7 +84,9 @@ export default function Bubbles({ coins }: Props) {
     const text2Sprites: PIXI.Text[] = [];
     const circleGraphics: PIXI.Sprite[] = [];
 
-    container?.children[0].addEventListener("click", (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles));
+    container?.children[0].addEventListener("click",
+      (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles)
+    );
 
     for (let i = 0; i < circles.length; i++) {
       const circle = circles[i];
@@ -94,7 +94,7 @@ export default function Bubbles({ coins }: Props) {
       const container = PixiUtils.createContainer(circle, setChosenToken, setIsOpenModal);
 
       const circleGraphic = new PIXI.Sprite(
-        PixiUtils.createGradientTexture(circle.targetRadius * 4, circle.color, circle.isHovered)
+        PixiUtils.createGradientTexture(circle.radius * 4, circle.color, circle.isHovered)
       );
       circleGraphic.anchor.set(0.5);
       circle.graphicSprite = circleGraphic;
@@ -132,7 +132,9 @@ export default function Bubbles({ coins }: Props) {
       appInstance
     );
 
-    app.ticker?.add(ticker);
+    setTimeout(() => {
+      app.ticker?.add(ticker);
+    }, 200)
 
     return () => {
       app.ticker?.remove(ticker);
@@ -144,41 +146,45 @@ export default function Bubbles({ coins }: Props) {
   }, [circles]);
 
   useEffect(() => {
-    if (circles) {
-      const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
-      const max = Math.min(width, height) * 0.15;
-      const min = Math.min(width, height) * 0.025;
+    if (!circles) return;
 
-      circles.forEach((circle) => {
-        if (!circle[bubbleSort]) return;
+    const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
+    const [max, min] = getMinMaxCircleSize(width, height);
 
-        const radius = Math.abs(
-          Math.floor(circle[bubbleSort] * scalingFactor)
-        );
+    circles.forEach((circle) => {
+      if (!circle[bubbleSort]) return;
 
-        circle.targetRadius = radius > max ? max : radius > min ? radius : min;
-        circle.color =
-          circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
+      const radius = Math.abs(
+        Math.floor(circle[bubbleSort] * scalingFactor)
+      );
 
-        const newText2Value =
-          formatPercentage(circle[displayChangeRef.current as PriceChange]) + " %";
+      circle.targetRadius = radius > max
+        ? max
+        : radius > min
+          ? radius
+          : min;
 
-        if (circle.text2) {
-          if (!circle.previousText2) {
-            circle.previousText2 = newText2Value;
-          }
+      circle.color =
+        circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
 
-          circle.text2.text = newText2Value;
+      const newText2Value =
+        formatPercentage(circle[displayChangeRef.current as PriceChange]) + " %";
+
+      if (circle.text2) {
+        if (!circle.previousText2) {
+          circle.previousText2 = newText2Value;
         }
 
-        const isMatched = !searchCoin
-          ? false
-          : circle.symbol.toLowerCase().startsWith(searchCoin.toLowerCase());
+        circle.text2.text = newText2Value;
+      }
 
-        circle.isSearched = isMatched;
-      });
-    }
-  }, [bubbleSort, coins, circles, width, height, displayChangeRef.current, searchCoin]);
+      const isMatched = !searchCoin
+        ? false
+        : circle.symbol.toLowerCase().startsWith(searchCoin.toLowerCase());
+
+      circle.isSearched = isMatched;
+    });
+  }, [searchCoin, bubbleSort, width, height]);
 
   return (
     <div

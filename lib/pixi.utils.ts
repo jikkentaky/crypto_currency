@@ -12,7 +12,7 @@ export class PixiUtils {
     const container = new PIXI.Container();
     container.position.set(circle.x, circle.y);
     container.hitArea = new PIXI.Circle(0, 0, circle.radius);
-    container.interactive = true;
+    container.eventMode = 'dynamic';
 
     container
       .on('pointerover', () => {

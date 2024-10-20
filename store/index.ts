@@ -1,20 +1,17 @@
 import { create } from 'zustand'
 import { Network } from '@/types/network.type'
 import { Resolution, PriceChange } from '@/types/bubbles.type'
-import { CoingeckoSingleCoinData } from '@/types/coingecko.type'
-import { ChangeEventHandler } from 'react'
+import { CoingeckoCoinData } from '@/types/coingecko.type'
 
 interface UseStore {
-  topTokensList: CoingeckoSingleCoinData[] | null
+  topTokensList: CoingeckoCoinData[] | null
   searchCoin: string
   searchNetwork: string
   resolution: PriceChange
   modalResolution: Resolution
-  isLoading: boolean
   isOpenModal: boolean
   isOpenMobileMenu: boolean
-  chosenToken: CoingeckoSingleCoinData | null
-  isNetworks: boolean
+  chosenToken: CoingeckoCoinData | null
   networkList: Network[] | null
   selectedModalResolution: Resolution
   isOpenMobileTimeFrame: boolean
@@ -24,13 +21,11 @@ interface UseStore {
   setSelectedModalResolution: (selectedModalResolution: Resolution) => void
   setNetworkList: (networkList: Network[]) => void
   setIsOpenMobileMenu: (isOpenMobileMenu: boolean) => void
-  setIsNetworks: (isNetworks: boolean) => void
   setModalResolution: (resolution: Resolution) => void
-  setChosenToken: (tokenAddress: string) => void
+  setChosenToken: (tokenId: string) => void
   setIsOpenModal: (isOpenModal: boolean) => void
-  setIsLoading: (isLoading: boolean) => void
   setResolution: (resolution: PriceChange) => void
-  setTopTokensList: (topTokensList: CoingeckoSingleCoinData[]) => void
+  setTopTokensList: (topTokensList: CoingeckoCoinData[]) => void
   setSearchCoin: (searchCoin: string) => void
   setSearchNetwork: (searchNetwork: string) => void
 }
@@ -45,15 +40,13 @@ export const useStore = create<UseStore>()((set, get) => ({
   networkList: null,
   searchCoin: '',
   searchNetwork: '',
-  isLoading: false,
   isOpenModal: false,
   chosenToken: null,
-  isNetworks: false,
   selectedModalResolution: Resolution.HOUR,
-  setChosenToken: (tokenAddress) => {
+  setChosenToken: (tokenId) => {
     const { topTokensList } = get()
     if (topTokensList) {
-      const chosenToken = topTokensList.find(token => token.contract_address === tokenAddress)
+      const chosenToken = topTokensList.find(token => token.id === tokenId)
       set({ chosenToken })
     }
   },
@@ -62,9 +55,7 @@ export const useStore = create<UseStore>()((set, get) => ({
   setSelectedModalResolution: (selectedModalResolution) => set({ selectedModalResolution }),
   setIsOpenMobileMenu: (isOpenMobileMenu) => set({ isOpenMobileMenu }),
   setNetworkList: (networkList) => set({ networkList }),
-  setIsNetworks: (isNetworks) => set({ isNetworks }),
   setIsOpenModal: (isOpenModal) => set({ isOpenModal }),
-  setIsLoading: (isLoading) => set({ isLoading }),
   setResolution: (resolution) => set({ resolution }),
   setModalResolution: (modalResolution) => set({ modalResolution }),
   setTopTokensList: (topTokensList) => set({ topTokensList }),

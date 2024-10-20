@@ -3,18 +3,12 @@
 @import "@/assets/mixins";
 
 .header {
-  padding: 0 16px;
-  width: 100%;
-  background-color: $color-black;
-  gap: 16px;
   display: flex;
   flex-direction: column;
-
-  &>div:nth-child(2) {
-    width: 100%;
-    max-width: 390px;
-    font-family: $ff-sans;
-  }
+  width: 100%;
+  background-color: $color-black;
+  display: flex;
+  flex-direction: column;
 
   @include responsive {
     border: 1px solid $color-grey-13;
@@ -28,12 +22,13 @@
 }
 
 .button-group {
-  height: 43px;
+  height: 45px;
 }
 
 .title {
   font-size: $fs-26;
-  line-height: 0;
+  line-height: 26px;
+  margin: 8px 16px;
 
   @media (max-width: 1415px) {
     display: none;
@@ -48,6 +43,11 @@
     font-size: $fs-26;
     line-height: 0;
   }
+}
+
+.search,
+.buttons-wrapper {
+  margin: 0 16px;
 }
 
 .buttons-wrapper {

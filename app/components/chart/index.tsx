@@ -21,18 +21,17 @@ const buttons = [
 ]
 
 const Chart = () => {
-  const { modalResolution, setModalResolution, chosenToken, chosenNetwork } = useStore()
+  const { modalResolution, setModalResolution, chosenToken } = useStore()
 
   const [data, setData] = useState<Bar[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchInitialData = async () => {
-    if (!chosenToken || !chosenNetwork) return
+    if (!chosenToken) return
     setIsLoading(true)
 
-    const symbol = chosenToken.token.address + ':' + chosenNetwork.id
     try {
-      const data = await getBars(symbol, modalResolution, chosenToken.quoteToken)
+      const data = await getBars(chosenToken.id, modalResolution)
       if (!data) return
 
       setData(data)

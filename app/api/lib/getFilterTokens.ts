@@ -12,16 +12,17 @@ async function fetchFilterTokens(): Promise<CoingeckoCoinData[] | null> {
       "coins/markets?" +
       "vs_currency=usd" +
       "&order=market_cap_desc" +
-      "&per_page=250" +
+      "&per_page=200" +
       `&page=${1}` +
       "&sparkline=true" +
       "&price_change_percentage=1h%2C24h%2C7d%2C30d%2C1y" +
       "&locale=en" +
       `&x_cg_demo_api_key=${process.env.COINGECKO_API_SECRET_KEY}`
     );
-    console.log("🚀 ~ fetchFilterTokens ~ data:", data)
 
-    return data.slice(0, 100);
+
+
+    return data;
   } catch (error) {
     console.log("🚀 ~ fetchFilterTokens ~ error:", error)
     return null;

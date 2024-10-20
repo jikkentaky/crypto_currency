@@ -7,54 +7,24 @@ import axios from "axios";
 import { unstable_cache } from "next/cache";
 
 async function fetchBars(
-  symbol: string,
+  id: string,
   resolution: Resolution,
-  quoteToken: string,
 ) {
-  const bars: Bar[] = [];
-
-  const { from, to, countBack, currentResolution } = getChartArgs(resolution);
+  const { from, to } = getChartArgs(resolution);
 
   try {
-    const { data } = await axios.post(
-      "https://graph.defined.fi/graphql",
-      {
-        query: `{
-          getBars(
-            symbol: "${symbol}"
-            from: ${from}
-            to: ${to}
-            resolution: "${currentResolution}"
-            quoteToken: ${quoteToken}
-            countback: ${countBack}
-            removeLeadingNullValues: true
-          ) {
-            t
-            o
-            h
-            l
-            c
-            v
-            volume
-          }
-        }`
-      }, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `${process.env.DEFINED_API_KEY}`
-      }
-    }
-    );
-    const currentData = data.data.getBars
+    const { data } = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range` +
+      `?from=${from}&to=${to}&vs_currency=usd` +
+      `&x_cg_demo_api_key=${process.env.COINGECKO_API_SECRET_KEY}`
+    )
 
-    for (let j = 0; j < currentData.o.length; j++) {
-      bars.push({
-        time: currentData.t[j],
-        value: currentData.c[j],
-      });
-    }
+    const result: Bar[] = data.prices.map((bar: [number, number]) => ({
+      time: Math.round(bar[0] / 1000),
+      value: bar[1]
+    }))
 
-    return bars;
+    return result;
   } catch (e) {
     console.log(e)
     return null;

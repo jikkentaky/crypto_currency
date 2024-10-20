@@ -16,7 +16,7 @@ const TokenInfo = () => {
 
   return (
     chosenToken && <div className={styles['token-info']}>
-      <div className={styles['token-image-wrapper']}>
+      {/* <div className={styles['token-image-wrapper']}>
         <Image
           loading='lazy'
           src={chosenToken.token.info.imageSmallUrl || defaultPath}
@@ -72,7 +72,7 @@ const TokenInfo = () => {
             {`$${convertNumber(+chosenToken.volume24)}`}
           </Typography>
         </div>
-      </div>
+      </div> */}
     </div >
   )
 }
