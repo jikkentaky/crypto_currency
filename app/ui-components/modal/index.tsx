@@ -3,11 +3,10 @@
 import Modal from '@mui/material/Modal';
 import styles from './styles.module.scss'
 import { useStore } from '@/store';
-import { ArrowBackIcon, CloseIcon } from '@/app/ui-components/icons';
+import { CloseIcon } from '@/app/ui-components/icons';
 import { createContext, useContext, useState } from 'react';
 import { TModalProps } from './types';
-import { Button } from '@mui/material';
-import { useWindowDimensions } from '@/hooks/use-window-dimensions';
+
 
 type Props = {
   children: React.ReactNode

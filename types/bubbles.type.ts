@@ -9,13 +9,7 @@ export enum PriceChange {
 }
 
 export enum Resolution {
-  MINUTE = '1',
-  FIVE_MINUTES = '5',
-  FIFTEEN_MINUTES = '15',
-  THIRTY_MINUTES = '30',
   HOUR = '60',
-  FOUR_HOURS = '240',
-  TWELVE_HOURS = '720',
   DAY = '1D',
   WEEK = '7D',
   MONTH = '1M',

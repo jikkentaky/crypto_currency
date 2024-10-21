@@ -16,9 +16,9 @@
   }
 
   @include responsive {
-    max-height: 100dvh;
-    height: 100dvh;
-    padding: 24px;
+    max-height: 80dvh;
+    height: 80dvh;
+    padding: 12px;
     gap: 16px;
   }
 }
@@ -52,6 +52,6 @@
   cursor: pointer;
 
   @include responsive {
-    right: 20px;
+    right: 0;
   }
 }

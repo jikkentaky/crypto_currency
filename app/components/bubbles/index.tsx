@@ -14,10 +14,6 @@ export default function BubblesPage() {
       {!isLoading && topTokensList
         ? (<Bubbles coins={topTokensList} />)
         : (<Loader height={'100vh'} />)}
-
-      <ModalComponent>
-        <ChartModalContent />
-      </ModalComponent>
     </>
   )
 }

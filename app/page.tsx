@@ -3,6 +3,8 @@ import { CoinsTable } from "./components/coins-table";
 import { Header } from "./components/header";
 import styles from './styles.module.scss';
 import { Footer } from "./components/footer";
+import { ModalComponent } from "./ui-components/modal";
+import { ChartModalContent } from "./components/chart-modal-content";
 
 export default function Home() {
   return (
@@ -21,6 +23,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <ModalComponent>
+        <ChartModalContent />
+      </ModalComponent>
     </main>
   );
 }

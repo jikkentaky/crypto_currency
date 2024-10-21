@@ -25,6 +25,19 @@ const CoinsTable = () => {
 
   const columns = useMemo<Array<ColumnDef<CoingeckoCoinData, any>>>(
     () => [
+      columnHelper.accessor((row) => row.current_price, {
+        id: 'rank',
+        cell: (info) => (
+          <span>
+            {info.row.index + 1}
+          </span>
+        ),
+        header: () => (
+          <span>
+            #
+          </span>
+        ),
+      }),
       columnHelper.accessor((row) => row.name, {
         id: 'name',
         cell: (info) => {
@@ -37,7 +50,7 @@ const CoinsTable = () => {
               key={row.id}
               onClick={() => onClick(row.id)}
             >
-              <p className={styles['col-name']} title={row.name}  key={row.id}>
+              <p className={styles['col-name']} title={row.name} key={row.id}>
                 <Image
                   loading="lazy"
                   src={row.image}
@@ -47,7 +60,7 @@ const CoinsTable = () => {
                   style={{ marginRight: '8px' }}
                 />
 
-                {info.getValue()}
+                {info.getValue().split('(')[0]}
               </p>
             </button>
           );
@@ -226,6 +239,7 @@ const CoinsTable = () => {
                 {headerGroup.headers.map((header) => (
                   <th
                     className={cn(styles['table-th'], {
+                      [styles.rank]: header.id === 'rank',
                     })}
                     key={header.id}
                     style={{ width: `${header.getSize()}px`, }}
@@ -263,7 +277,9 @@ const TableRow = memo(({ row }: { row: Row<CoingeckoCoinData> }) => {
       {row.getVisibleCells().map((cell) => {
         return (
           <td
-            className={cn(styles['table-cell'])}
+            className={cn(styles['table-cell'], {
+              [styles.name]: cell.column.id === 'name',
+            })}
             key={cell.id}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}

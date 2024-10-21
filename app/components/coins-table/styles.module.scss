@@ -50,15 +50,17 @@
   gap: 6px;
 }
 
-.end {
-  justify-content: flex-end;
-}
-
 .button {
-  width: 100%;
+  width: max-content;
+  height: 100%;
   border: 0;
   color: $color-white;
-  background-color: transparent;
+  background-color: $color-grey-13;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+
+  @include hover('background-color', $color-green-1);
 }
 
 .table-row {
@@ -75,7 +77,6 @@
   text-align: center;
   height: 40px;
 }
-
 
 .positive {
   background-color: $color-green-1;
@@ -119,7 +120,18 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 20px;
   -webkit-line-clamp: 1;
   margin: 0;
+}
+
+.rank {
+  min-width: 35px;
+}
+
+.name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 3px 0;
+  height: 53px;
 }

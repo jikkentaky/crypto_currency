@@ -11,11 +11,12 @@
   @include responsive {
     height: 100%;
     position: relative;
+    padding-top: 10px;
     z-index: 1;
     overflow-y: auto;
     gap: 32px;
     padding-right: 6px;
     padding-left: 6px;
-    justify-content: space-between;
+    justify-content: center;
   }
 }

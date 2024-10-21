@@ -12,7 +12,7 @@ async function fetchTokens(): Promise<CoingeckoCoinData[] | null> {
       "coins/markets?" +
       "vs_currency=usd" +
       "&order=market_cap_desc" +
-      "&per_page=250" +
+      "&per_page=200" +
       `&page=${1}` +
       "&sparkline=true" +
       "&price_change_percentage=1h%2C24h%2C7d%2C30d%2C1y" +

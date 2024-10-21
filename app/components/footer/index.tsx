@@ -2,28 +2,20 @@
 
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
-import { MobileModal } from '@/app/ui-components/mobile-modal';
-import cn from 'classnames';
-import { NetworksModalContent } from '@/app/components/networks-modal-content';
-import { MobileModalNetworks } from '@/app/components/mobile-modal-networks';
+import { ButtonGroupRadio } from '@/app/ui-components/button-group-radio';
+import { priceChangeButtons } from '@/lib/config';
 
 const Footer = () => {
-  const { isOpenMobileMenu, isNetworks, setIsOpenMobileMenu } = useStore()
+  const { resolution, setResolution } = useStore()
 
   return (
     <footer className={styles.footer}>
-      <MobileModal
-        className={cn({
-          [styles['networks-modal']]: isNetworks,
-          [styles['networks-chose-modal']]: !isNetworks,
-        })}
-        open={isOpenMobileMenu}
-        onClose={() => setIsOpenMobileMenu(false)}
-      >
-        {!isNetworks && <MobileModalNetworks />}
-
-        {isNetworks && <div className={styles['networks-modal-content']}><NetworksModalContent /></div>}
-      </MobileModal>
+      <ButtonGroupRadio
+        buttons={priceChangeButtons}
+        resolution={resolution}
+        setResolution={setResolution}
+        className={styles['button-group']}
+      />
     </footer>
   )
 }
