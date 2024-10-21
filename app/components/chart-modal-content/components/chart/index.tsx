@@ -1,6 +1,6 @@
 'use client'
 
-import { Resolution } from "@/types/bubbles.type"
+import { PriceChange, Resolution } from "@/types/bubbles.type"
 import { ButtonGroupRadio } from "@/app/ui-components/button-group-radio"
 import { useStore } from "@/store"
 import { ChartComponent } from "./chart-component"
@@ -30,10 +30,9 @@ const Chart = () => {
 
       <ButtonGroupRadio
         className={styles.buttons}
-        // @ts-expect-error
         buttons={buttons}
         resolution={modalResolution}
-        setResolution={setModalResolution}
+        setResolution={setModalResolution as (value: PriceChange | Resolution) => void}
       />
     </div>
   )

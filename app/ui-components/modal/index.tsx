@@ -4,19 +4,10 @@ import Modal from '@mui/material/Modal';
 import styles from './styles.module.scss'
 import { useStore } from '@/store';
 import { CloseIcon } from '@/app/ui-components/icons';
-import { createContext, useContext, useState } from 'react';
-import { TModalProps } from './types';
-
 
 type Props = {
   children: React.ReactNode
 }
-
-
-const ModalContext = createContext<TModalProps>({
-  isEditNetworks: false,
-  setIsEditNetworks: () => { },
-})
 
 const ModalComponent: React.FC<Props> = ({ children }) => {
   const { isOpenModal, setIsOpenModal } = useStore()
@@ -43,6 +34,4 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
   )
 }
 
-const useModal = () => useContext(ModalContext)
-
-export { ModalComponent, useModal }
+export { ModalComponent }

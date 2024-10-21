@@ -1,17 +1,17 @@
 import { FC } from 'react';
 import { ToggleButton, ToggleButtonGroup, ToggleButtonProps } from '@mui/material';
 import styles from './styles.module.scss';
-import { PriceChange } from '@/types/bubbles.type';
+import { PriceChange, Resolution } from '@/types/bubbles.type';
 import cn from 'classnames';
 
 type CustomToggleButton = ToggleButtonProps & {
-  value: PriceChange;
+  value: PriceChange | Resolution;
   content: string;
 };
 
 type Props = {
   buttons: CustomToggleButton[];
-  resolution: PriceChange;
+  resolution: PriceChange | Resolution;
   setResolution: (value: PriceChange) => void;
   className?: string;
 };

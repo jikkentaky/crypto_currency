@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChange } from "@/types/bubbles.type";
-import { appConfig, defaultPath } from "./config";
+import { appConfig } from "./config";
 import { formatPercentage } from "./format-percentage";
-import { CoingeckoCoinData, CoingeckoSingleCoinData } from "@/types/coingecko.type";
+import { CoingeckoCoinData } from "@/types/coingecko.type";
 import { getMinMaxCircleSize } from "./getMinMaxCircleSize";
 import { checkBoundaryCollision } from "./checkBoundaryCollision";
 
@@ -242,7 +242,7 @@ export class BubblesUtils {
       const data = {
         id: item.id,
         symbol: item.symbol.slice(0, 5),
-        image: item.image || defaultPath,
+        image: item.image,
         coinName: item.name,
         isSearched: false,
         isPreviousSearched: false,

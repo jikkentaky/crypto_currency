@@ -22,12 +22,6 @@ const mobileResolution = {
   change24: "24H",
 }
 
-const blazingPath = `/static/assets/images/blazing.png`;
-const maestroPath = `/static/assets/images/maestro.png`;
-const photonPath = `/static/assets/images/photon.png`;
-const bonkPath = `/static/assets/images/bonk.png`;
-const bulxPath = `/static/assets/images/bulx.png`;
-
 const SUBSCRIPT_NUMBER_MAP: { [key: number]: string } = {
   4: '₄',
   5: '₅',

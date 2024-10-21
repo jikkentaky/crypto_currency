@@ -2,7 +2,6 @@
 
 import { Circle, PriceChange } from "@/types/bubbles.type";
 import * as PIXI from "pixi.js";
-import { defaultPath } from "./config";
 import { formatPercentage } from "./format-percentage";
 
 const gradientTextureCache: Map<string, PIXI.Texture> = new Map();
@@ -31,7 +30,7 @@ export class PixiUtils {
   };
 
   static createImageSprite = (circle: Circle) => {
-    const imgUrl = circle.image || defaultPath;
+    const imgUrl = circle.image as string;
     const imageSprite = PIXI.Sprite.from(imgUrl);
     const isFullSize = circle.radius * 0.3 < 10;
 

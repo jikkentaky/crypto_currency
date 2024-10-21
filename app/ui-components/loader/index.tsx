@@ -6,7 +6,7 @@ type Props = {
   height?: string
 }
 
-const Loader: React.FC<Props> = ({ height = '260px' }) => {
+const Loader: React.FC<Props> = ({ height }) => {
 
   return (
     <Box

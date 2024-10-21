@@ -10,7 +10,7 @@ import { formatPercentage } from "@/lib/format-percentage"
 
 const TokenInfo = () => {
   const { chosenToken, resolution } = useStore()
-  let value = chosenToken?.[resolution];
+  const value = chosenToken?.[resolution];
 
   return (
     chosenToken && value && <div className={styles['token-info']}>

@@ -9,6 +9,7 @@ export enum PriceChange {
 }
 
 export enum Resolution {
+  MINUTE = '1',
   HOUR = '60',
   DAY = '1D',
   WEEK = '7D',
