@@ -13,18 +13,6 @@ function getChartArgs(resolution: string) {
       currentResolution = Resolution.MINUTE;
       break;
 
-    case Resolution.FOUR_HOURS:
-      from = to - 4 * 60 * 60;
-      countBack = 60 * 4
-      currentResolution = Resolution.MINUTE;
-      break;
-
-    case Resolution.TWELVE_HOURS:
-      from = to - 12 * 60 * 60;
-      countBack = 4 * 12
-      currentResolution = Resolution.FIFTEEN_MINUTES;
-      break;
-
     case Resolution.DAY:
       from = to - 24 * 60 * 60;
       countBack = 24
@@ -40,12 +28,6 @@ function getChartArgs(resolution: string) {
     case Resolution.MONTH:
       from = to - 30 * 24 * 60 * 60;
       countBack = 30
-      currentResolution = Resolution.DAY;
-      break;
-
-    case Resolution.YEAR:
-      from = to - 30 * 24 * 60 * 60;
-      countBack = 365
       currentResolution = Resolution.DAY;
       break;
 

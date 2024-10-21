@@ -134,7 +134,7 @@ export default function Bubbles({ coins }: Props) {
 
     setTimeout(() => {
       app.ticker?.add(ticker);
-    }, 200)
+    }, 400)
 
     return () => {
       app.ticker?.remove(ticker);
@@ -190,7 +190,7 @@ export default function Bubbles({ coins }: Props) {
     <div
       style={{
         width: '100%',
-        height: `${width > 1160 ? 'calc(100dvh - 70px)' : 'calc(100dvh - 165px)'}`,
+        height: `${width > 1160 ? 'calc(100dvh - 106px)' : 'calc(100dvh - 165px)'}`,
       }} ref={appRef} className={styles.container}></div>
   );
 }

@@ -3,64 +3,36 @@
 import { Resolution } from "@/types/bubbles.type"
 import { ButtonGroupRadio } from "@/app/ui-components/button-group-radio"
 import { useStore } from "@/store"
-import { useEffect, useState } from "react"
 import { ChartComponent } from "./chart-component"
-import { getBars } from "@/app/api/lib"
 import { Loader } from "@/app/ui-components/loader"
 import styles from './styles.module.scss'
-import { Bar } from "@/types/bar.type"
+import { UseBars } from "@/hooks/use-bars"
 
 const buttons = [
-  { value: Resolution.HOUR, content: '1H' },
-  { value: Resolution.FOUR_HOURS, content: '4H' },
-  { value: Resolution.TWELVE_HOURS, content: '12H' },
-  { value: Resolution.DAY, content: '1D' },
-  { value: Resolution.WEEK, content: '7D' },
-  { value: Resolution.MONTH, content: '1M' },
-  { value: Resolution.YEAR, content: '1Y' },
+  { value: Resolution.HOUR, content: 'HOUR' },
+  { value: Resolution.DAY, content: 'DAY' },
+  { value: Resolution.WEEK, content: 'WEEK' },
+  { value: Resolution.MONTH, content: 'MONTH' },
 ]
 
 const Chart = () => {
-  const { modalResolution, setModalResolution, chosenToken } = useStore()
-
-  const [data, setData] = useState<Bar[] | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const fetchInitialData = async () => {
-    if (!chosenToken) return
-    setIsLoading(true)
-
-    try {
-      const data = await getBars(chosenToken.id, modalResolution)
-      if (!data) return
-
-      setData(data)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchInitialData()
-  }, [modalResolution])
-
-  const height = '385px'
+  const { modalResolution, setModalResolution } = useStore()
+  const { data, isLoading } = UseBars()
+  const loaderHeight = '385px'
 
   return (
     <div>
       <div className={styles.container}>
         {(data && !isLoading) && <ChartComponent data={data} />}
 
-        {isLoading && <Loader height={height} />}
+        {isLoading && <Loader height={loaderHeight} />}
       </div>
 
       <ButtonGroupRadio
         className={styles.buttons}
+        // @ts-expect-error
         buttons={buttons}
         resolution={modalResolution}
-        // @ts-expect-error
         setResolution={setModalResolution}
       />
     </div>

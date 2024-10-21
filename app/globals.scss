@@ -51,41 +51,7 @@ body {
   background: transparent;
 }
 
-.MuiModal-backdrop {
-  background-color: rgba(0, 0, 0, 0.9) !important;
-}
-
-.MuiOutlinedInput-input {
-  color: $color-white !important;
-  font-family: $ff-sans !important;
-  font-size: $fs-16 !important;
-  opacity: 1 !important;
-}
-
-.MuiPaper-root {
-  background-color: $color-black-2 !important;
-  border-radius: 0 !important;
-  border: 1px solid $color-grey-13 !important;
-  color: $color-white !important;
-
-  @include responsive {
-    left: 0 !important;
-    min-width: 100% !important;
-    bottom: 0 !important;
-    top: auto !important;
-  }
-}
-
-.MuiMenuItem-root {
-  font-family: $ff-sans !important;
-
-  @include hover ('background', $color-dark-blue);
-}
-
-.MuiMenuItem-root[aria-selected='true'] {
-  background: $color-gradient !important;
-}
-
-.MuiList-padding {
-  padding: 0 !important;
+.MuiModal-root {
+  @include flex-center();
+  background-color: rgba(0, 0, 0, 0.8);
 }

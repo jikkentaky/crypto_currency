@@ -1,4 +1,4 @@
-import { getFilterTokens } from "@/app/api/lib"
+import { getTokens } from "@/app/api/lib"
 import { useStore } from "@/store"
 import { useEffect, useState } from "react"
 
@@ -7,13 +7,12 @@ const UseCoins = () => {
   const { topTokensList, setTopTokensList } =
     useStore()
 
-
   useEffect(() => {
     const getCoins = async () => {
       setIsLoading(true)
 
       try {
-        const coins = await getFilterTokens()
+        const coins = await getTokens()
 
         if (!coins) return
 

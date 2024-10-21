@@ -1,64 +1,30 @@
 'use client'
 
 import { useStore } from "@/store"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, Row, ColumnSort } from "@tanstack/react-table"
-import { memo, useEffect, useMemo, useState } from "react"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable, Row } from "@tanstack/react-table"
+import { memo, useMemo } from "react"
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import { PriceArrowIcon } from "@/app/ui-components/icons/price-arrow-icon"
-import { SortArrowIcon } from "@/app/ui-components/icons/sort-arrow-icon"
-import { PlatformLink } from "@/app/components/platform-link"
-import { blazingPath, maestroPath, photonPath, bulxPath, bonkPath, defaultPath } from "@/lib/config"
 import Image from 'next/image'
 import { formatTokenPrice } from "@/lib/format-token-price"
 import { convertNumber } from "@/lib/convert-number"
 import { formatPercentage } from "@/lib/format-percentage"
-import { CoingeckoSingleCoinData } from "@/types/coingecko.type"
+import { CoingeckoCoinData } from "@/types/coingecko.type"
+import { useScrollTranslate } from "@/hooks/use-scroll-translate"
 
 const CoinsTable = () => {
   const { topTokensList, setChosenToken, setIsOpenModal } = useStore();
-
-  const [translateY, setTranslateY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const tableElement = document.querySelector(`.${styles.table}`) as HTMLElement;
-      if (tableElement) {
-        const scrollTop = window.scrollY;
-        const tableTop = tableElement.offsetTop;
-        const newTranslateY = Math.max(0, scrollTop - tableTop);
-        setTranslateY(newTranslateY);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useMemo(() => {
-    topTokensList && setTokens(topTokensList);
-  }, [topTokensList]);
-
-  const columnHelper = createColumnHelper<CoingeckoSingleCoinData>();
+  const translateY = useScrollTranslate({ styles });
+  const columnHelper = createColumnHelper<CoingeckoCoinData>();
 
   const onClick = (tokenId: string) => {
     setChosenToken(tokenId);
     setIsOpenModal(true);
   }
 
-  const columns = useMemo<Array<ColumnDef<CoingeckoSingleCoinData, any>>>(
+  const columns = useMemo<Array<ColumnDef<CoingeckoCoinData, any>>>(
     () => [
-      columnHelper.accessor((row) => row.rank, {
-        id: 'rank',
-        cell: (info) => <p>{info.getValue()}</p>,
-        header: () => (
-          <span>
-            RANK
-          </span>
-        ),
-      }),
       columnHelper.accessor((row) => row.name, {
         id: 'name',
         cell: (info) => {
@@ -69,12 +35,12 @@ const CoinsTable = () => {
                 { [styles.selected]: true })
               }
               key={row.id}
-              onClick={() => onClick(row.contract_address)}
+              onClick={() => onClick(row.id)}
             >
-              <p className={styles['col-name']} title={row.name}>
+              <p className={styles['col-name']} title={row.name}  key={row.id}>
                 <Image
                   loading="lazy"
-                  src={row.image.thumb || defaultPath}
+                  src={row.image}
                   width={20}
                   height={20}
                   alt={row.name}
@@ -92,7 +58,7 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.priceUSD, {
+      columnHelper.accessor((row) => row.current_price, {
         id: 'priceUSD',
         cell: (info) => (
           <span>
@@ -105,7 +71,7 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.marketCap, {
+      columnHelper.accessor((row) => row.market_cap, {
         id: 'marketCap',
         cell: (info) => (
           <span>
@@ -118,8 +84,8 @@ const CoinsTable = () => {
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.volume24, {
-        id: 'volume24',
+      columnHelper.accessor((row) => row.total_volume, {
+        id: 'volume',
         cell: (info) => (
           <span>
             ${convertNumber(info.getValue())}
@@ -127,12 +93,12 @@ const CoinsTable = () => {
         ),
         header: () => (
           <span>
-            24H VOL
+            VOLUME
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.change1, {
-        id: 'change1',
+      columnHelper.accessor((row) => row.price_change_percentage_1h_in_currency, {
+        id: 'price_change_percentage_1h_in_currency',
         cell: (info) => {
           const value = info.getValue();
           const formattedValue = formatPercentage(value) + ' %';
@@ -149,12 +115,12 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            1H
+            HOUR
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.change4, {
-        id: 'change4',
+      columnHelper.accessor((row) => row.price_change_percentage_24h, {
+        id: 'price_change_percentage_24h',
         cell: (info) => {
           const value = info.getValue();
           const formattedValue = formatPercentage(value) + ' %';
@@ -171,12 +137,12 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            4H
+            DAY
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.change12, {
-        id: 'change12',
+      columnHelper.accessor((row) => row.price_change_percentage_7d_in_currency, {
+        id: 'price_change_percentage_7d_in_currency',
         cell: (info) => {
           const value = info.getValue();
           const formattedValue = formatPercentage(value) + ' %';
@@ -193,12 +159,12 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            12H
+            WEEK
           </span>
         ),
       }),
-      columnHelper.accessor((row) => row.change24, {
-        id: 'change24',
+      columnHelper.accessor((row) => row.price_change_percentage_30d_in_currency, {
+        id: 'price_change_percentage_30d_in_currency',
         cell: (info) => {
           const value = info.getValue();
           const formattedValue = formatPercentage(value) + ' %';
@@ -215,22 +181,29 @@ const CoinsTable = () => {
         },
         header: () => (
           <span>
-            24H
+            MONTH
           </span>
         ),
       }),
-      columnHelper.accessor(() => '', {
-        id: 'links',
-        cell: () => <div className={styles['links-content']}>
-          <PlatformLink path={blazingPath} href="https://app.blazingbot.com/" size={24} />
-          <PlatformLink path={maestroPath} href="https://www.maestrobots.com/" size={24} />
-          <PlatformLink path={photonPath} href="https://photon-sol.tinyastro.io/" size={24} />
-          <PlatformLink path={bulxPath} href="https://bull-x.io/" size={24} />
-          <PlatformLink path={bonkPath} href="#" size={24} />
-        </div>,
+      columnHelper.accessor((row) => row.price_change_percentage_1y_in_currency, {
+        id: 'price_change_percentage_1y_in_currency',
+        cell: (info) => {
+          const value = info.getValue();
+          const formattedValue = formatPercentage(value) + ' %';
+
+          return (
+            <p className={styles['price-change']}>
+              <PriceArrowIcon className={cn({
+                [styles['up-r']]: value > 0,
+                [styles['down-r']]: value < 0
+              })} />
+              {formattedValue}
+            </p>
+          );
+        },
         header: () => (
           <span>
-            LINKS
+            YEAR
           </span>
         ),
       }),
@@ -238,11 +211,8 @@ const CoinsTable = () => {
 
   const table = useReactTable({
     columns,
-    data: tokens || [],
+    data: topTokensList || [],
     getCoreRowModel: getCoreRowModel(),
-    state: {
-      sorting: sorting as ColumnSort[],
-    },
   });
 
   return (
@@ -256,22 +226,11 @@ const CoinsTable = () => {
                 {headerGroup.headers.map((header) => (
                   <th
                     className={cn(styles['table-th'], {
-                      [styles.links]: header.id === 'links',
                     })}
                     key={header.id}
-                    onClick={() => {
-                      if (header.id === 'links') return;
-                      sortTokensByColumn(header.column.id as SORTING_BY)
-                    }}
                     style={{ width: `${header.getSize()}px`, }}
                   >
-                    <div className={cn(header.id === 'links' && styles.end, styles['table-th-content'])}>
-                      {header.id !== 'links' &&
-                        <SortArrowIcon
-                          className={cn(header.column.getIsSorted() == 'asc' && styles.up)}
-                        />
-                      }
-
+                    <div>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())
@@ -283,7 +242,7 @@ const CoinsTable = () => {
             ))}
           </thead>
 
-          {tokens?.length && (
+          {topTokensList?.length && (
             <tbody className={styles['table-body']}>
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} row={row} />
@@ -298,15 +257,13 @@ const CoinsTable = () => {
 
 export { CoinsTable };
 
-const TableRow = memo(({ row }: { row: Row<CoingeckoSingleCoinData> }) => {
+const TableRow = memo(({ row }: { row: Row<CoingeckoCoinData> }) => {
   return (
     <tr key={row.id} className={styles['table-row']}>
       {row.getVisibleCells().map((cell) => {
         return (
           <td
-            className={cn(styles['table-cell'], {
-              [styles.links]: cell.column.id === 'links',
-            })}
+            className={cn(styles['table-cell'])}
             key={cell.id}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}

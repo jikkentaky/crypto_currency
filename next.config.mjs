@@ -11,7 +11,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   images: {
-    domains: ['token-media.defined.fi'],
+    domains: ['coin-images.coingecko.com'],
   },
 };
 

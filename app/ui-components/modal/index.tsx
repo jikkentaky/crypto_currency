@@ -20,10 +20,7 @@ const ModalContext = createContext<TModalProps>({
 })
 
 const ModalComponent: React.FC<Props> = ({ children }) => {
-  const [isEditNetworks, setIsEditNetworks] = useState(false)
   const { isOpenModal, setIsOpenModal } = useStore()
-  const { width } = useWindowDimensions()
-  const isMobile = width < 1160;
   const handleClose = () => {
     setIsOpenModal(false)
   }
@@ -37,14 +34,6 @@ const ModalComponent: React.FC<Props> = ({ children }) => {
     >
       <div className={styles.content}>
         <div className={styles.relative}>
-          {isEditNetworks && !isMobile && (
-            <Button
-              className={styles['back-button']}
-              onClick={() => setIsEditNetworks(false)}
-            >
-              <ArrowBackIcon />
-            </Button>
-          )}
           <button className={styles['icon-wrapper']} onClick={handleClose}>
             <CloseIcon />
           </button>

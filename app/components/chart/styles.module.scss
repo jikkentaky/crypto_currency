@@ -8,6 +8,7 @@
 
 .buttons {
   display: flex;
+  gap: 8px;
 
   @media (max-width: 505px) {
     flex-wrap: wrap;
@@ -17,14 +18,8 @@
   &>button {
 
     @media (max-width: 505px) {
-      flex: 1 1 33%;
+      flex: 1 1 25%;
       border: 1px solid $color-grey-13 !important;
-    }
-
-    &:nth-child(2) {
-      @media (max-width: 505px) {
-        display: none;
-      }
     }
   }
 }

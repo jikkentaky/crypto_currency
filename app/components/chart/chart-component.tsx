@@ -38,7 +38,6 @@ export const ChartComponent: FC<Props> = (props) => {
         chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
 
-
       const chart = createChart(chartContainerRef.current, {
         layout: {
           background: { type: ColorType.Solid, color: backgroundColor },
