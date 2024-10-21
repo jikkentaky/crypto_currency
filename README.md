@@ -1,19 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## CryptoBubbles
+CryptoBubbles is a web application that visualizes cryptocurrency data in an interactive and engaging way. Inspired by CryptoBubbles.net, this application allows users to explore various cryptocurrencies and their market data through dynamic bubble charts.
 
-## Getting Started
+## Features
+•  Interactive Bubble Charts: Visualize cryptocurrency data with dynamic and interactive bubble charts.
 
-First, run the development server:
+•  Real-time Data: Fetches real-time data from the CoinGecko API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+•  Search Functionality: Easily search for specific cryptocurrencies.
 
+•  Responsive Design: Optimized for both desktop and mobile devices.
 
+## Installation
+To get started with CryptoBubbles, follow these steps:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Clone the repository:
+
+git clone https://github.com/jikkentaky/crypto_currency
+
+1. Install dependencies:
+
+npm install
+
+1. Start the development server:
+
+npm start
+
+Usage
+Once the development server is running, open your browser and navigate to http://localhost:3000 to view the application.
+
+Searching for Cryptocurrencies
+•  Use the search bar to find specific cryptocurrencies.
+
+•  Click on a bubble to view detailed information about the selected cryptocurrency.
+
+Customizing the View
+•  Use the buttons to filter and sort the data based on different criteria such as market cap, price change, etc.
+
