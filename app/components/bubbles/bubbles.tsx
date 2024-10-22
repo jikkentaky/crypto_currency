@@ -186,18 +186,7 @@ export default function Bubbles({ coins }: Props) {
     });
   }, [searchCoin, bubbleSort, width, height]);
 
-  const headerDesktopHeight = 109;
-  const headerMobileHeight = 64;
-  const footerMobileHeight = 71;
-
   return (
-    <div
-      style={{
-        width: '100%',
-        height: `${width > 1160
-          ? `calc(100dvh - ${headerDesktopHeight}px)`
-          : `calc(100dvh - ${headerMobileHeight + footerMobileHeight}px)`
-          }`,
-      }} ref={appRef} className={styles.container}></div>
+    <div ref={appRef} className={styles.container}></div>
   );
 }

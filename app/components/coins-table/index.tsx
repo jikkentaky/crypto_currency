@@ -57,7 +57,6 @@ const CoinsTable = () => {
                   width={20}
                   height={20}
                   alt={row.name}
-                  style={{ marginRight: '8px' }}
                 />
 
                 {info.getValue().split('(')[0]}

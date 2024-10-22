@@ -3,6 +3,7 @@
 @import "@/assets/mixins";
 
 .header {
+  height: $header-desktop-height;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -12,6 +13,7 @@
   border: 1px solid $color-grey-13;
 
   @include responsive {
+    height: $header-mobile-height;
     flex-direction: row;
     justify-content: space-between;
     padding: 0 16px;

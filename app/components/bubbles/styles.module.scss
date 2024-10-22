@@ -4,4 +4,9 @@
 
 .container {
   background-color: $color-grey-4;
+  height: calc(100dvh - #{$header-desktop-height});
+
+  @include responsive {
+    height: calc(100dvh - #{$header-mobile-height} - #{$footer-mobile-height});
+  }
 }

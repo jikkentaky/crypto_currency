@@ -6,7 +6,7 @@
   display: none;
 
   @include responsive {
-    position: relative;
+    height: $footer-mobile-height;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -90,6 +90,6 @@ export const ChartComponent: FC<Props> = (props) => {
   );
 
   return (
-    <div ref={chartContainerRef} style={{ height: `${height}px` }} />
+    <div ref={chartContainerRef} />
   );
 };
