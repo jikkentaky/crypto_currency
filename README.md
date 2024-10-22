@@ -1,6 +1,8 @@
 ## CryptoBubbles
 CryptoBubbles is a web application that visualizes cryptocurrency data in an interactive and engaging way. Inspired by CryptoBubbles.net, this application allows users to explore various cryptocurrencies and their market data through dynamic bubble charts.
 
+**--Here is [DEMO LINK](https://github.com/jikkentaky/crypto_currency)**
+
 ## Features
 •  Interactive Bubble Charts: Visualize cryptocurrency data with dynamic and interactive bubble charts.
 
