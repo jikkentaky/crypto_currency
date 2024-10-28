@@ -1,8 +1,8 @@
-@use 'sass:color';
-@import './assets/normalize';
-@import './assets/variables-colors';
-@import './assets/variables';
-@import './assets/mixins';
+@use "sass:color";
+@import "./assets/normalize";
+@import "./assets/variables-colors";
+@import "./assets/variables";
+@import "./assets/mixins";
 
 * {
   box-sizing: border-box;
@@ -33,17 +33,17 @@ body {
     width: 100%;
     height: 6px;
 
-
-    box-shadow:
-      inset 0 0 0 1px $color-grey-8,
-      inset 0 0 0 3px $color-grey-5;
+    box-shadow: inset 0 0 0 1px $color-grey-8, inset 0 0 0 3px $color-grey-5;
   }
 
   &-thumb {
     border: 1px solid $color-grey-13;
     background-color: $color-dark-pink;
 
-    @include hover('background-color', color.adjust($color-dark-blue, $lightness: 10%));
+    @include hover(
+      "background-color",
+      color.adjust($color-dark-blue, $lightness: 10%)
+    );
   }
 }
 

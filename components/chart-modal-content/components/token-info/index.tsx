@@ -2,7 +2,7 @@
 
 import { useStore } from "@/store"
 import styles from './styles.module.scss'
-import { Typography } from "@/app/ui-components/typography"
+import { Typography } from "@/ui-components/typography"
 import { convertNumber } from "@/lib/convert-number"
 import Image from "next/image"
 import { formatTokenPrice } from "@/lib/format-token-price"

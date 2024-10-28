@@ -2,8 +2,8 @@
 
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
-import { ButtonGroupRadio } from '@/app/ui-components/button-group-radio';
-import { priceChangeButtons } from '@/lib/config';
+import { ButtonGroupRadio } from '@/ui-components/button-group-radio';
+import { priceChangeButtons } from '@/config/config';
 
 const Footer = () => {
   const { resolution, setResolution } = useStore()

@@ -1,4 +1,4 @@
-import { appConfig } from '@/lib/config';
+import { appConfig } from '@/config/config';
 import { useState, useEffect } from 'react';
 const { aside } = appConfig
 

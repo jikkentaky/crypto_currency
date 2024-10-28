@@ -1,10 +1,10 @@
 'use client'
 
 import { PriceChange, Resolution } from "@/types/bubbles.type"
-import { ButtonGroupRadio } from "@/app/ui-components/button-group-radio"
+import { ButtonGroupRadio } from "@/ui-components/button-group-radio"
 import { useStore } from "@/store"
 import { ChartComponent } from "./chart-component"
-import { Loader } from "@/app/ui-components/loader"
+import { Loader } from "@/ui-components/loader"
 import styles from './styles.module.scss'
 import { UseBars } from "@/hooks/use-bars"
 

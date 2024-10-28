@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 import { PixiUtils } from "./pixi.utils";
 import { Circle, PriceChange } from "@/types/bubbles.type";
-import { appConfig } from "./config";
+import { appConfig } from "../config/config";
 import { formatPercentage } from "./format-percentage";
 import { CoingeckoCoinData } from "@/types/coingecko.type";
-import { getMinMaxCircleSize } from "./getMinMaxCircleSize";
-import { checkBoundaryCollision } from "./checkBoundaryCollision";
+import { getMinMaxCircleSize } from "./get-min-max-circle-size";
+import { checkBoundaryCollision } from "./check-boundary-collision";
 
 export type GenerateCirclesParams = {
   coins: CoingeckoCoinData[];

@@ -1,10 +1,10 @@
 'use client'
 import styles from './styles.module.scss'
 import { useStore } from '@/store'
-import { ButtonGroupRadio } from '@/app/ui-components/button-group-radio'
-import { SearchInput } from '@/app/ui-components/search-input'
+import { ButtonGroupRadio } from '@/ui-components/button-group-radio'
+import { SearchInput } from '@/ui-components/search-input'
 import cn from 'classnames'
-import { priceChangeButtons } from '@/lib/config'
+import { priceChangeButtons } from '@/config/config'
 import { ChangeEvent } from 'react'
 
 const Header = () => {

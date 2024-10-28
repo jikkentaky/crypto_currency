@@ -27,7 +27,6 @@ async function fetchBars(
     return result;
   } catch (e) {
     console.log(e)
-    return null;
   }
 }
 

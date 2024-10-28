@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { SUBSCRIPT_NUMBER_MAP } from "./config";
+import { SUBSCRIPT_NUMBER_MAP } from "../config/config";
 
 const formatTokenPrice = (price: number, precision?: number, gr0 = true) => {
   if (!price) {

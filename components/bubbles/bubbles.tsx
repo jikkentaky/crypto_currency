@@ -10,7 +10,10 @@ import { formatPercentage } from "@/lib/format-percentage";
 import { useWindowDimensions } from "@/hooks/use-window-dimensions";
 import styles from "./styles.module.scss";
 import { CoingeckoCoinData } from "@/types/coingecko.type";
-import { getMinMaxCircleSize } from "@/lib/getMinMaxCircleSize";
+import { getMinMaxCircleSize } from "@/lib/get-min-max-circle-size";
+import { ModalComponent } from "@/ui-components/modal";
+import { ChartModalContent } from "../chart-modal-content";
+import { CoinsTable } from "../coins-table";
 
 type Props = {
   coins: CoingeckoCoinData[];
@@ -18,12 +21,13 @@ type Props = {
 
 export default function Bubbles({ coins }: Props) {
   const displayChangeRef = useRef<PriceChange | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { width, height } = useWindowDimensions();
 
   const {
     resolution: bubbleSort,
+    setTopTokensList,
     searchCoin,
-    setIsOpenModal,
     setChosenToken,
   } = useStore((state) => {
     displayChangeRef.current = state.currentResolution;
@@ -38,7 +42,12 @@ export default function Bubbles({ coins }: Props) {
   useEffect(() => {
     if (!coins) return;
 
-    const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
+    const scalingFactor = BubblesUtils.getScalingFactor(
+      coins,
+      bubbleSort,
+      width,
+      height
+    );
     const shapes = BubblesUtils.generateCircles(
       coins,
       scalingFactor,
@@ -51,6 +60,7 @@ export default function Bubbles({ coins }: Props) {
   }, [coins]);
 
   useEffect(() => {
+    setTopTokensList(coins);
     if (!appRef.current) return;
 
     const app = new PIXI.Application({
@@ -62,7 +72,7 @@ export default function Bubbles({ coins }: Props) {
       backgroundAlpha: 0,
     }) as unknown;
 
-    appInstance.current = app as PIXI.Application;;
+    appInstance.current = app as PIXI.Application;
     appRef.current.appendChild((app as { view: Node }).view);
 
     return () => {
@@ -77,24 +87,32 @@ export default function Bubbles({ coins }: Props) {
     if (!circles || !appInstance.current) return;
 
     const app = appInstance.current;
-    const container = appRef.current
+    const container = appRef.current;
 
     const imageSprites: PIXI.Sprite[] = [];
     const textSprites: PIXI.Text[] = [];
     const text2Sprites: PIXI.Text[] = [];
     const circleGraphics: PIXI.Sprite[] = [];
 
-    container?.children[0].addEventListener("click",
-      (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles)
+    container?.children[0].addEventListener("click", (e: unknown) =>
+      BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles)
     );
 
     for (let i = 0; i < circles.length; i++) {
       const circle = circles[i];
 
-      const container = PixiUtils.createContainer(circle, setChosenToken, setIsOpenModal);
+      const container = PixiUtils.createContainer(
+        circle,
+        setChosenToken,
+        setIsOpenModal
+      );
 
       const circleGraphic = new PIXI.Sprite(
-        PixiUtils.createGradientTexture(circle.radius * 4, circle.color, circle.isHovered)
+        PixiUtils.createGradientTexture(
+          circle.radius * 4,
+          circle.color,
+          circle.isHovered
+        )
       );
       circleGraphic.anchor.set(0.5);
       circle.graphicSprite = circleGraphic;
@@ -134,12 +152,14 @@ export default function Bubbles({ coins }: Props) {
 
     setTimeout(() => {
       app.ticker?.add(ticker);
-    }, 400)
+    }, 400);
 
     return () => {
       app.ticker?.remove(ticker);
 
-      container?.children[0]?.removeEventListener("click", (e: unknown) => BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles));
+      container?.children[0]?.removeEventListener("click", (e: unknown) =>
+        BubblesUtils.handleEmptySpaceClick(e as MouseEvent, circles)
+      );
 
       app.stage?.removeChildren();
     };
@@ -148,27 +168,27 @@ export default function Bubbles({ coins }: Props) {
   useEffect(() => {
     if (!circles) return;
 
-    const scalingFactor = BubblesUtils.getScalingFactor(coins, bubbleSort, width, height);
+    const scalingFactor = BubblesUtils.getScalingFactor(
+      coins,
+      bubbleSort,
+      width,
+      height
+    );
     const [max, min] = getMinMaxCircleSize(width, height);
 
     circles.forEach((circle) => {
       if (!circle[bubbleSort]) return;
 
-      const radius = Math.abs(
-        Math.floor(circle[bubbleSort] * scalingFactor)
-      );
+      const radius = Math.abs(Math.floor(circle[bubbleSort] * scalingFactor));
 
-      circle.targetRadius = radius > max
-        ? max
-        : radius > min
-          ? radius
-          : min;
+      circle.targetRadius = radius > max ? max : radius > min ? radius : min;
 
       circle.color =
         circle[displayChangeRef.current as PriceChange] > 0 ? "green" : "red";
 
       const newText2Value =
-        formatPercentage(circle[displayChangeRef.current as PriceChange]) + " %";
+        formatPercentage(circle[displayChangeRef.current as PriceChange]) +
+        " %";
 
       if (circle.text2) {
         if (!circle.previousText2) {
@@ -186,7 +206,20 @@ export default function Bubbles({ coins }: Props) {
     });
   }, [searchCoin, bubbleSort, width, height]);
 
+  const handleClose = () => {
+    setIsOpenModal(false);
+    setChosenToken("");
+  };
+
   return (
-    <div ref={appRef} className={styles.container}></div>
+    <div className={styles.wrapper}>
+      <div ref={appRef} className={styles.container}></div>
+
+      <CoinsTable setIsOpenModal={setIsOpenModal} />
+
+      <ModalComponent isOpen={isOpenModal} handleClose={handleClose}>
+        <ChartModalContent />
+      </ModalComponent>
+    </div>
   );
 }

@@ -1,10 +1,15 @@
-@import '@/assets/variables-colors';
-@import '@/assets/variables';
-@import '@/assets/mixins';
+@import "@/assets/variables-colors";
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.wrapper {
+  background-color: $color-grey-4;
+}
 
 .container {
-  background-color: $color-grey-4;
   height: calc(100dvh - #{$header-desktop-height});
+  max-width: 1920px;
+  width: calc(100% - $scroll-width);
 
   @include responsive {
     height: calc(100dvh - #{$header-mobile-height} - #{$footer-mobile-height});

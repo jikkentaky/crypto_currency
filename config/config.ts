@@ -1,7 +1,6 @@
 import { PriceChange } from "@/types/bubbles.type";
 
 const appConfig = {
-  aside: 310,
   speed: 0.005,
   elasticity: 0.005,
   wallDamping: 0.5,
