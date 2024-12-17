@@ -30,7 +30,7 @@ export default function Bubbles({ coins }: Props) {
     searchCoin,
     setChosenToken,
   } = useStore((state) => {
-    displayChangeRef.current = state.currentResolution;
+    displayChangeRef.current = state.resolution;
     return state;
   });
 
