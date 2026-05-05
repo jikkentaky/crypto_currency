@@ -36,12 +36,15 @@ export default function Bubbles({ coins }: Props) {
   });
 
   const [circles, setCircles] = useState<Circle[] | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   const appRef = useRef<HTMLDivElement>(null);
   const appInstance = useRef<PIXI.Application | null>(null);
 
   useEffect(() => {
     if (!coins) return;
+
+    setIsReady(false);
 
     const visibleCoins = coins.slice(0, bubbleCount);
     const scalingFactor = BubblesUtils.getScalingFactor(
@@ -154,6 +157,7 @@ export default function Bubbles({ coins }: Props) {
 
     setTimeout(() => {
       app.ticker?.add(ticker);
+      setTimeout(() => setIsReady(true), 700);
     }, 400);
 
     return () => {
@@ -216,6 +220,24 @@ export default function Bubbles({ coins }: Props) {
   return (
     <div className={styles.wrapper}>
       <div ref={appRef} className={styles.container}></div>
+
+      <div className={`${styles['loading-overlay']} ${isReady ? styles['loading-overlay--hidden'] : ''}`}>
+        <div className={styles['bubbles-loader']}>
+          {[
+            { size: 18, color: 'red',   delay: '0s'     },
+            { size: 30, color: 'green', delay: '0.18s'  },
+            { size: 46, color: 'red',   delay: '0.36s'  },
+            { size: 30, color: 'green', delay: '0.54s'  },
+            { size: 18, color: 'red',   delay: '0.72s'  },
+          ].map((b, i) => (
+            <span
+              key={i}
+              className={`${styles['loader-bubble']} ${styles[`loader-bubble--${b.color}`]}`}
+              style={{ width: b.size, height: b.size, animationDelay: b.delay }}
+            />
+          ))}
+        </div>
+      </div>
 
       <CoinsTable setIsOpenModal={setIsOpenModal} />
 

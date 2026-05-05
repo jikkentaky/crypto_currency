@@ -4,6 +4,7 @@
 
 .wrapper {
   background-color: $color-grey-4;
+  position: relative;
 }
 
 .container {
@@ -14,4 +15,59 @@
   @include responsive {
     height: calc(100dvh - #{$header-mobile-height} - #{$footer-mobile-height});
   }
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-grey-4;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  pointer-events: all;
+
+  &--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.bubbles-loader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.loader-bubble {
+  border-radius: 50%;
+  display: block;
+  animation: bubble-float 1.3s ease-in-out infinite;
+
+  &--green {
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(46, 204, 113, 0.15) 0%,
+      rgba(46, 204, 113, 0.2) 45%,
+      rgba(46, 204, 113, 0.95) 100%
+    );
+    box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);
+  }
+
+  &--red {
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 99, 71, 0.15) 0%,
+      rgba(255, 99, 71, 0.2) 45%,
+      rgba(255, 99, 71, 0.95) 100%
+    );
+    box-shadow: 0 0 12px rgba(255, 99, 71, 0.4);
+  }
+}
+
+@keyframes bubble-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
 }
