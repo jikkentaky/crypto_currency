@@ -43,4 +43,5 @@ export type Circle = {
   image: string | null | undefined
   text2: Text | null
   previousText2: string | null
+  previousTextureKey: string | null
 }

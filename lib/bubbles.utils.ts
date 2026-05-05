@@ -60,52 +60,6 @@ export class BubblesUtils {
         const container = circleGraphic.parent as PIXI.Container;
         const newText2Value = formatPercentage(circle[displayChange]) + ' %';
 
-        const updateCircleChildren = () => {
-          const gradientColor = circle.isSearched ? "white" : circle.color;
-
-          circleGraphic.texture = PixiUtils.createGradientTexture(
-            circle.targetRadius * 4,
-            gradientColor,
-            circle.isHovered
-          );
-
-          const fontSize = circle.radius * 0.7;
-          const isFullSize = circle.radius * 0.5 < 20;
-
-          if (imageSprite) {
-            const scaleFactor = 0.6;
-
-            imageSprite.width = circle.radius * (isFullSize ? 1.2 : scaleFactor);
-            imageSprite.height = circle.radius * (isFullSize ? 1.2 : scaleFactor);
-            imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
-            imageSprite.zIndex = 1;
-          }
-
-          const textStyle = new PIXI.TextStyle({
-            fontFamily: "Work Sans, sans-serif",
-            fontSize: !isFullSize ? fontSize * 0.5 + "px" : "0",
-            fill: "#ffffff",
-          });
-
-          const text2Style = new PIXI.TextStyle({
-            fontFamily: "Work Sans, sans-serif",
-            fontSize: !isFullSize ? fontSize * 0.37 + "px" : "0",
-            fill: "#ffffff",
-          });
-
-          text.style = textStyle;
-          text.zIndex = 1;
-          text.position.y = 0.15 * circle.radius;
-
-          text2.style = text2Style;
-          text2.zIndex = 1;
-          text2.position.y = circle.radius / 1.8;
-
-          if (circle.text2) {
-            circle.text2.text = newText2Value;
-          }
-        };
-
         circle.x += circle.vx;
         circle.y += circle.vy;
 
@@ -156,8 +110,6 @@ export class BubblesUtils {
 
         container.position.set(circle.x, circle.y);
 
-        let radiusChanged = false;
-
         if (
           circle.radius !== circle.targetRadius ||
           circle.color !== circle.previousColor ||
@@ -172,15 +124,14 @@ export class BubblesUtils {
           circle.previousText2 = newText2Value;
           circle.isPreviousSearched = circle.isSearched;
 
+          let radiusChanged = false;
           if (circle.radius !== circle.targetRadius) {
             const sizeDifference = circle.targetRadius - circle.radius;
-
             if (Math.abs(sizeDifference) <= changeSizeStep) {
               circle.radius = circle.targetRadius;
             } else {
               circle.radius += Math.sign(sizeDifference) * changeSizeStep;
             }
-
             radiusChanged = circle.radius !== circle.targetRadius;
           }
 
@@ -188,9 +139,48 @@ export class BubblesUtils {
             container.hitArea = new PIXI.Circle(0, 0, circle.radius);
           }
 
-          updateCircleChildren();
+          // Only reassign texture when the key actually changes — avoids redundant GPU uploads
+          const gradientColor = circle.isSearched ? "white" : circle.color;
+          const textureKey = `${circle.targetRadius * 4}_${gradientColor}_${circle.isHovered}`;
+          if (textureKey !== circle.previousTextureKey) {
+            circleGraphic.texture = PixiUtils.createGradientTexture(
+              circle.targetRadius * 4,
+              gradientColor,
+              circle.isHovered
+            );
+            circle.previousTextureKey = textureKey;
+          }
 
-          container.cacheAsBitmap = true;
+          const fontSize = circle.radius * 0.7;
+          const isFullSize = circle.radius * 0.5 < 20;
+          const textFontSize = !isFullSize ? `${fontSize * 0.5}px` : "0";
+          const text2FontSize = !isFullSize ? `${fontSize * 0.37}px` : "0";
+
+          if (imageSprite) {
+            const scaleFactor = 0.6;
+            imageSprite.width = circle.radius * (isFullSize ? 1.2 : scaleFactor);
+            imageSprite.height = circle.radius * (isFullSize ? 1.2 : scaleFactor);
+            imageSprite.position = { x: 0, y: isFullSize ? 0 : -circle.radius / 2 };
+            imageSprite.zIndex = 1;
+          }
+
+          // Mutate style in-place — avoids allocating new PIXI.TextStyle every dirty frame
+          text.style.fontSize = textFontSize;
+          text.zIndex = 1;
+          text.position.y = 0.15 * circle.radius;
+
+          text2.style.fontSize = text2FontSize;
+          text2.zIndex = 1;
+          text2.position.y = circle.radius / 1.8;
+
+          if (circle.text2) {
+            circle.text2.text = newText2Value;
+          }
+
+          // Skip re-caching while radius is still animating — the bitmap would be stale next frame
+          if (!radiusChanged) {
+            container.cacheAsBitmap = true;
+          }
         }
       }
     };
@@ -237,7 +227,7 @@ export class BubblesUtils {
     const [maxCircleSize, minCircleSize] = getMinMaxCircleSize(width, height);
 
     const shapes: Circle[] = coins.map((item) => {
-      const radius = Math.abs(parseFloat(item[bubbleSort].toString()) * scalingFactor);
+      const radius = Math.abs(parseFloat((item[bubbleSort] ?? 0).toString()) * scalingFactor);
 
       const data = {
         id: item.id,
@@ -260,6 +250,7 @@ export class BubblesUtils {
         dragging: false,
         text2: null,
         previousText2: null,
+        previousTextureKey: null,
         [PriceChange.HOUR]: item[PriceChange.HOUR],
         [PriceChange.DAY]: item[PriceChange.DAY],
         [PriceChange.WEEK]: item[PriceChange.WEEK],

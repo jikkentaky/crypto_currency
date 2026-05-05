@@ -26,6 +26,7 @@ export default function Bubbles({ coins }: Props) {
 
   const {
     resolution: bubbleSort,
+    bubbleCount,
     setTopTokensList,
     searchCoin,
     setChosenToken,
@@ -42,14 +43,15 @@ export default function Bubbles({ coins }: Props) {
   useEffect(() => {
     if (!coins) return;
 
+    const visibleCoins = coins.slice(0, bubbleCount);
     const scalingFactor = BubblesUtils.getScalingFactor(
-      coins,
+      visibleCoins,
       bubbleSort,
       width,
       height
     );
     const shapes = BubblesUtils.generateCircles(
-      coins,
+      visibleCoins,
       scalingFactor,
       bubbleSort,
       width,
@@ -57,7 +59,7 @@ export default function Bubbles({ coins }: Props) {
     );
 
     setCircles(shapes);
-  }, [coins]);
+  }, [coins, bubbleCount]);
 
   useEffect(() => {
     setTopTokensList(coins);
@@ -127,7 +129,7 @@ export default function Bubbles({ coins }: Props) {
       container.addChild(text);
       textSprites.push(text);
 
-      const text2 = PixiUtils.createText2(circle, PriceChange.HOUR);
+      const text2 = PixiUtils.createText2(circle, bubbleSort);
       container.addChild(text2);
       text2Sprites.push(text2);
 

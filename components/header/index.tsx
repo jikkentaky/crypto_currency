@@ -6,17 +6,26 @@ import { SearchInput } from '@/ui-components/search-input'
 import cn from 'classnames'
 import { priceChangeButtons } from '@/config/config'
 import { ChangeEvent } from 'react'
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
+
+const BUBBLE_COUNT_OPTIONS = [10, 25, 50, 100];
 
 const Header = () => {
   const {
     searchCoin,
     resolution,
+    bubbleCount,
     setResolution,
-    setSearchCoin
+    setSearchCoin,
+    setBubbleCount,
   } = useStore()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchCoin(e.target.value);
+  };
+
+  const handleCountChange = (_: React.MouseEvent<HTMLElement>, value: number | null) => {
+    if (value !== null) setBubbleCount(value);
   };
 
   return (
@@ -32,6 +41,31 @@ const Header = () => {
             setResolution={setResolution}
             className={styles['button-group']}
           />
+
+          <ToggleButtonGroup
+            value={bubbleCount}
+            exclusive
+            onChange={handleCountChange}
+            aria-label="bubble-count"
+            className={cn(styles['button-group'], styles['count-group'])}
+            sx={{
+              '.MuiToggleButton-root': {
+                font: 'inherit',
+                color: '#fff',
+                fontWeight: 800,
+              },
+            }}
+          >
+            {BUBBLE_COUNT_OPTIONS.map((n) => (
+              <ToggleButton
+                key={n}
+                value={n}
+                className={cn(styles['count-button'], { [styles['count-selected']]: n === bubbleCount })}
+              >
+                {n}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
         </div>
 
         <SearchInput

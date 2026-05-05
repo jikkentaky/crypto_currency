@@ -10,6 +10,7 @@ interface UseStore {
   chosenToken: CoingeckoCoinData | null;
   selectedModalResolution: Resolution;
   currentResolution: PriceChange;
+  bubbleCount: number;
   setCurrentResolution: (currentResolution: PriceChange) => void;
   setSelectedModalResolution: (selectedModalResolution: Resolution) => void;
   setModalResolution: (resolution: Resolution) => void;
@@ -17,6 +18,7 @@ interface UseStore {
   setResolution: (resolution: PriceChange) => void;
   setTopTokensList: (topTokensList: CoingeckoCoinData[]) => void;
   setSearchCoin: (searchCoin: string) => void;
+  setBubbleCount: (count: number) => void;
 }
 
 export const useStore = create<UseStore>()((set, get) => ({
@@ -27,6 +29,7 @@ export const useStore = create<UseStore>()((set, get) => ({
   searchCoin: "",
   chosenToken: null,
   selectedModalResolution: Resolution.HOUR,
+  bubbleCount: 100,
   setChosenToken: (tokenId) => {
     const { topTokensList } = get();
 
@@ -42,4 +45,5 @@ export const useStore = create<UseStore>()((set, get) => ({
   setModalResolution: (modalResolution) => set({ modalResolution }),
   setTopTokensList: (topTokensList) => set({ topTokensList }),
   setSearchCoin: (searchCoin) => set({ searchCoin }),
+  setBubbleCount: (bubbleCount) => set({ bubbleCount }),
 }));

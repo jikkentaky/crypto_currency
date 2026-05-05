@@ -43,6 +43,13 @@ export class PixiUtils {
     const posY = isFullSize ? 0 : -circle.radius / 2;
     imageSprite.position.set(0, posY);
 
+    // If texture hasn't loaded yet, force a cache-invalidating tick once it does
+    if (!imageSprite.texture.baseTexture.valid) {
+      imageSprite.texture.baseTexture.once('loaded', () => {
+        circle.previousHovered = !circle.isHovered;
+      });
+    }
+
     return imageSprite;
   };
 

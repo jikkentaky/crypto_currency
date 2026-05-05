@@ -88,3 +88,23 @@
   width: 100%;
   padding: 0 8px;
 }
+
+.count-group {
+  flex-shrink: 0;
+}
+
+.count-button {
+  min-width: 44px !important;
+  width: 100%;
+  border-radius: $border-radius !important;
+  padding: 16px 10px !important;
+  background-color: $color-grey-8 !important;
+  font-size: $fs-14 !important;
+  line-height: 0;
+
+  @include hover('background-color', $color-green-1);
+}
+
+.count-selected {
+  background-color: $color-green-1 !important;
+}
