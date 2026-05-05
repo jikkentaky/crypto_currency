@@ -5,8 +5,9 @@
 .border {
   min-width: 100%;
   max-width: 600px;
+  height: calc(100dvh - #{$header-desktop-height});
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
   @include component-to-hide(1px, $media-1100-width);
 }
 
@@ -24,9 +25,9 @@
 }
 
 .table-head {
-  z-index: 5;
-  transform: translateY(0px);
   position: sticky;
+  top: 0;
+  z-index: 5;
 }
 
 .table-th {

@@ -18,15 +18,12 @@ import { formatTokenPrice } from "@/lib/format-token-price";
 import { convertNumber } from "@/lib/convert-number";
 import { formatPercentage } from "@/lib/format-percentage";
 import { CoingeckoCoinData } from "@/types/coingecko.type";
-import { useScrollTranslate } from "@/hooks/use-scroll-translate";
-
 type Props = {
   setIsOpenModal: (value: boolean) => void;
 };
 
 const CoinsTable: FC<Props> = ({ setIsOpenModal }) => {
   const { topTokensList, setChosenToken } = useStore();
-  const translateY = useScrollTranslate({ styles });
   const columnHelper = createColumnHelper<CoingeckoCoinData>();
 
   const onClick = (tokenId: string) => {
@@ -209,10 +206,7 @@ const CoinsTable: FC<Props> = ({ setIsOpenModal }) => {
       <div className={styles.border}>
         <div className={styles.container}>
           <table className={styles["table"]}>
-            <thead
-              className={styles["table-head"]}
-              style={{ transform: `translateY(${translateY - 1}px)` }}
-            >
+            <thead className={styles["table-head"]}>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (

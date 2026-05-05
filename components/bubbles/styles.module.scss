@@ -19,7 +19,10 @@
 
 .loading-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(100dvh - #{$header-desktop-height});
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,6 +31,10 @@
   opacity: 1;
   transition: opacity 0.5s ease;
   pointer-events: all;
+
+  @include responsive {
+    height: calc(100dvh - #{$header-mobile-height} - #{$footer-mobile-height});
+  }
 
   &--hidden {
     opacity: 0;
