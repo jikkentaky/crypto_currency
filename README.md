@@ -3,6 +3,7 @@ CryptoBubbles is a web application that visualizes cryptocurrency data in an int
 
 **--Here is [DEMO LINK](https://crypto-currency-lac.vercel.app/)**
 
+
 ## Features
 •  Interactive Bubble Charts: Visualize cryptocurrency data with dynamic and interactive bubble charts.
 
@@ -37,4 +38,3 @@ Searching for Cryptocurrencies
 
 Customizing the View
 •  Use the buttons to filter and sort the data based on different criteria such as price change.
-
